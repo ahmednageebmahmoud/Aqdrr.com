@@ -1,0 +1,117 @@
+<!-- ======= Breadcrumbs ======= -->
+<section id="breadcrumbs" class="breadcrumbs">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h2>{{'OrdersServices.orderServiceCaption' | translate }}</h2>
+            </div>
+            <div>
+                <div colspan='100%' class="text-center" >{{'Common.Data.ResultsFound' | translate }} [ {{query.totalItems || '0' }} ] </div>
+            </div>
+            <ol>
+                
+            </ol>
+        </div>
+    </div>
+</section><!-- End Breadcrumbs -->
+
+<article id="profile" class="content">
+    <div class="container-fluid" [ngClass]="{'disabled-spinner-container': isLoading}">
+        <app-spinner-container *ngIf="isLoading" class="spinner-container"></app-spinner-container>
+        <div class="btn-toolbar justify-content-between m-2" role="toolbar" aria-label="Toolbar with filter field">
+            <div class="form-inline">
+                <div class="input-group">
+                    <input type="text" class="form-control" maxlength="30" [(ngModel)]="query.filterText" (keyup.esc)="resetFilter()" (keyup.enter)="onFilterChange()" placeholder="{{'Common.Data.SearchTip' | translate}}">
+                    <div class="input-group-append" id="button-addon4">
+                        <button id="LnkBtn_resetFilter" class="btn btn-danger" type="button" (click)="resetFilter()" title="{{'Common.Data.Reset' | translate}}"><span class="fa fa-remove"></span></button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="btn-group" role="group" aria-label="ToolBar">
+                <a class="btn btn-info" [routerLink]="[ '/taskers', 'list' ]"><i class="fa fa-cart-plus" aria-hidden="true"></i>{{'OrdersServices.AddOrdersServiceTitle' | translate }}</a>
+                <button id="btnToolbarrefreshData" type="button" class="btn btn-success" (click)="resetFilter()">
+                  <span class="fa fa-refresh text-success" title="{{'Common.Data.Refresh' | translate}}"></span>
+                </button>
+
+              </div>
+        </div>
+
+
+        <div class="aqdr-table">
+            <div class="aqdr-table-row aqdr-table-header">
+                <div class="aqdr-table-column w10prec">#</div>
+                <div class="aqdr-table-column w45prec">{{'OrdersServices.UserTaskId'|translate}}</div>
+                <div class="aqdr-table-column w45prec">{{'OrdersServices.OrderStatus'|translate}}</div>
+            </div>
+            <div *ngIf="!orderServices?.length">
+                <div colspan='100%' class="text-center text-info" >
+                    <p class="mb-2">{{'Common.Messages.NotFoundAnyRecord' | translate:{'value': 'Common.Data.Record' | translate} }}</p>
+                </div>
+            </div>
+            <div class="aqdr-table-row justify-content-center align-items-center" *ngFor="let orderService of orderServices ">
+                <div class="aqdr-table-column w10prec display-unset "  >
+
+                        #{{orderService.id}}
+                </div>
+                <div class="aqdr-table-column w45prec display-unset"  >
+                    <a class="text-info font-weight-bold" [routerLink]="['/orders', orderService.id ,'details']">{{orderService?.userTask?.task?.name}}</a>
+                    <br>
+                    {{'OrdersServices.BookingDate' | translate }}:
+                    <span class="h6">{{orderService.startDate| date:'yyyy/MM/dd'}}</span>
+                    <br>
+                    <span class="h6 badge-xl bg-secondary">{{orderService.timingDescription}}</span>
+                    <div class="row d-flex flex-row flex-nowrap m-0 mb-1">
+                      <div class="p-0">
+                        <div class="pic-sm"><app-small-avatar-img [ImageName]="orderService?.userTask?.taskerCard?.publicId" [Gender]='orderService?.userTask?.taskerCard?.gender' [Size]="45" [heightWidthSameSize]='true' [ImgClass]="'img-fluid img-thumbnail'"></app-small-avatar-img></div>
+                      </div>
+                      <div class="flex-grow-1 p-0 pl-1">
+                        <a [routerLink]="(orderService?.userTask?.taskerId) ? [ '/profile', orderService?.userTask?.taskerId] : ['']"  >
+                          <h6 class="mb-0 text-secondary"><strong>{{orderService?.userTask?.taskerCard?.firstName + ' ' + orderService?.userTask?.taskerCard?.lastName}}</strong></h6>
+                        </a>
+                        <div class="h6 text-secondary">(<i class="fa fa-map-marker" aria-hidden="true"></i> <strong>{{orderService?.userTask?.taskerCard?.cityName}}</strong>)</div>
+                      </div>
+                    </div>
+                </div>
+                <div class="aqdr-table-column w45prec display-unset  text-center"   [ngClass]="getOrderStatusStyle(orderService.orderStage)">
+                        <i [ngClass]="getOrderStatusIconStyle(orderService.orderStage)"></i> {{orderService.orderStageDescription}}
+                </div>
+            </div>
+        </div>
+<br>
+        
+        <ngb-pagination *ngIf="orderServices?.length" class="d-flex justify-content-center" [boundaryLinks]="true" [pageSize]="query.pageSize" [collectionSize]="query.totalItems"
+                    [(page)]="query.pageNumber"  [maxSize]="5" [rotate]="true" (pageChange)="onPageChange($event);">
+            <ng-template ngbPaginationFirst>&laquo;</ng-template>
+            <ng-template ngbPaginationPrevious>&lsaquo;</ng-template>
+            <ng-template ngbPaginationLast>&raquo;</ng-template>
+            <ng-template ngbPaginationNext>&rsaquo;</ng-template>
+        </ngb-pagination>
+    </div>
+</article>
+
+
+
+<ng-template #popTitle let-vOrderService="vOrderService">{{'Common.Data.MoreInformations' | translate }}</ng-template>
+<ng-template #popContent let-vOrderService="vOrderService">
+	<div class="form-group">
+		<label class="font-weight-bold text-info" >#&nbsp;:</label>
+		<p class="form-control-Static">#{{vOrderService.id}}</p>
+	</div>
+	<div class="form-group">
+		<label class="font-weight-bold text-info" >{{'Tasks.Price' | translate }}&nbsp;:</label>
+		<p class="form-control-Static"><strong>{{vOrderService.price}}</strong><img height="15px" src="assets/img/icons/rial.svg"/><strong>/س</strong></p>
+	</div>
+	<div *ngIf="vOrderService?.userTask?.description" class="form-group">
+		<label class="font-weight-bold text-info" >{{'Tasks.Description' | translate }}&nbsp;:</label>
+		<p class="form-control-Static">{{vOrderService?.userTask?.description}}</p>
+    </div>
+    <div class="form-group">
+		<label class="font-weight-bold text-info" >{{'OrdersServices.UpdatedDate' | translate }}&nbsp;:</label>
+		<p class="form-control-Static">{{vOrderService.updatedDate| date:'yyyy/MM/dd hh:mm'}}</p>
+	</div>
+	<div class="form-group">
+		<label class="font-weight-bold text-info" >{{'OrdersServices.CreatedDate' | translate }}&nbsp;:</label>
+		<p class="form-control-Static">{{vOrderService.createdDate | date:'yyyy/MM/dd hh:mm'}}</p>
+	</div>
+</ng-template>

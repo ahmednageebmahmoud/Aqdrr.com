@@ -1,0 +1,105 @@
+<!-- start Bootstrap Ngb Modal (Update Form) -->
+<div class="modal-header">
+	<h5 class="modal-title"><span class="fa fa-pencil"></span>&nbsp;{{'SubscriptionPackages.EdtSubscriptionPackageTitle' | translate }}</h5>
+	<button type="button" class="close pull-right" aria-label="Close" (click)="activeModal.close()">
+		<span aria-hidden="true">&times;</span>
+	</button>
+</div>
+<div class="modal-body" [formGroup]="edtSubscriptionPackageForm">
+	<div class="form-group">
+		<label for="txtEditId" class="font-weight-bold" >{{'SubscriptionPackages.Id' | translate }}<strong class="text-danger">*</strong></label>
+		<input  class="form-control default"  formControlName="id" placeholder="{{'SubscriptionPackages.Id' | translate }}" [ngClass]="{'is-invalid' : updateValidator.id.errors && updateValidator.id.touched}" readonly >
+		<div *ngIf="updateValidator.id.touched && updateValidator.id.errors" class="invalid-feedback">
+			<div *ngIf="updateValidator.id.errors.required">{{'Common.Validation.Required' | translate }}</div>
+		</div>
+	</div>
+  <div class="form-group">
+		<label for="ddlColor" class="font-weight-bold" >{{'SubscriptionPackages.Color' | translate }}<strong class="text-danger">*</strong></label>
+		<select id="ddlColor" name="ddlColor" formControlName="color" class="form-control" [ngClass]="{'is-invalid' : updateValidator.color.errors && updateValidator.color.touched }">
+			<option [value]="null" disabled>{{'Common.Form.ChooseFromMenu' | translate }}</option>
+			<option *ngFor="let color of subscriptionsPackageColorsOptions" value="{{color.id}}">{{color.name}}</option>
+		</select>
+		<div *ngIf="updateValidator.color.touched && updateValidator.color.errors" class="invalid-feedback">
+			<div *ngIf="updateValidator.color.errors.required">{{'Common.Validation.SelectedRequiredMsg' | translate }}</div>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="txtEditArTitle" class="font-weight-bold" >{{'SubscriptionPackages.ArTitle' | translate }}<strong class="text-danger">*</strong></label>
+		<input  class="form-control default"  maxlength="100" formControlName="arTitle" placeholder="{{'SubscriptionPackages.ArTitle' | translate }}" [ngClass]="{'is-invalid' : updateValidator.arTitle.errors && updateValidator.arTitle.touched}"  >
+		<div *ngIf="updateValidator.arTitle.touched && updateValidator.arTitle.errors" class="invalid-feedback">
+			<div *ngIf="updateValidator.arTitle.errors.required">{{'Common.Validation.Required' | translate }}</div>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="txtEditEnTitle" class="font-weight-bold" >{{'SubscriptionPackages.EnTitle' | translate }}<strong class="text-danger">*</strong></label>
+		<input  class="form-control default"  maxlength="100" formControlName="enTitle" placeholder="{{'SubscriptionPackages.EnTitle' | translate }}" [ngClass]="{'is-invalid' : updateValidator.enTitle.errors && updateValidator.enTitle.touched}"  >
+		<div *ngIf="updateValidator.enTitle.touched && updateValidator.enTitle.errors" class="invalid-feedback">
+			<div *ngIf="updateValidator.enTitle.errors.required">{{'Common.Validation.Required' | translate }}</div>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="txtEditDescription" class="font-weight-bold" >{{'SubscriptionPackages.Description' | translate }}</label>
+		<textarea id="txtEditDescription" name="txtEditDescription" AutoSize [maximumHeight]="300" [minHeight]="20" class= "form-control animated" rows="1"  maxlength="300" formControlName="description" placeholder="{{'Common.Form.MaxLength' | translate:{'value': 'SubscriptionPackages.Description' | translate , 'max':'300'} }}" [ngClass]="{'is-invalid' : updateValidator.description.errors && updateValidator.description.touched}"  ></textarea>
+		<div *ngIf="updateValidator.description.touched && updateValidator.description.errors" class="invalid-feedback">
+			<div *ngIf="updateValidator.description.errors.minlength || updateValidator.description.errors.maxlength">{{'Common.Validation.Maxlength' | translate:{'value':'300'} }}</div>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="rdbEditIsFree" class="font-weight-bold" >{{'SubscriptionPackages.Fee' | translate }}<strong class="text-danger">*</strong></label>
+		<div class="form-check form-check-inline">
+			<input id="rdbEditIsFree1" class="form-check-input" type="radio" name="isFree" formControlName="isFree" [value]="true" [ngClass]="{'is-invalid' : updateValidator.isFree.errors && updateValidator.isFree.touched}">
+			<label class="form-check-label pl-1" for="rdbEditIsFree1">{{'SubscriptionPackages.IsFree' | translate }}</label>
+		</div>
+		<div class="form-check form-check-inline">
+			<input id="rdbEditIsFree2" class="form-check-input" type="radio" name="isFree" formControlName="isFree" [value]="false" [ngClass]="{'is-invalid' : updateValidator.isFree.errors && updateValidator.isFree.touched}">
+			<label class="form-check-label pl-1" for="rdbEditIsFree2">{{'SubscriptionPackages.PaidSubscription' | translate }}</label>
+		</div>
+		<label class="my-0" [ngClass]="{'is-invalid' : updateValidator.isFree.errors && updateValidator.isFree.touched}"></label>
+		<div *ngIf="updateValidator.isFree.touched && updateValidator.isFree.errors" class="invalid-feedback">
+			<div *ngIf="updateValidator.isFree.errors.required">{{'Common.Validation.Required' | translate }}</div>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="txtEditOldPrice" class="font-weight-bold" >{{'SubscriptionPackages.OldPrice' | translate }}<strong class="text-danger">*</strong></label>
+		<input  class="form-control default"  formControlName="oldPrice" placeholder="{{'SubscriptionPackages.OldPrice' | translate }}" [ngClass]="{'is-invalid' : updateValidator.oldPrice.errors && updateValidator.oldPrice.touched}"  >
+		<div *ngIf="updateValidator.oldPrice.touched && updateValidator.oldPrice.errors" class="invalid-feedback">
+			<div *ngIf="updateValidator.oldPrice.errors.required">{{'Common.Validation.Required' | translate }}</div>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="txtEditPrice" class="font-weight-bold" >{{'SubscriptionPackages.Price' | translate }}<strong class="text-danger">*</strong></label>
+		<input  class="form-control default"  formControlName="price" placeholder="{{'SubscriptionPackages.Price' | translate }}" [ngClass]="{'is-invalid' : updateValidator.price.errors && updateValidator.price.touched}"  >
+		<div *ngIf="updateValidator.price.touched && updateValidator.price.errors" class="invalid-feedback">
+			<div *ngIf="updateValidator.price.errors.required">{{'Common.Validation.Required' | translate }}</div>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="txtEditPriceSaudiRiyal" class="font-weight-bold" >{{'SubscriptionPackages.PriceSaudiRiyal' | translate }}<strong class="text-danger">*</strong></label>
+		<input  class="form-control default"  formControlName="priceSaudiRiyal" placeholder="{{'SubscriptionPackages.PriceSaudiRiyal' | translate }}" [ngClass]="{'is-invalid' : updateValidator.priceSaudiRiyal.errors && updateValidator.priceSaudiRiyal.touched}"  >
+		<div *ngIf="updateValidator.priceSaudiRiyal.touched && updateValidator.priceSaudiRiyal.errors" class="invalid-feedback">
+			<div *ngIf="updateValidator.priceSaudiRiyal.errors.required">{{'Common.Validation.Required' | translate }}</div>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="txtEditTotalDays" class="font-weight-bold" >{{'SubscriptionPackages.TotalDays' | translate }}<strong class="text-danger">*</strong></label>
+		<input   type="number" step="1"  class="form-control default"  formControlName="totalDays" placeholder="{{'SubscriptionPackages.TotalDays' | translate }}" [ngClass]="{'is-invalid' : updateValidator.totalDays.errors && updateValidator.totalDays.touched}"  >
+		<div *ngIf="updateValidator.totalDays.touched && updateValidator.totalDays.errors" class="invalid-feedback">
+			<div *ngIf="updateValidator.totalDays.errors.required">{{'Common.Validation.Required' | translate }}</div>
+		</div>
+	</div>
+	<div class="form-group" *ngIf="!updateValidator.employmentBags.disabled">
+		<label for="txtEditEmploymentBags" class="font-weight-bold" >{{'SubscriptionPackages.EmploymentBags' | translate }}<strong class="text-danger">*</strong></label>
+		<input   type="number" step="1"  class="form-control default"  formControlName="employmentBags" placeholder="{{'SubscriptionPackages.EmploymentBags' | translate }}" [ngClass]="{'is-invalid' : updateValidator.employmentBags.errors && updateValidator.employmentBags.touched}"  >
+		<div *ngIf="updateValidator.employmentBags.touched && updateValidator.employmentBags.errors" class="invalid-feedback">
+			<div *ngIf="updateValidator.employmentBags.errors.required">{{'Common.Validation.Required' | translate }}</div>
+		</div>
+	</div>
+</div>
+<div class="modal-footer  text-right">
+	<button id="btnEdtSubscriptionPackage" class="btn btn-success" [disabled]="isSubmitting || !edtSubscriptionPackageForm.valid" type="button" (click)="editSubscriptionPackage()">
+		<i class='fa ' [ngClass]="isSubmitting ? 'fa-circle-o-notch fa-spin' : 'fa-send'"></i>&nbsp;
+		{{(isSubmitting ? 'Common.Data.SendingData' : 'Common.CRUD.Save') | translate}}&nbsp;
+	</button>
+</div>
+<!-- End Bootstrap Ngb Modal (Update Form) -->
+

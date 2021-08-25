@@ -1,0 +1,113 @@
+<!-- ======= Breadcrumbs ======= -->
+<section id="breadcrumbs" class="breadcrumbs">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h2>{{'OrdersServices.Manage' | translate }}</h2>
+            </div>
+            <ol>
+                
+            </ol>
+        </div>
+    </div>
+</section><!-- End Breadcrumbs -->
+
+<article id="profile" class="content">
+    <div class="container-fluid" [ngClass]="{'disabled-spinner-container': isLoading}">
+        <app-spinner-container *ngIf="isLoading" class="spinner-container"></app-spinner-container>
+        <div class="btn-toolbar justify-content-between m-2" role="toolbar" aria-label="Toolbar with filter field">
+            <div class="form-inline">
+                <div class="input-group">
+                    <input type="text" class="form-control" maxlength="30" [(ngModel)]="query.filterText" (keyup.esc)="resetFilter()" (keyup.enter)="onFilterChange()" placeholder="{{'Common.Data.SearchTip' | translate}}">
+                    <div class="input-group-append" id="button-addon4">
+                        <button id="LnkBtn_resetFilter" class="btn btn-danger" type="button" (click)="resetFilter()" title="{{'Common.Data.Reset' | translate}}"><span class="fa fa-remove"></span></button>
+                    </div>
+                </div>
+            </div>
+            <div class="btn-group" role="group" aria-label="ToolBar">
+                <button id="btnToolbarrefreshData" type="button" class="btn btn-default" (click)="resetFilter()">
+                  <span class="fa fa-refresh text-success" title="{{'Common.Data.Refresh' | translate}}"></span>
+                </button>
+              </div>
+        </div>
+        
+        
+        <div class="table-responsive">
+            <table class="table table-sm table-bordered table-hover">
+                <thead class="table-info">
+                    <tr>
+                        <th *ngFor="let c of columns" class="{{c.style}}">
+                            <div *ngIf="c.isSortable" class="align-middle text-{{c.align}} " (click)="sortBy(c.key)">
+                                {{ c.title }}
+                                <i *ngIf="query.sortBy === c.key"
+                                    class="fa "
+                                    [class.fa-sort-asc]="query.isSortAscending"
+                                    [class.fa-sort-desc]="!query.isSortAscending"></i>
+                            </div>
+                            <div *ngIf="!c.isSortable" class="align-middle text-{{c.align}}">
+                                {{ c.title }}
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr class="table-info">
+                        <th colspan='100%' class="text-center" >{{'Common.Data.ResultsFound' | translate }} [ {{query.totalItems || '0' }} ] </th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    <tr *ngIf="!orderServices?.length">
+                        <th colspan='100%' class="text-center text-info" ><p class="mb-2">{{'Common.Messages.NotFoundAnyRecord' | translate:{'value': 'Common.Data.Record' | translate} }}</p></th>
+                    </tr>
+                    <tr *ngFor="let orderService of orderServices" >
+                        <td class="align-middle text-center ">#{{orderService.id}}</td>
+                        <td class="align-middle text-left " style="min-width:200px">
+                            <a class="text-info font-weight-bold" [routerLink]="['/orders', orderService.id ,'details']">{{orderService?.userTask?.task?.name}}</a>
+                            <br>
+                            {{'OrdersServices.BookingDate' | translate }}: 
+                            <span class="h6">{{orderService.startDate| date:'yyyy/MM/dd'}}</span>
+                            <br>
+                            <span class="h6 badge-xl bg-secondary">{{orderService.timingDescription}}</span>
+
+                        </td>
+                        <td class="align-middle text-left " [ngClass]="getOrderStatusStyle(orderService.orderStage)"><i [ngClass]="getOrderStatusIconStyle(orderService.orderStage)"></i> {{orderService.orderStageDescription}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <ngb-pagination class="d-flex justify-content-center" [boundaryLinks]="true" [pageSize]="query.pageSize" [collectionSize]="query.totalItems" 
+                    [(page)]="query.pageNumber"  [maxSize]="5" [rotate]="true" (pageChange)="onPageChange($event);">
+            <ng-template ngbPaginationFirst>&laquo;</ng-template>
+            <ng-template ngbPaginationPrevious>&lsaquo;</ng-template>
+            <ng-template ngbPaginationLast>&raquo;</ng-template>
+            <ng-template ngbPaginationNext>&rsaquo;</ng-template>
+        </ngb-pagination>
+    </div>
+</article>
+
+
+
+<ng-template #popTitle let-vOrderService="vOrderService">{{'Common.Data.MoreInformations' | translate }}</ng-template> 
+<ng-template #popContent let-vOrderService="vOrderService">
+	<div class="form-group">
+		<label class="font-weight-bold text-info" >#&nbsp;:</label>
+		<p class="form-control-Static">#{{vOrderService.id}}</p>
+	</div>
+	<div class="form-group">
+		<label class="font-weight-bold text-info" >{{'Tasks.Price' | translate }}&nbsp;:</label>
+		<p class="form-control-Static"><strong>{{vOrderService.price}}</strong><img height="15px" src="assets/img/icons/rial.svg"/><strong>/س</strong></p>
+	</div>
+	<div *ngIf="vOrderService?.userTask?.description" class="form-group">
+		<label class="font-weight-bold text-info" >{{'Tasks.Description' | translate }}&nbsp;:</label>
+		<p class="form-control-Static">{{vOrderService?.userTask?.description}}</p>
+    </div>
+    <div class="form-group">
+		<label class="font-weight-bold text-info" >{{'OrdersServices.UpdatedDate' | translate }}&nbsp;:</label>
+		<p class="form-control-Static">{{vOrderService.updatedDate| date:'yyyy/MM/dd hh:mm'}}</p>
+	</div>
+	<div class="form-group">
+		<label class="font-weight-bold text-info" >{{'OrdersServices.CreatedDate' | translate }}&nbsp;:</label>
+		<p class="form-control-Static">{{vOrderService.createdDate | date:'yyyy/MM/dd hh:mm'}}</p>
+	</div>
+</ng-template> 

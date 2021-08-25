@@ -1,0 +1,30 @@
+
+<!-- ======= Breadcrumbs ======= -->
+<section id="breadcrumbs" class="breadcrumbs">
+  <div class="container">
+      <div class="d-flex justify-content-between align-items-center">
+          <div>
+              <h2><i class="fa fa-cubes" aria-hidden="true"></i>&nbsp;{{'PricingTable.BusinessAccountOffers' | translate }}</h2>
+          </div>
+          <ol>
+              
+              <li><span class="text-muted" >{{'PricingTable.BusinessAccountOffers' | translate }}</span></li>
+          </ol>
+      </div>
+  </div>
+</section><!-- End Breadcrumbs -->
+
+<article id="profile" class="content">
+  <div class="container-fluid">
+    <div *ngIf="message" class="alert alert-warning mb-1" role="alert">
+      <h6 class="alert-heading"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> {{message}}</h6>
+    </div>
+    <app-pricing-preview-businesses *ngIf="!loggedIn() || permissions.canAddJobs"></app-pricing-preview-businesses>
+  </div>
+</article>
+
+
+
+
+
+

@@ -1,0 +1,30 @@
+<div class="d-flex flex-md-row justify-content-between flex-column" >
+    <a [routerLink]="(user) ? ['/profile', user?.id , getUserFriendlyName] : ['']" class="d-flex align-items-start mb-2">
+        <app-small-avatar-img [ImageName]="user?.publicId" [Gender]='user?.gender' [Size]="35" ></app-small-avatar-img>
+        <div class="d-flex flex-column">
+            <div>
+                <div class="d-flex align-items-start">
+                    <h6>{{getUserFriendlyName}}</h6>
+                    <div class="ml-3 text-muted" data-title="{{user?.totalRating}}">
+                        <app-display-rating-stars [Rating]='user?.totalRating'></app-display-rating-stars>
+                    </div>   
+                </div>   
+            </div>
+            <div>
+                <div class="d-flex align-items-start">
+                    <span class="time-ago"><i class="fa fa-clock-o"></i>&nbsp;
+                        {{'users.Profile.MemberSince' | translate }} {{user?.createdDate | timeAgo}}
+                    </span> 
+                </div> 
+            </div>
+        </div>
+    </a>
+    <div class="text-right">
+        <button *ngIf="permissions.canManageAppliesToTheJobs" class="btn btn-outline-primary btn-sm" [disabled]="isSubmitting" (click)="registerNewApplicant()">
+            <i *ngIf="isSubmitting" class='fa fa-circle-o-notch fa-spin'></i>&nbsp;{{!isSubmitting ? '' : 'Common.Data.SendingData'  | translate }}
+            <i *ngIf="!isSubmitting" class="fa fa-briefcase" ></i>&nbsp;{{isSubmitting ? '' : 'Applicants.HireThisUser' | translate}}&nbsp;
+        </button>
+    </div>
+</div>
+<hr/>
+

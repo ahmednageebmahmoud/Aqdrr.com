@@ -1,0 +1,53 @@
+<!-- start Bootstrap Ngb Modal (Add Form) -->
+<div class="modal-header">
+	<h5 class="modal-title"><span class="fa fa-plus"></span>&nbsp;{{'JobCategories.AddJobCategoryTitle' | translate }}</h5>
+	<button type="button" class="close pull-right" aria-label="Close" (click)="activeModal.close()">
+		<span aria-hidden="true">&times;</span>
+	</button>
+</div>
+<div class="modal-body" [formGroup]="addJobCategoryForm">
+	<div class="form-group position-relative">
+		<label for="uplodAddIcon" class="font-weight-bold" >{{'JobCategories.Icon' | translate }}</label>
+		<div class="custom-file">
+			<input id="uplodAddIcon" name="uplodAddIcon" type="file" class="custom-file-input" multiple (change)="onFileChange($event, $event.target.files)"  [attr.accept]="allowTypeToUpload.join(', ')"
+			 formControlName="icon" placeholder= "" [ngClass]="{'is-invalid' : addValidator.icon.errors && addValidator.icon.touched}" >
+			<label #labelImport class="custom-file-label" for="uplodAddIcon">Choose file</label>
+		</div>
+		<div class="badge-xl align-middle text-left table-warning text-body">
+			<i class="fa fa-question-circle"></i>{{'Attachments.Note' | translate }}
+		</div>
+	
+		<div class="progress" *ngIf="uploadResponse?.status === uploadStatusEnum.progress">
+			<div class="progress-bar progress-bar-striped bg-info" role="progressbar" [style.width.%]="uploadResponse.message" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">{{uploadResponse.message}}%</div>
+		</div>
+		<div class="form-group" *ngIf="selectedFiles?.length > 0">
+			<span *ngFor="let file of selectedFiles;let index = index" class="badge badge-info attachment-badge-with-btn rounded-right mt-1 mr-1">
+				<span class="attachment-badge" >{{file.name  | slice:0:30}}</span><span>({{(file.size / 1024 / 1024) | number: '1.0-2'}}MB)</span>
+				<span class="mr-2 ml-2">|</span>
+				<span class="attachment-badge bg-danger rounded-left" (click)="removeFileFromSelectedFile(index);"><i class="fa fa-trash" aria-hidden="true"></i></span>
+			</span>
+		</div>
+	</div>
+	<div class="form-group position-relative">
+		<label for="txtAddArName" class="font-weight-bold" >{{'JobCategories.ArName' | translate }}<strong class="text-danger">*</strong></label>
+		<input  class="form-control default"  formControlName="arName" placeholder="{{'JobCategories.ArName' | translate }}" [ngClass]="{'is-invalid' : addValidator.arName.errors && addValidator.arName.touched}"  >
+		<div *ngIf="addValidator.arName.touched && addValidator.arName.errors" class="invalid-tooltip">
+			<div *ngIf="addValidator.arName.errors.required">{{'Common.Validation.Required' | translate }}</div>
+		</div>
+	</div>
+	<div class="form-group position-relative">
+		<label for="txtAddEnName" class="font-weight-bold" >{{'JobCategories.EnName' | translate }}<strong class="text-danger">*</strong></label>
+		<input  class="form-control default"  formControlName="enName" placeholder="{{'JobCategories.EnName' | translate }}" [ngClass]="{'is-invalid' : addValidator.enName.errors && addValidator.enName.touched}"  >
+		<div *ngIf="addValidator.enName.touched && addValidator.enName.errors" class="invalid-tooltip">
+			<div *ngIf="addValidator.enName.errors.required">{{'Common.Validation.Required' | translate }}</div>
+		</div>
+	</div>
+</div>
+<div class="modal-footer  text-right">
+	<button id="btnAddJobCategory" class="btn btn-primary" [disabled]="isSubmitting || !addJobCategoryForm.valid" type="button" (click)="addNewJobCategoryWithFile()">
+		<i class='fa ' [ngClass]="isSubmitting ? 'fa-circle-o-notch fa-spin' : 'fa-send'"></i>&nbsp;
+		{{(isSubmitting ? 'Common.Data.SendingData' : 'Common.CRUD.Add') | translate}}&nbsp;
+	</button>
+</div>
+<!-- End Bootstrap Ngb Modal (Add Form) -->
+

@@ -1,0 +1,93 @@
+img.img-thumbnail {
+  height: 100px;
+  min-width: 100px !important;
+}
+
+.btn-sm {
+
+  font-weight: bolder;
+  font-family: 'Tajawal';
+  font-size: 0.8rem;
+  margin-top: 1px;
+  border-radius: 5px !important;
+}
+
+.card {
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 16px 16px 0 0/13px 17px 16px 16px;
+}
+
+.btn-up {
+  border-radius: 16px 16px 0 0/13px 17px 16px 16px !important;
+}
+
+.btn-down {
+  border-radius: 0px 0px 16px 16px/16px 16px 16px 16px !important;
+}
+
+.not-approved {
+  opacity: 0.4;
+}
+
+.img-wrapper {
+  position: relative;
+}
+
+.img-text {
+  font-weight: bold;
+  position: absolute;
+  bottom: 50%;
+  font-size: 1.0rem !important;
+  text-shadow: 1px 1px 2px rgb(248, 244, 244), 0 0 25px rgb(253, 253, 251), 0 0 5px rgb(248, 244, 244);
+}
+
+
+
+.drop-container {
+  background: #e5e5e5;
+  border-radius: 6px;
+  height: 100px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed #c0c4c7;
+}
+
+p {
+  font-size: 16px;
+  font-weight: 400;
+  color: #222c32;
+}
+
+.upload-button {
+  display: inline-block;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  color: #009688;
+}
+
+.upload-button input {
+  display: none;
+}
+
+.dropzone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  border-radius: 5px;
+  background: white;
+}
+
+progress::-webkit-progress-value {
+  transition: width 0.1s ease;
+}
+
+
+.nv-file-over {
+  border: dashed 2px #009688;
+  background-color: #e5e5e5 !important;
+}

@@ -1,0 +1,77 @@
+<app-breadcrumbs title="{{'Menu.MyAccount' | translate }}" currentPageTitle="{{userProfile?.fullName}}"></app-breadcrumbs>
+
+<!-- ======= member profile ======= -->
+<section id="profile" class="profile">
+    <div class="container">
+        <div class="row" id="user-profile">
+            <div class="col-lg-3 col-md-4 col-sm-4 p-0">
+                <div class="main-box">
+                    <h4 class="user-name" [ngClass]="getGenderStyle()">{{userProfile.fullName}}</h4>
+                    <div class="profile-status">
+                        <i class="fa fa-check-circle"></i>&nbsp;{{userProfile?.studentAccountData?.accountStatusName}}
+                    </div>
+
+                    <app-profile-image [UserProfileData]="userProfile"></app-profile-image>
+                    <app-profile-stars [Rating]="userProfile?.totalRating"></app-profile-stars>
+                    <app-since-profile [MemberSince]="userProfile?.createdDate" [LastActivity]="userProfile?.lastActive"></app-since-profile>
+                    <app-jobs-searcher-counters></app-jobs-searcher-counters>
+
+                    <div *ngIf="!isCurrentUserProfile" class="profile-message-btn center-block text-center">
+                        <a class="btn btn-success text-white" (click)="showChatBox()">
+                            <i class="fa fa-envelope"></i> {{'Chatbox.SendMessage' | translate }}
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-lg-9 col-md-8 col-sm-8 p-0 px-md-2">
+                <div class="main-box ">
+                    <ul class="nav nav-tabs" id="user-tab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="about-user-tab" data-toggle="tab" href="#aboutUser" role="tab" aria-controls="about-user-tab" aria-selected="true">بياناتي</a>
+                        </li>
+
+                        <li class="nav-item">
+                          <a class="nav-link" id="ratings-history-tab" data-toggle="tab" href="#ratings-history" role="tab" aria-controls="ratings-history" aria-selected="false">التقييمات</a>
+                        </li>
+
+                        <li *ngIf="!isCurrentUserProfile" class="nav-item">
+                          <a #chatboxTab class="nav-link" id="chatbox-tab" data-toggle="tab" href="#chatbox" role="tab" aria-controls="chatbox" aria-selected="false">المحادثة</a>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content  p-2" id="myTabContent">
+                        <div class="tab-pane fade show active" id="aboutUser" role="tabpanel" aria-labelledby="about-user-tab">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <h4 class="text-left"><span class="section-header-behind-line behind-line-gray px-2 pb-1">{{'users.Students.PersonalInfo' | translate }}</span></h4>
+                                <a *ngIf="isCurrentUserProfile" [routerLink]="['/profile' , 'visitor', 'edit' ]" class="btn btn-primary btn-sm edit-profile">
+                                    <i class="fa fa-pencil-square fa-lg"></i> {{'Common.CRUD.Update' | translate }}
+                                </a>
+                            </div>
+                            <app-personal-details [UserProfileData]="userProfile" ></app-personal-details>
+                            <app-member-contact *ngIf="userProfile?.displayContactInfo" [UserProfileData]="userProfile"></app-member-contact>
+                        </div>
+
+                        <div class="tab-pane fade" id="ratings-history" role="tabpanel" aria-labelledby="ratings-history-tab">
+                            <app-rating-and-reviews-list [RatingsAndReviews]="userProfile.ratingsGot"></app-rating-and-reviews-list>
+                        </div>
+
+                        <div *ngIf="!isCurrentUserProfile" class="tab-pane fade profile-chatbox" id="chatbox" role="tabpanel" aria-labelledby="chatbox-tab">
+                          <ng-container *ngIf="!isCurrentUserCanStartConversationWithThisUser; else conversationBox">
+                            <div *ngIf="conversationNotAllowed"  class="alert alert-danger text-center" role="alert">{{conversationNotAllowed}}</div>
+                            <div *ngIf="!conversationNotAllowed"  class="alert alert-warning text-center" role="alert"><span class="spinner-border spinner-border-sm" role="status"></span>&nbsp;&nbsp;{{'Common.Data.Loading' | translate}}</div>
+
+                          </ng-container>
+                          <ng-template #conversationBox>
+                            <app-conversation-box [RecipientId]="userProfile?.id" [RecipientGender]="userProfile?.gender"></app-conversation-box>
+                          </ng-template>
+                        </div>
+
+                      </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End member profile -->

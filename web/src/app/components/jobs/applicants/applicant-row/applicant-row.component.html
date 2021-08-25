@@ -1,0 +1,53 @@
+<div class="d-flex flex-md-row justify-content-between flex-column" >
+    <a [routerLink]="(applicant?.user) ? ['/profile', applicant?.user?.id , getUserFriendlyName] : ['']" class="d-flex align-items-start mb-2">
+        <app-small-avatar-img [ImageName]="applicant?.user?.publicId" [Gender]='applicant?.user?.gender' [Size]="35" ></app-small-avatar-img>
+        <div class="d-flex flex-column">
+            <div>
+                <div class="d-flex align-items-start">
+                    <h6>{{getUserFriendlyName}}</h6>
+                    <div class="ml-3 text-muted" data-title="{{applicant?.user?.totalRating}}">
+                        <app-display-rating-stars [Rating]='applicant?.user?.totalRating'></app-display-rating-stars>
+                    </div>   
+                </div>   
+            </div>
+            <div>
+                <div class="d-flex align-items-start">
+                    <span class="time-ago"><i class="fa fa-clock-o"></i>&nbsp;
+                        {{'users.Profile.MemberSince' | translate }} {{applicant?.user?.createdDate | timeAgo}}
+                    </span> 
+                </div> 
+            </div>
+        </div>
+    </a>
+    <div class="text-right" *ngIf="!isSubmitting" >
+        <div class="alert p-2" [ngClass]="getApplicantStatusStyle" role="alert">
+            <div class="text-center"><i class="fa" [ngClass]="getApplicantStatusIcon" aria-hidden="true"></i>&nbsp;{{applicant?.statusDescription}}</div> 
+            <div class="text-right" *ngIf="(permissions.canManageAppliesToTheJobs && isOfferOwnerSameCurrentUser && applicant.status === ApplicantStatusEnum.None && !isSubmitting)" >
+                <hr>
+                <button *ngIf="permissions.canManageAppliesToTheJobs && !isSubmitting"  class="btn btn-outline-success btn-sm" [disabled]="isSubmitting" (click)="acceptedOrRejectedApplicantByOwner(ApplicantStatusEnum.Accepted)">
+                    <i class="fa fa-check-circle" ></i>&nbsp;{{'Common.CRUD.Accept' | translate}}&nbsp;
+                </button>
+                <button *ngIf="permissions.canManageAppliesToTheJobs && !isSubmitting" class="btn btn-outline-danger btn-sm" [disabled]="isSubmitting" (click)="acceptedOrRejectedApplicantByOwner(ApplicantStatusEnum.Rejected)">
+                    <i class="fa fa-times-circle-o" ></i>&nbsp;{{'Common.CRUD.Reject' | translate}}&nbsp;
+                </button>
+            </div>
+            <div class="text-right" *ngIf="(permissions.canApplyToTheJobs && isApplicantUserSameCurrentUser && applicant.status === ApplicantStatusEnum.Requested && !isSubmitting)" >
+                <hr>
+                <button *ngIf="permissions.canApplyToTheJobs && isApplicantUserSameCurrentUser  && !isSubmitting"  class="btn btn-outline-success btn-sm" [disabled]="isSubmitting" (click)="requestedUserAcceptOrDiscardTheApplicant(ApplicantStatusEnum.RequestAccept)">
+                    <i class="fa fa-check-circle" ></i>&nbsp;{{'Common.CRUD.Accept' | translate}}&nbsp;
+                </button>
+                <button *ngIf="permissions.canApplyToTheJobs && isApplicantUserSameCurrentUser && !isSubmitting" class="btn btn-outline-danger btn-sm" [disabled]="isSubmitting" (click)="requestedUserAcceptOrDiscardTheApplicant(ApplicantStatusEnum.RequestDiscard)">
+                    <i class="fa fa-times-circle-o" ></i>&nbsp;{{'Common.CRUD.Discard' | translate }}&nbsp;
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-right" *ngIf="isSubmitting" >
+        <button *ngIf="isSubmitting" class="btn btn-outline-sacondary btn-sm" [disabled]="isSubmitting" >
+            <i *ngIf="isSubmitting" class='fa fa-circle-o-notch fa-spin'></i>&nbsp;{{!isSubmitting ? '' : 'Common.Data.SendingData'  | translate }}
+        </button>
+    </div>
+</div>
+<hr/>
+

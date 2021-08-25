@@ -1,0 +1,145 @@
+<!-- ======= Breadcrumbs ======= -->
+<section id="breadcrumbs" class="breadcrumbs">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h2><i class="fa fa-bell-o" aria-hidden="true"></i> {{'Notifications.List' | translate}}</h2>
+            </div>
+            <ol>
+                
+            </ol>
+        </div>
+    </div>
+</section><!-- End Breadcrumbs -->
+
+<article id="profile" class="content min-vh-100" style="min-height: 55vh !important;">
+    <div class="container px-2 " [ngClass]="{'disabled-spinner-container': isLoading}">
+        <app-spinner-container *ngIf="isLoading" class="spinner-container"></app-spinner-container>
+
+        <div *ngIf="!notifications?.length" class="container d-flex h-100">
+            <div class="row align-self-center justify-content-center w-100">
+                <div class="d-flex flex-column bd-highlight">
+                    <div class="text-center">
+                        <span class="fa-stack fa-5x">
+                            <i class="fa fa-bell-o fa-stack-1x"></i>
+                            <i class="fa fa-ban fa-stack-2x text-info"></i>
+                        </span>
+                    </div>
+                    <div class="text-center mt-4">
+                        <h3>{{'Common.Messages.NotFoundAnyRecord' | translate:{'value': 'Notifications.Name' | translate} }}</h3>
+                    </div>
+                  </div>
+            </div>
+        </div>
+
+        <div class="list-group list-group-flush w-100 p-0" >
+            <ng-container *ngFor="let notification of notifications">
+                <ng-container [ngSwitch]="notification.type">
+                    <ng-container *ngSwitchCase="NotificationTypeEnum.NewApplicantApply">
+                        <app-new-applicant-apply  [Notification]="notification"></app-new-applicant-apply>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="NotificationTypeEnum.ApplicantChangeStatus">
+                        <app-applicant-change-status  [Notification]="notification"></app-applicant-change-status>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="NotificationTypeEnum.InviteToWorkWithCompany">
+                        <app-invite-to-work-with-company  [Notification]="notification"></app-invite-to-work-with-company>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="NotificationTypeEnum.NewServiceRequested">
+                      <app-service-has-been-requested  [Notification]="notification"></app-service-has-been-requested>
+                  </ng-container>
+                  <ng-container *ngSwitchCase="NotificationTypeEnum.RespondToServiceRequest">
+                    <app-respond-to-service-request  [Notification]="notification"></app-respond-to-service-request>
+                </ng-container>
+                    <ng-container *ngSwitchDefault>
+                        <app-default-notification  [Notification]="notification"></app-default-notification>
+                    </ng-container>
+                    <hr class="break">
+                    {{makeNotificationAsRead(notification)}}
+                </ng-container>
+            </ng-container>
+
+        </div>
+
+        <ng-container *ngIf="query.totalItems >= PAGE_SIZE">
+            <ngb-pagination class="d-flex justify-content-center" [boundaryLinks]="true" [pageSize]="query.pageSize" [collectionSize]="query.totalItems"
+                        [(page)]="query.pageNumber"  [maxSize]="5" [rotate]="true" (pageChange)="onPageChange($event);">
+                <ng-template ngbPaginationFirst>&laquo;</ng-template>
+                <ng-template ngbPaginationPrevious>&lsaquo;</ng-template>
+                <ng-template ngbPaginationLast>&raquo;</ng-template>
+                <ng-template ngbPaginationNext>&rsaquo;</ng-template>
+            </ngb-pagination>
+        </ng-container>
+
+    </div>
+</article>
+
+
+
+
+
+
+<!--
+
+<div class="row justify-content-center">
+    <div class="col-sm-6">
+        <div class="notice notice-primary alert fade show" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+
+            <strong>Something to note:</strong>
+            <br>
+            Some message here!
+        </div>
+
+        <div class="notice notice-secondary alert fade show" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+
+            <strong>Something to note:</strong>
+            <br>
+            Some message here!
+        </div>
+
+        <div class="notice notice-success alert fade show" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+
+            <strong>You've done it!</strong>
+            <br>
+            Some message here!
+        </div>
+
+        <div class="notice notice-info alert fade show" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+
+            <strong>Here's a little information:</strong>
+            <br>
+            Some message here!
+        </div>
+
+        <div class="notice notice-warning alert fade show" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+
+            <strong>Something Went Wrong!</strong>
+            <br>
+            Some message here!
+        </div>
+
+        <div class="notice notice-danger alert fade show" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+
+            <strong>Something went horribly wrong!</strong>
+            <br>
+             Some message here!
+        </div>
+    </div>
+</div> -->

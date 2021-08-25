@@ -1,0 +1,21 @@
+<!-- ======= Register Section ======= -->
+<section id="login">
+    <div class="container h-100">
+        <div class="row h-100">
+            <div class="col-sm-10 col-md-8 col-lg-6 mx-auto d-table h-100">
+                <div class="d-table-cell align-middle">
+                    <div class="card">
+                        <ng-container *ngIf="!showCreateAccountForm" >
+                            <app-select-account-type @EnterLeave [(selectedAccountType)]="registerAccountFill.accountType" (gotoNextStep)="toggleCreateAccount($event)"></app-select-account-type>
+                        </ng-container>
+                        <ng-container *ngIf="showCreateAccountForm">
+                            <app-create-new-account @EnterLeave [(registerAccount)]="registerAccountFill" (backToPreviousStep)="toggleCreateAccount($event)" ></app-create-new-account>
+                        </ng-container>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section><!-- End Register Section -->
+

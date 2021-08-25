@@ -1,0 +1,37 @@
+<div class="col-md-12 pl-4">
+    <div class="form-group row my-0">
+        <label  class="col-sm-3 col-form-label profile-info-title">{{'users.Profile.Name' | translate }}</label>
+        <div class="col-sm-9">
+            <p class="form-control-plaintext profile-info-details">{{userProfile?.fullName}}</p>
+        </div>
+    </div>
+    <div class="form-group row my-0">
+        <label class="col-form-label col-sm-3 profile-info-title">{{'users.Students.City' | translate }}</label>
+        <div class="col-sm-3">
+            <p class="form-control-plaintext profile-info-details"><i class="fa fa-map-marker"></i>&nbsp;&nbsp;{{userProfile?.cityName}}</p>
+        </div>
+        <label class="col-form-label col-sm-3 profile-info-title">{{'users.Students.Gender' | translate }}</label>
+        <div class="col-sm-3">
+            <p class="form-control-plaintext profile-info-details"><i [ngClass]="getGenderStyle()"></i>&nbsp;&nbsp;{{userProfile?.genderName}}</p>
+        </div>
+    </div>
+    <div class="form-group row my-0">
+        <label class="col-form-label col-sm-3 profile-info-title">{{'users.Students.Age' | translate }}</label>
+        <div class="col-sm-3">
+            <p class="form-control-plaintext profile-info-details">{{userProfile?.age}}</p>
+        </div>
+    </div>
+    <div *ngIf="showAboutField()" class="form-group row my-0">
+        <label  class="col-sm-12 col-form-label profile-info-title">{{'users.Students.About' | translate }}</label>
+        <div class="col-sm-12">
+            <ng-container *ngIf="getAboutValue; else nothingTemplate">
+                <p class="form-control-plaintext profile-info-details">{{getAboutValue}}</p>
+            </ng-container>
+            <ng-template #nothingTemplate>
+                <p class="form-control-plaintext text-break text-secondary pt-0">{{'Common.Data.NoData' | translate }}</p>
+            </ng-template>
+        </div>
+    </div>
+</div>
+
+

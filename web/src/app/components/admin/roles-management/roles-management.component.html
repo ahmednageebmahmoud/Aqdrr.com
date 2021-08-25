@@ -1,0 +1,45 @@
+
+<div class="btn-toolbar justify-content-between m-2" role="toolbar" aria-label="Toolbar with button groups">
+
+    <form class="form-inline">
+        <div class="input-group">
+                <input type="text" class="form-control" maxlength="30" placeholder="Put your search here">
+                <div class="input-group-append" id="button-addon4">
+                    <button id="LnkBtnQuickSearch" class="btn btn-default" type="button"><span class="fa fa-search"></span></button>
+                    <button id="LnkBtnCancelSearch" class="btn btn-danger" type="button"><span class="fa fa-remove"></span></button>
+                </div>
+            </div>
+     </form>
+      <div class="btn-group" role="group" aria-label="First group">
+          <button id="btnTolbar_AddNewRole" type="button" class="btn btn-default" (click)="addNewRole()">
+              <span class="fa fa-plus text-primary" title="Add" ></span>
+          </button>
+
+          <button type="button" class="btn btn-default" (click)="getRolesWithPermissions()">
+              <span class="fa fa-refresh text-success" title="refresh"></span>
+          </button>
+      </div>
+</div>
+
+<div class="table-responsive">
+<table class="table table-sm table-bordered table-hover">
+  <thead class="table-info">
+    <tr>
+      <th class="align-middle text-center" scope="col" style="width: 10%">#</th>
+      <th class="align-middle text-center" style="width: 25%">إسم الصلاحية</th>
+      <th class="align-middle text-center" style="width: 10%">المُستخدمون</th>
+      <th class="align-middle text-center" style="width: 40%">الأذونات</th>
+      <th class="align-middle text-center" style="width: 15%"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let role of roles">
+      <td class="align-middle text-center" scope="row">{{role.id}}</td>
+      <td class="align-middle"><strong class="text-info" (click)="showUsersListInSelectedRole(role)">{{role.name}}</strong><br>{{role.description}}</td>
+      <td class="align-middle text-center" scope="row">{{role.usersCount}}</td>
+      <td><span class="badge-md bg-secondary" *ngFor="let per of role.permissions" title="{{per.description}}">{{per.name}}</span></td>
+      <td><button class="btn btn-info btn-sm" (click)="editPermissionsModal(role);" >تعديل الأذونات</button></td>
+    </tr>
+  </tbody>
+</table>
+</div>

@@ -1,0 +1,19 @@
+/* You can add global styles to this file, and also import other style files */
+@import "../node_modules/bootstrap-v4-rtl/dist/css/bootstrap-rtl.min.css";
+@import "../node_modules/font-awesome/css/font-awesome.min.css";
+@import "../node_modules/alertifyjs/build/css/alertify.min.css";
+@import "../node_modules/alertifyjs/build/css/themes/bootstrap.min.css";
+@import "../node_modules/@ng-select/ng-select/themes/default.theme.css";
+@import url("assets/css/theme.css");
+@import url("assets/css/style.css");
+@import url("assets/css/pricing-table.css");
+@import url("assets/css/member-profile.css");
+@import url("assets/css/job-detials.css");
+@import url("assets/css/social-media-buttons.css");
+@import url("assets/css/animate.min.css");
+@import url("assets/css/style-new.css");
+
+
+/* @font-face {font-family:"dgJory";src: url("./assets/fonts/dg_jory_reg.ttf");}
+@font-face {font-family:"JF Flat";src: url("./assets/Fonts/JF-Flat-Regular.ttf");} */
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@500&display=swap');

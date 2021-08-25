@@ -1,0 +1,317 @@
+<app-breadcrumbs title="{{studentAccount.firstName || studentAccount.enFullName }}" currentPageTitle="{{studentAccount.firstName || studentAccount.enFullName }}"></app-breadcrumbs>
+
+<article id="profile" class="content">
+    <div class="container">
+        <!-- start Normal Edt BootStrap Form -->
+
+        <form id ="formEdtExtendedStudentAccount" [formGroup]="edtStudentAccountForm" (ngSubmit)="editStudentAccount()">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="profile-horizontal-Line text-left px-2 mb-5">
+                        <span class="section-header-behind-line profile-head-line px-2">{{'users.Profile.GeneralInfo' | translate }}</span>
+                    </h4>
+
+                    <div class="form-row">
+                        <div class="form-group col-lg-6">
+                            <label class="font-weight-bold" >{{'users.Students.FirstName' | translate }}<strong class="text-danger">*</strong></label>
+                            <input class="form-control"  maxlength="70" formControlName="arFirstName" placeholder= "{{'users.Students.FirstName' | translate }}" [ngClass]="{'is-invalid' : updateValidator.arFirstName.errors && updateValidator.arFirstName.touched}"  >
+                            <div *ngIf="updateValidator.arFirstName.touched && updateValidator.arFirstName.errors" class="invalid-feedback">
+                                <div *ngIf="updateValidator.arFirstName.errors.required">{{'Common.Validation.Required' | translate }}</div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label class="font-weight-bold" >{{'users.Students.LastName' | translate }}<strong class="text-danger">*</strong></label>
+                            <input class="form-control"  maxlength="70" formControlName="arLastName" placeholder= "{{'users.Students.LastName' | translate }}" [ngClass]="{'is-invalid' : updateValidator.arLastName.errors && updateValidator.arLastName.touched}"  >
+                            <div *ngIf="updateValidator.arLastName.touched && updateValidator.arLastName.errors" class="invalid-feedback">
+                                <div *ngIf="updateValidator.arLastName.errors.required">{{'Common.Validation.Required' | translate }}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">{{'users.Students.EnFullName' | translate }}<strong class="text-danger">*</strong></span>
+                            </div>
+                            <input class="form-control"  maxlength="100" formControlName="enFullName" placeholder= "{{'users.Students.EnFullName' | translate }}" [ngClass]="{'is-invalid' : updateValidator.enFullName.errors && updateValidator.enFullName.touched}"  >
+                            <div *ngIf="updateValidator.enFullName.touched && updateValidator.enFullName.errors" class="invalid-feedback">
+                                <div *ngIf="updateValidator.enFullName.errors.required">{{'Common.Validation.Required' | translate }}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-lg-6">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fa fa-building"></i>&nbsp;{{'users.Students.City' | translate }}<strong class="text-danger">*</strong></span>
+                                </div>
+                                <select formControlName="cityId" class="form-control" [ngClass]="{'is-invalid' : updateValidator.cityId.errors && updateValidator.cityId.touched }">
+                                    <option value="0" disabled>{{'Common.Form.ChooseFromMenu' | translate }}</option>
+                                    <option *ngFor="let city of citiesOptions" value="{{city.id}}">{{city.name}}</option>
+                                </select>
+                                <div *ngIf="updateValidator.cityId.touched && updateValidator.cityId.errors" class="invalid-feedback">
+                                    <div *ngIf="updateValidator.cityId.errors.required">{{'Common.Validation.Required' | translate }}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <div class="input-group">
+                                <div class="input-group-prepend ">
+                                    <span class="input-group-text px-1">{{'users.Students.Gender' | translate }}<strong class="text-danger">*</strong></span>
+                                </div>
+                                <label class="form-control px-1 text-center">
+                                  <input id="male" type="radio" name="gender" [value]="1" formControlName="gender">
+                                  <i class="fa fa-lg fa-male text-sky px-1"></i>{{'Signup.IAmMan' | translate }}
+                                </label>
+                                <label class="form-control px-1 text-center">
+                                    <input id="female" type="radio" name="gender" [value]="2" formControlName="gender">
+                                    <i class="fa fa-lg fa-female text-pink px-1"></i>{{'Signup.IAmWoman' | translate }}
+                                </label>
+                                <div *ngIf="updateValidator.gender.touched && updateValidator.gender.errors" class="invalid-feedback">
+                                    <div *ngIf="updateValidator.gender.errors.required">{{'Common.Validation.Required' | translate }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-lg-6">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                   <span class="input-group-text">{{'users.Students.BirthDay' | translate }}</span>
+                                </div>
+                                <input ngbDatepicker #birthDayDatepicker="ngbDatepicker" [maxDate]="maxDate" [minDate]="{year: 1950, month: 1, day: 1}" [firstDayOfWeek]="0" class="form-control"  formControlName="birthDay" readonly (click)="birthDayDatepicker?.toggle()">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary calendar" (click)="birthDayDatepicker?.toggle()" type="button"><i class="fa fa-calendar"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <div class="input-group">
+                                <div class="input-group-prepend ">
+                                    <span class="input-group-text px-1">{{'users.Students.SocialStatus' | translate }}</span>
+                                </div>
+                                <label class="form-control px-1 text-center">
+                                    <input id="single" type="radio" name="socialStatus" [value]="1" formControlName="socialStatus">
+                                    {{'users.Students.Single' | translate }}
+                                </label>
+                                <label class="form-control px-1 text-center">
+                                    <input id="married" type="radio" name="socialStatus" [value]="2" formControlName="socialStatus">
+                                    {{'users.Students.Married' | translate }}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="font-weight-bold" >{{'users.Students.About' | translate }}</label>
+                        <textarea class="form-control" rows="3"  maxlength="500" formControlName="about" placeholder= "{{'Common.Form.MaxThousand' | translate:{'value': 'users.Students.About' | translate} }}"></textarea>
+                    </div>
+
+                    <h4 class="profile-horizontal-Line text-left px-2 mb-4">
+                        <span class="section-header-behind-line profile-head-line px-2">{{'users.Students.JobInterests' | translate }}</span>
+                    </h4>
+
+                    <div class="form-group">
+                        <label class="font-weight-bold" >{{'users.Students.DayAvailability' | translate }}<strong class="text-danger">*</strong></label>
+                        <div class="input-group">
+                            <label class="form-control px-1 text-center">
+                                <input id="single" type="radio" name="dayAvailability" [value]="1" formControlName="dayAvailability">
+                                {{'users.Students.Morning' | translate }}
+                            </label>
+                            <label class="form-control px-1 text-center">
+                                <input id="married" type="radio" name="dayAvailability" [value]="2" formControlName="dayAvailability">
+                                {{'users.Students.Evening' | translate }}
+                            </label>
+                            <label class="form-control px-1 text-center">
+                                <input id="married" type="radio" name="dayAvailability" [value]="3" formControlName="dayAvailability">
+                                {{'users.Students.AllDay' | translate }}
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="font-weight-bold" >{{'users.Students.JobInterests' | translate }}</label>
+                        <ng-select [loading]="isLoadingOptions" bindValue="id" bindLabel="name" [multiple]="true" [items]="jobCategoriesOptions"
+                                formControlName="jobCategories" [clearable]="false" [selectableGroup]="true" [closeOnSelect]="false"
+                                placeholder="{{'Common.Form.SelectFromMenu' | translate:{'value': 'users.Students.JobInterests' | translate} }}" class="custom">
+                            <ng-template ng-loadingspinner-tmp><div class="lds-ellipsis mx-2"><div></div><div></div><div></div><div></div></div></ng-template>
+                            <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                                <input id="item-{{index}}" type="checkbox" [checked]="item$.selected"/>&nbsp;{{item.name}}
+                            </ng-template>
+                        </ng-select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="font-weight-bold" >{{'users.Students.Languages' | translate }}</label>
+                        <ng-select [loading]="isLoadingOptions" bindValue="id" bindLabel="name" [multiple]="true" [items]="languagesOptions"
+                                formControlName="languages" [clearable]="false" [selectableGroup]="true" [closeOnSelect]="false"
+                                placeholder="{{'Common.Form.SelectFromMenu' | translate:{'value': 'users.Students.Languages' | translate} }}" class="custom">
+                            <ng-template ng-loadingspinner-tmp><div class="lds-ellipsis mx-2"><div></div><div></div><div></div><div></div></div></ng-template>
+                            <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                                <input id="item-{{index}}" type="checkbox" [checked]="item$.selected"/>&nbsp;{{item.name}}
+                            </ng-template>
+                        </ng-select>
+                    </div>
+
+                    <h4 class="profile-horizontal-Line text-left px-2 mb-4">
+                        <span class="section-header-behind-line profile-head-line px-2">{{'users.Students.Educations' | translate }}</span>
+                    </h4>
+                    
+                    <div class="form-row">
+                        <div class="form-group col-lg-6">
+                            <label class="font-weight-bold" >{{'users.Students.University' | translate }}</label>
+                            <select formControlName="universityId" class="form-control" >
+                                <option [value]="'' || 0" disabled>{{'Common.Form.SelectFromMenu' | translate:{'value': 'users.Students.University' | translate} }}</option>
+                                <option *ngFor="let university of universitiesOptions" value="{{university.id}}">{{university.name}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label class="font-weight-bold" >{{'users.Students.Certificate' | translate }}</label>
+                            <select formControlName="certificateId" class="form-control" >
+                                <option [value]="'' || 0" disabled>{{'Common.Form.SelectFromMenu' | translate:{'value': 'users.Students.Certificate' | translate} }}</option>
+                                <option *ngFor="let certificate of certificatesOptions" value="{{certificate.id}}">{{certificate.name}}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-lg-6">
+                            <label class="font-weight-bold" >{{'users.Students.EducationDegree' | translate }}</label>
+                            <select formControlName="educationsDegreeId" class="form-control" (change)="onChangeLoadEducationLevels($event.target.value)">
+                                <option [value]="'' || 0" disabled>{{'Common.Form.SelectFromMenu' | translate:{'value': 'users.Students.EducationDegree' | translate} }}</option>
+                                <option *ngFor="let educationDegree of educationDegreesOptions" value="{{educationDegree.id}}">{{educationDegree.name}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label class="font-weight-bold" >{{'users.Students.EducationLevel' | translate }}</label>
+                            <select formControlName="educationLevelId" class="form-control" >
+                                <option [value]="'' || 0" disabled>{{'Common.Form.SelectFromMenu' | translate:{'value': 'users.Students.EducationLevel' | translate} }}</option>
+                                <option *ngFor="let educationLevel of educationLevelsOptions" value="{{educationLevel.id}}">{{educationLevel.name}}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-lg-6">
+                            <label class="font-weight-bold" >{{'users.Students.Major' | translate }}</label>
+                            <select formControlName="majorId" class="form-control" (change)="onChangeLoadSubMajors($event.target.value)">
+                                <option [value]="'' || 0" disabled>{{'Common.Form.SelectFromMenu' | translate:{'value': 'users.Students.Major' | translate} }}</option>
+                                <option *ngFor="let major of majorsOptions" value="{{major.id}}">{{major.name}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label class="font-weight-bold" >{{'users.Students.SubMajor' | translate }}</label>
+                            <select formControlName="subMajorId" class="form-control" >
+                                <option [value]="'' || 0" disabled>{{'Common.Form.SelectFromMenu' | translate:{'value': 'users.Students.SubMajor' | translate} }}</option>
+                                <option *ngFor="let subMajor of subMajorsOptions" value="{{subMajor.id}}">{{subMajor.name}}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <h4 class="profile-horizontal-Line text-left px-2 mb-4">
+                        <span class="section-header-behind-line profile-head-line px-2">{{'users.Students.Skills' | translate }}</span>
+                    </h4>
+
+                    <div class="form-group">
+                        <label class="font-weight-bold" >{{'users.Students.GeneralSkills' | translate }}</label>
+                        <ng-select [loading]="isLoadingOptions" bindValue="id" bindLabel="name" [multiple]="true" [items]="generalSkillsOptions"
+                                formControlName="generalSkills" [clearable]="false" [selectableGroup]="true" [closeOnSelect]="false"
+                                placeholder="{{'Common.Form.SelectFromMenu' | translate:{'value': 'users.Students.GeneralSkills' | translate} }}" class="custom">
+                            <ng-template ng-loadingspinner-tmp><div class="lds-ellipsis mx-2"><div></div><div></div><div></div><div></div></div></ng-template>
+                            <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                                <input id="item-{{index}}" type="checkbox" [checked]="item$.selected"/>&nbsp;{{item.name}}
+                            </ng-template>
+                        </ng-select>
+                    </div>
+                    <div class="form-group">
+                        <label class="font-weight-bold" >{{'users.Students.PersonalSkills' | translate }}</label>
+                        <ng-select [loading]="isLoadingOptions" bindValue="id" bindLabel="name" [multiple]="true" [items]="personalSkillsOptions"
+                                formControlName="personalSkills" [clearable]="false" [selectableGroup]="true" [closeOnSelect]="false"
+                                placeholder="{{'Common.Form.SelectFromMenu' | translate:{'value': 'users.Students.PersonalSkills' | translate} }}" class="custom">
+                            <ng-template ng-loadingspinner-tmp><div class="lds-ellipsis mx-2"><div></div><div></div><div></div><div></div></div></ng-template>
+                            <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                                <input id="item-{{index}}" type="checkbox" [checked]="item$.selected"/>&nbsp;{{item.name}}
+                            </ng-template>
+                        </ng-select>
+                    </div>
+                    <div class="form-group">
+                        <label class="font-weight-bold" >{{'users.Students.Hobbies' | translate }}</label>
+                        <ng-select [loading]="isLoadingOptions" bindValue="id" bindLabel="name" [multiple]="true" [items]="hobbiesOptions"
+                                formControlName="hobbies" [clearable]="false" [selectableGroup]="true" [closeOnSelect]="false"
+                                placeholder="{{'Common.Form.SelectFromMenu' | translate:{'value': 'users.Students.Hobbies' | translate} }}" class="custom">
+                            <ng-template ng-loadingspinner-tmp><div class="lds-ellipsis mx-2"><div></div><div></div><div></div><div></div></div></ng-template>
+                            <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                                <input id="item-{{index}}" type="checkbox" [checked]="item$.selected"/>&nbsp;{{item.name}}
+                            </ng-template>
+                        </ng-select>
+                    </div>
+
+                    <h4 class="profile-horizontal-Line text-left px-2 mb-4">
+                        <span class="section-header-behind-line profile-head-line px-2">{{'SocialMedias.Title' | translate }}</span>
+                    </h4>
+
+                    <div class="form-row">
+                        <div class="form-group col-lg-6">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><span class="fa fa-instagram"></span></span>
+                                </div>
+                                <input class="form-control"  formControlName="instagram" placeholder= "{{'SocialMedias.PlaceHolder' | translate:{'value': 'SocialMedias.Instagram' | translate} }}" [ngClass]="{'is-invalid' : updateValidator.instagram.errors && updateValidator.instagram.touched}"  >
+                                <div *ngIf="updateValidator.instagram.touched && updateValidator.instagram.errors" class="invalid-feedback">
+                                    <div *ngIf="updateValidator.instagram.errors.pattern">{{'SocialMedias.RegularExpression' | translate }}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><span class="fa fa-linkedin-square"></span></span>
+                                </div>
+                                <input class="form-control"  formControlName="linkedin" placeholder= "{{'SocialMedias.PlaceHolder' | translate:{'value': 'SocialMedias.Linkedin' | translate} }}" [ngClass]="{'is-invalid' : updateValidator.linkedin.errors && updateValidator.linkedin.touched}"  >
+                                <div *ngIf="updateValidator.linkedin.touched && updateValidator.linkedin.errors" class="invalid-feedback">
+                                    <div *ngIf="updateValidator.linkedin.errors.pattern">{{'SocialMedias.RegularExpression' | translate }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-lg-6">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><span class="fa fa-twitter"></span></span>
+                                </div>
+                                <input class="form-control"  formControlName="twitter" placeholder= "{{'SocialMedias.PlaceHolder' | translate:{'value': 'SocialMedias.Twitter' | translate} }}" [ngClass]="{'is-invalid' : updateValidator.twitter.errors && updateValidator.twitter.touched}"  >
+                                <div *ngIf="updateValidator.twitter.touched && updateValidator.twitter.errors" class="invalid-feedback">
+                                    <div *ngIf="updateValidator.twitter.errors.pattern">{{'SocialMedias.RegularExpression' | translate }}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><span class="fa fa-facebook-square"></span></span>
+                                </div>
+                                <input class="form-control"  formControlName="facebook" placeholder= "{{'SocialMedias.PlaceHolder' | translate:{'value': 'SocialMedias.Facebook' | translate} }}" [ngClass]="{'is-invalid' : updateValidator.facebook.errors && updateValidator.facebook.touched}"  >
+                                <div *ngIf="updateValidator.facebook.touched && updateValidator.facebook.errors" class="invalid-feedback">
+                                    <div *ngIf="updateValidator.facebook.errors.pattern">{{'SocialMedias.RegularExpression' | translate }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-footer text-right">
+                    <button class="btn btn-success"  type="submit" [disabled]="isSubmitting">
+                        <i *ngIf="isSubmitting" class='fa fa-circle-o-notch fa-spin'></i>&nbsp;{{!isSubmitting ? '' : 'Common.Data.SendingData'  | translate }}
+                        <i *ngIf="!isSubmitting" class="fa fa-save" ></i>&nbsp;{{isSubmitting ? '' : 'Common.CRUD.UpdateData' | translate}}&nbsp;
+                    </button>
+                    <!-- [disabled]="isSubmitting || !edtStudentAccountForm.valid" -->
+                </div>
+            </div>
+        </form><!-- End Normal Edt BootStrap Form -->
+    </div>
+</article>
+
+

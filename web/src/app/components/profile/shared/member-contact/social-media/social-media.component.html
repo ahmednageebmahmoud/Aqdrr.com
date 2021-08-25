@@ -1,0 +1,6 @@
+<ul *ngIf="socialMediaAccounts" class="list-unstyled">
+    <li *ngIf="socialMediaAccounts.twitter || socialMediaAccounts.twitter !== ''"><i class="fa fa-twitter-square pr-1"></i><a target="_blank" [href]="'https://twitter.com/' + socialMediaAccounts.twitter">{{socialMediaAccounts?.twitter}}</a></li>
+    <li *ngIf="socialMediaAccounts.linkedin || socialMediaAccounts.linkedin !== ''"><i class="fa fa-linkedin-square pr-1"></i><a target="_blank" [href]="'http://ca.linkedin.com/in/' + socialMediaAccounts.linkedin">{{socialMediaAccounts?.linkedin}}</a></li>
+    <li *ngIf="socialMediaAccounts.facebook || socialMediaAccounts.facebook !== ''"><i class="fa fa-facebook-square pr-1"></i><a target="_blank" [href]="'https://www.facebook.com/' + socialMediaAccounts.facebook">{{socialMediaAccounts?.facebook}}</a></li>
+    <li *ngIf="socialMediaAccounts.instagram || socialMediaAccounts.instagram !== ''" ><i class="fa fa-instagram pr-1"></i><a target="_blank" [href]="'https://www.instagram.com/' + socialMediaAccounts.instagram">{{socialMediaAccounts?.instagram}}</a></li>
+</ul>

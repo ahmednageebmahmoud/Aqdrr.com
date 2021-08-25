@@ -1,0 +1,36 @@
+<div>
+	<!-- start Bootstrap Ngb Modal (View Details Form) -->
+	<div class="modal-header">
+		<h5 class="modal-title"><span class="fa fa-eye"></span>&nbsp;{{'Tasks.ArName' | translate }}</h5>
+		<button type="button" class="close pull-right" aria-label="Close" (click)="activeModal.close()">
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+	<div class="modal-body">
+		<div class="form-group">
+			<label for="ronlyVewId" class="font-weight-bold" >{{'Tasks.Id' | translate }}</label>
+			<p class="form-control-plaintext">{{task?.id}}</p>
+		</div>
+		<div class="form-group">
+			<label for="ronlyVewArName" class="font-weight-bold" >{{'Tasks.ArName' | translate }}</label>
+			<p class="h6 mb-0">{{task?.arName}}</p>
+		</div>
+		<div class="form-group">
+			<label for="ronlyVewEnName" class="font-weight-bold" >{{'Tasks.EnName' | translate }}</label>
+			<p class="h6 mb-0">{{task?.enName}}</p>
+		</div>
+		<div class="form-group">
+			<label for="ronlyVewDescription" class="font-weight-bold" >{{'Tasks.Description' | translate }}</label>
+			<p class="h6 mb-0">{{task?.description}}</p>
+		</div>
+		<div class="form-group">
+			<label for="ronlyVewIsEnabled" class="font-weight-bold" >{{'Tasks.IsEnabled' | translate }}</label>
+			<p class="h6 mb-0">{{task?.isEnabled}}</p>
+		</div>
+		<div class="form-group">
+			<label for="ronlyVewUpdatedDate" class="font-weight-bold" >{{'Tasks.UpdatedDate' | translate }}</label>
+			<p class="h6 mb-0">{{task.updatedDate| date:'yyyy/MM/dd hh:mm'}}</p>
+		</div>
+	</div>
+	<!-- End Bootstrap Ngb Modal (View Details Form) -->
+</div>

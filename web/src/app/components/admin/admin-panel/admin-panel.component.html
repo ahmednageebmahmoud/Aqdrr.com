@@ -1,0 +1,41 @@
+<!-- ======= Breadcrumbs ======= -->
+<section id="breadcrumbs" class="breadcrumbs">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <!-- <h2><span class="mr-1 job-title-badge badge badge-info">{{'Portfolios.Work'| translate}}</span>{{portfolio?.title}}</h2>
+                <span class="sub-title"><i class="fa fa-clock-o"></i>&nbsp;{{portfolio?.createdDate | timeAgo}}</span> -->
+            </div>
+            <ol>
+                
+                <li><a [routerLink]="['/profile']">{{'Portfolios.portfolio' | translate }}</a></li>
+            </ol>
+        </div>
+    </div>
+</section><!-- End Breadcrumbs -->
+
+<article id="profile" class="content">
+    <div class="container-fluid">
+        <div class="col-md-12">
+          <ul class="nav nav-tabs" id="user-tab" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="user-management-tab" data-toggle="tab" href="#user-management" role="tab" aria-controls="user-management" aria-selected="true">إدارة المستخدمين</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="roles-management-tab" data-toggle="tab" href="#roles-management" role="tab" aria-controls="roles-management" aria-selected="false">إدارة الصلاحيات</a>
+            </li>
+          </ul>
+          <div class="tab-content  p-2" id="myTabContent">
+            <div class="tab-pane fade show active" id="user-management" role="tabpanel" aria-labelledby="user-management-tab">
+              <app-user-management></app-user-management>
+            </div>
+      
+            <div class="tab-pane fade" id="roles-management" role="tabpanel" aria-labelledby="roles-management-tab">
+              <app-roles-management></app-roles-management>
+            </div>
+          </div>
+        </div>
+    </div>
+</article>
+
+

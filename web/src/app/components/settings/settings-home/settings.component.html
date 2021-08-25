@@ -1,0 +1,164 @@
+<!-- ======= Breadcrumbs ======= -->
+<section id="breadcrumbs" class="breadcrumbs">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h2><i class="fa fa-cogs" aria-hidden="true"></i>&nbsp;{{'Menu.Dashboard' | translate }}</h2>
+            </div>
+            <ol>
+                
+                <li><a [routerLink]="['/settings']">{{'Menu.Dashboard' | translate }}</a></li>
+            </ol>
+        </div>
+    </div>
+</section><!-- End Breadcrumbs -->
+
+<article id="profile" class="content">
+    <div class="container-fluid" [ngClass]="{'disabled-spinner-container': isLoading}">
+        <app-spinner-container *ngIf="isLoading" class="spinner-container"></app-spinner-container>
+          <!-- ======= Nav Buttons Section ======= -->
+        <div class="container px-0">
+            <div class="row">
+
+                <div [class.isDisabled]="permissions.canViewUsers ? null : true" class="col-xl-3 col-lg-4 col-md-6 col-12 d-flex px-1 mb-2" >
+                    <a [routerLink]="permissions.canViewUsers ? ['/admin'] : [''] " class="glow-card glow-card-nav" >
+                    <div class="flex-fill">
+                        <div class="glow-card-icon">
+                        <div class="glow-icon">
+                            <span class="fa fa-users fa-2x animated"></span>
+                        </div>
+                        </div>
+                        <div class="glow-card-header">
+                        <h3 class="heading">{{'users.management.Management' | translate }}</h3>
+                        </div>
+                    </div>
+                    </a>
+                </div>
+
+                <div [class.isDisabled]="permissions.canViewUsers ? null : true" class="col-xl-3 col-lg-4 col-md-6 col-12 d-flex px-1 mb-2">
+                    <a [routerLink]="permissions.canViewUsers ? ['/settings' , 'JobCategory'] : ['']" class="glow-card glow-card-nav">
+                    <div class="flex-fill">
+                        <div class="glow-card-icon">
+                        <div class="glow-icon">
+                            <span class="fa-stack animated">
+                            <i class="fa fa-square-o fa-stack-2x"></i>
+                            <i class="fa fa-list-ol fa-stack-1x"></i>
+                            </span>
+                        </div>
+                        </div>
+                        <div class="glow-card-header">
+                        <h3 class="heading">{{'JobCategories.Title' | translate }}</h3>
+                        </div>
+                    </div>
+                    </a>
+                </div>
+
+                <div [class.isDisabled]="permissions.canViewUsers ? null : true" class="col-xl-3 col-lg-4 col-md-6 col-12 d-flex px-1 mb-2">
+                    <a [routerLink]="permissions.canViewUsers ? ['/settings' , 'tasks'] : ['']" class="glow-card glow-card-nav">
+                        <div class="flex-fill">
+                            <div class="glow-card-icon">
+                                <div class="glow-icon">
+                                    <i class="fa fa-handshake-o fa-2x animated"></i>
+                                </div>
+                            </div>
+                            <div class="glow-card-header">
+                                <h3 class="heading">{{'Tasks.Services' | translate }}</h3>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div [class.isDisabled]="permissions.canViewUsers ? null : true" class="col-xl-3 col-lg-4 col-md-6 col-12 d-flex px-1 mb-2">
+                    <a [routerLink]="permissions.canViewUsers ? ['/settings' , 'cities'] : ['']" class="glow-card glow-card-nav">
+                        <div class="flex-fill">
+                            <div class="glow-card-icon">
+                                <div class="glow-icon">
+                                    <i class="fa fa-map-o fa-2x animated"></i>
+                                </div>
+                            </div>
+                            <div class="glow-card-header">
+                                <h3 class="heading">{{'Cities.Title' | translate }}</h3>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-xl-3 col-lg-4 col-md-6 col-12 d-flex px-1 mb-2">
+                    <a [routerLink]="['/tickets']" class="glow-card glow-card-nav">
+                    <div class="flex-fill">
+                        <div class="glow-card-icon">
+                        <div class="glow-icon">
+                            <span class="fa fa-ticket fa-2x animated"></span>
+                        </div>
+                        </div>
+                        <div class="glow-card-header">
+                        <h3 class="heading">{{'Tickets.ticketCaption' | translate }}</h3>
+                        </div>
+                    </div>
+                    </a>
+                </div>
+
+                <div class="col-xl-3 col-lg-4 col-md-6 col-12 d-flex px-1 mb-2">
+                  <a [routerLink]="permissions.canViewUsers ? ['/settings' , 'sms'] : ['']" class="glow-card glow-card-nav">
+                  <div class="flex-fill">
+                      <div class="glow-card-icon">
+                      <div class="glow-icon">
+                          <span class="fa fa-mobile fa-2x animated"></span>
+                      </div>
+                      </div>
+                      <div class="glow-card-header">
+                      <h3 class="heading">{{'Sms.Title' | translate }}</h3>
+                      </div>
+                  </div>
+                  </a>
+                </div>
+
+                <div class="col-xl-3 col-lg-4 col-md-6 col-12 d-flex px-1 mb-2">
+                  <a [routerLink]="permissions.canManageSubscriptionPackages ? ['/subscription-packages'] : ['']" class="glow-card glow-card-nav">
+                  <div class="flex-fill">
+                      <div class="glow-card-icon">
+                      <div class="glow-icon">
+                          <span class="fa fa-cubes fa-2x animated"></span>
+                      </div>
+                      </div>
+                      <div class="glow-card-header">
+                      <h3 class="heading">{{'SubscriptionPackages.Caption' | translate }}</h3>
+                      </div>
+                  </div>
+                  </a>
+                </div>
+
+                <div class="col-xl-3 col-lg-4 col-md-6 col-12 d-flex px-1 mb-2">
+                  <a [routerLink]="permissions.canManageSubscriptionPackages ? ['/payments' , 'test'] : ['']" class="glow-card glow-card-nav">
+                  <div class="flex-fill">
+                      <div class="glow-card-icon">
+                      <div class="glow-icon">
+                          <span class="fa fa-credit-card fa-2x animated"></span>
+                      </div>
+                      </div>
+                      <div class="glow-card-header">
+                      <h3 class="heading">{{'Payments.TestPayment' | translate }}</h3>
+                      </div>
+                  </div>
+                  </a>
+                </div>
+
+                <div class="col-xl-3 col-lg-4 col-md-6 col-12 d-flex px-1 mb-2">
+                  <a [routerLink]="permissions.canManageSubscriptionPackages ? ['/payments' , 'invoices' , 'list'] : ['']" class="glow-card glow-card-nav">
+                  <div class="flex-fill">
+                      <div class="glow-card-icon">
+                      <div class="glow-icon">
+                          <span class="fa fa-money fa-2x animated"></span>
+                      </div>
+                      </div>
+                      <div class="glow-card-header">
+                      <h3 class="heading">{{'Invoices.invoiceCaption' | translate }}</h3>
+                      </div>
+                  </div>
+                  </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</article>
+

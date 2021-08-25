@@ -1,0 +1,70 @@
+  <!-- ======= popup menu show on mobile ======= -->
+  <button *ngIf="isMobileOrTab" type="button" class="mobile-nav-toggle d-lg-none" (click)="showMenu($event)"><i class="fa-bars fa"></i></button>
+  <nav *ngIf="isMobileOrTab" class="mobile-nav d-lg-none">
+    <!-- load menu temp -->
+    <ng-template [ngTemplateOutlet]="navigationItems"></ng-template>
+  </nav>
+  <div id="mobileNavOverly" #mobileNavOverly *ngIf="isMobileOrTab" class="mobile-nav-overly" style="display: none;" (click)="hideMenu()"></div>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top d-flex align-items-center">
+    <div class="container d-flex align-items-center">
+      <div class="logo mr-auto">
+        <!-- <h1 class="text-light"><a [routerLink]="['']"><span>أقدر</span></a></h1> -->
+        <a  [routerLink]="['']" routerLinkActive="router-link-active" ><img src="assets/img/Aqdrr-logo.jpg" alt="" class="img-fluid"></a>
+      </div>
+      <a *ngIf="!loggedIn() && isMobileOrTab" class="btn-get-started mr-5" [routerLink]="['/login']" routerLinkActive="router-link-active">{{'Login.Signin' | translate }}</a>
+      <nav id="navigation" #navigation class="nav-menu d-none d-lg-block" [ngClass]="{'mobile-nav d-lg-none': isMobileOrTab}">
+        <!-- load menu temp -->
+        <ng-template [ngTemplateOutlet]="navigationItems"></ng-template>
+      </nav><!-- .nav-menu -->
+    </div>
+  </header><!-- End Header -->
+
+  <!-- menu temp -->
+  <ng-template #navigationItems>
+    <ul>
+      <li *ngIf="!loggedIn()"><a href="#jobs">{{'Navbar.Members' | translate }}</a></li>
+      <li *ngIf="!loggedIn()"><a href="#team">{{'Navbar.Business' | translate }}</a></li>
+
+      <li *ngIf="loggedIn()" class="icon-badge-group">
+        <a routerLinkActive="active" [routerLink]="['/notifications']" title="{{'Notifications.List' | translate }}" (click)="hideMenu()">
+          <div class="icon-badge-container">
+              <i class="fa fa-bell-o icon-badge-icon" aria-hidden="true"></i>
+              <div class="icon-badge">{{newNotificationsCount}}</div>
+          </div>
+        </a>
+      </li>
+
+      <ng-container *ngIf="loggedIn() && permissions.canManageUsers; else actionsTemplate">
+        <li *ngIf="loggedIn() && permissions.canViewUsers"><a routerLinkActive="active" [routerLink]="['/settings']" (click)="hideMenu()">{{'Menu.Dashboard' | translate }}</a></li>
+      </ng-container>
+      <ng-template #actionsTemplate>
+        <li *ngIf="loggedIn() && permissions.canManageJobs"><a routerLinkActive="active" [routerLink]="['/jobs' , 'manage']" (click)="hideMenu()">{{'JobsOffers.ManageJobs' | translate }}</a></li>
+        <li *ngIf="loggedIn() && permissions.canManageJobs"><a routerLinkActive="active" [routerLink]="['/jobs', 'applicants']" (click)="hideMenu()">{{'Applicants.ApplicantsList' | translate }}</a></li>
+        <li *ngIf="loggedIn() && permissions.canApplyToTheJobs"><a routerLinkActive="active" [routerLink]="['/jobs']" (click)="hideMenu()">{{'JobsOffers.jobOfferCaption' | translate }}</a></li>
+        <li *ngIf="loggedIn() && permissions.canApplyToTheJobs"><a routerLinkActive="active" [routerLink]="['/jobs', 'my', 'requests']" (click)="hideMenu()">{{'Applicants.SearcherRequests' | translate }}</a></li>
+        <li *ngIf="loggedIn() && permissions.canManageOrders"><a routerLinkActive="active" [routerLink]="['/orders', 'manage']" (click)="hideMenu()">{{'OrdersServices.Manage' | translate }}</a></li>
+      </ng-template>
+
+
+      <li *ngIf="!loggedIn()" class="drop-down"><a href="javascript:void(0)" (click)="slideToggle($event)">{{'Navbar.Language' | translate }}</a>
+        <ul [@toggleHeight]="isShowLanguageOptions" style="display:block">
+          <li><a href="javascript:void(0)" (click)="changeLanguage('en')" onclick="selectPageDirection('ltr')" class="text-primary" (click)="hideMenu()"><i class="fa fa-language"></i> English</a></li>
+          <li><a href="javascript:void(0)" (click)="changeLanguage('ar')" onclick="selectPageDirection('rtl')" class="text-success" (click)="hideMenu()"><i class="fa fa-language"></i> عربي</a></li>
+        </ul>
+      </li>
+
+      <li *ngIf="loggedIn()" class="drop-down"><a href="javascript:void(0)" (click)="slideToggle($event)">{{authService.currentUser?.fullName | titlecase}}</a>
+        <ul *ngIf="loggedIn()" [@toggleHeight]="isShowUserOptions" style="display:block">
+          <li><a href="javascript:void(0)" [routerLink]="['/profile']" (click)="hideMenu()"><i class="fa fa-user"></i> {{'Navbar.Profile' | translate }}</a></li>
+          <li><a href="javascript:void(0)" [routerLink]="['/orders']" (click)="hideMenu()"><i class="fa fa-shopping-cart"></i> {{'OrdersServices.orderServiceCaption' | translate }}</a></li>
+          <li><a href="javascript:void(0)" [routerLink]="['/profile' , 'messages']" (click)="hideMenu()"><i class="fa fa-comments"></i> {{'Chatbox.Chats' | translate }}</a></li>
+          <li><a href="javascript:void(0)" [routerLink]="['']" (click)="logout()" class="text-danger" (click)="hideMenu()"><i class="fa fa-sign-out"></i> {{'Navbar.Logout' | translate }}</a></li>
+        </ul>
+      </li>
+
+      <li *ngIf="!loggedIn()" class="get-started"><a [routerLink]="['/login']" routerLinkActive="router-link-active" (click)="hideMenu()">{{'Login.Signin' | translate }}</a></li>
+    </ul>
+  </ng-template>
+  <!-- menu temp -->

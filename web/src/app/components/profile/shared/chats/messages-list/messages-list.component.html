@@ -1,0 +1,76 @@
+<app-breadcrumbs title="" currentPageTitle=""></app-breadcrumbs>
+
+<article id="profile" class="content">
+    <div class="container">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between">
+                <h5><span class="fa fa-comments"></span>&nbsp;{{'Chatbox.Chats' | translate }}</h5>
+
+                <div class="">
+                    <div class="">
+                        <div class="input-group">
+                            <input type="text" class=" form-control" placeholder="البحث">
+                            <span class="input-group-addon">
+                                <button type="button" class="btn btn-success"> <i class="fa fa-search"
+                                        aria-hidden="true"></i> </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body p-0">
+                <div class="inbox_msg">
+                    <div [hidden]="isMobile && toggleMobile" class="inbox_people pull-left col-md-4	p-0">
+
+                        <div class="inbox_chat">
+                          
+ <div class="container d-flex h-100" *ngIf="!messagesItems.length">
+                <div class="row align-self-center justify-content-center w-100">
+                    <div class="d-flex flex-column bd-highlight">
+                        <div class="text-center">
+                            <i class="fas fa-comment-slash fa-2x text-secondary"></i>
+                        </div>
+                        <div class="text-center text-secondary mt-4">
+                            <h3>{{'Chatbox.NoContactsNow'|translate}}</h3>
+                        </div>
+                      </div>
+                </div>
+            </div>
+                            <div class="chat_list" *ngFor="let conversation of messagesItems; let i=index"
+                                [ngClass]="{'active_chat': isSelectedConversation(conversation)}"
+                                (click)="toggleWindows(conversation)">
+                                <div class="chat_people">
+                                    <div class=" chat_img pull-left"> <img [src]="getContactPicture(conversation)">
+                                    </div>
+                                    <div class="chat_ib pl-2 pull-right">
+                                        <h5>
+                                            {{getContactName(conversation)}}
+                                            <span class="chat_date pull-right">{{conversation?.messageSent |
+                                                timeAgo}}</span>
+                                        </h5>
+                                        <p
+                                            [ngClass]="{'font-weight-bold text-dark': !conversation?.isRead && !isSenderIsCurrentUser(conversation?.senderId)}">
+                                            {{conversation?.content}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div [hidden]="isMobile && !toggleMobile" class="mesgs pull-right col-md-8 p-0">
+                        <div class="headind_srch">
+                            <div class="recent_heading pull-left">
+                                <h4>{{getContactName(selectedConversation)}}</h4>
+                            </div>
+                            <div *ngIf="isMobile" class="pull-right"><a class="nav-link text-danger p-0"
+                                    (click)="toggleWindows(null)"><i class="fa fa-times-circle-o"></i>&nbsp;غلق</a>
+                            </div>
+                        </div>
+                        <!-- <app-conversation-box [RecipientId]="userProfile?.id" [RecipientGender]="userProfile?.gender"></app-conversation-box> -->
+                        <app-conversation-box [RecipientId]="getRecipientId(selectedConversation)" [RecipientGender]=""
+                            [CurrentUserId]="currentUserId"></app-conversation-box>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</article>

@@ -1,0 +1,39 @@
+<section class="aqdr-section" id="aqdr-jobs">
+    <div class="aqdr-container">
+        <div class="aqdr-section-title-container" *ngIf="isShowTitleBar">
+            <div class="aqdr-section-title">
+                <img src="assets/images/title.png" alt="">
+                {{'JobsOffers.Title'|translate}}
+            </div>
+            <a [routerLink]="['/jobs/all']" class="aqdr-more-link">
+                {{'JobsOffers.More'|translate}}
+                <span class="aqdr-icon-btn">
+                    <i class="fa fa-arrow-left"></i>
+                </span>
+            </a>
+        </div>
+
+        <div class="aqdr-table">
+            <div class="aqdr-table-row aqdr-table-header">
+                <div class="aqdr-table-column job">{{'JobsOffers.TheJob'|translate}}</div>
+                <div class="aqdr-table-column location">{{'JobsOffers.Location'|translate}}</div>
+                <div class="aqdr-table-column time">{{'JobsOffers.Time'|translate}}</div>
+                <div class="aqdr-table-column period">{{'JobsOffers.Period'|translate}}</div>
+                <div class="aqdr-table-column price">{{'JobsOffers.Price'|translate}}</div>
+                <div class="aqdr-table-column tools">
+                    <a *ngIf="!authService.isLoggedIn || permissions.canAddJobs" [routerLink]="['/jobs', 'new']"
+                        class="aqdr-icon-btn">
+                        <i class="fa fa-plus"></i>
+                        <span>{{'JobsOffers.AddNewJob'|translate}}</span>
+                    </a>
+                </div>
+            </div>
+            <div *ngIf="!jobOffers?.length" class="text-center text-info">
+                <p class="mb-2">{{'Common.Messages.NotFoundAnyRecord' | translate:{'value': 'Common.Data.Record' |
+                    translate} }}</p>
+            </div>
+            <app-job-offer-row class="aqdr-table-row" *ngFor="let jobOffer of jobOffers; let i=index" [imageSize]="144"
+                [@EnterItem]="{value:'', params:{delay: 100 * i}}" [JobOffer]='jobOffer' [isNewDesign]="true"></app-job-offer-row>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,27 @@
+
+<!-- ======= Breadcrumbs ======= -->
+<section id="breadcrumbs" class="breadcrumbs">
+  <div class="container">
+      <div class="d-flex justify-content-between align-items-center">
+          <div>
+              <h2><i class="fa fa-credit-card-alt" aria-hidden="true"></i>&nbsp;{{'Invoices.Status' | translate }}</h2>
+          </div>
+          <ol>
+              
+              <li><span class="text-muted" >{{'Invoices.Status' | translate }}</span></li>
+          </ol>
+      </div>
+  </div>
+</section><!-- End Breadcrumbs -->
+
+<article id="profile" class="content">
+  <div class="container-fluid" [ngClass]="{'disabled-spinner-container': isLoadingData || isSubmitting}">
+    <app-spinner-container [textClass]="'h4'" [waitingText]="'Payments.Waiting' | translate "  *ngIf="isLoadingData" ></app-spinner-container>
+    <app-payment-success *ngIf="this.isPaidSucceeded === true"></app-payment-success>
+    <app-payment-failed *ngIf="this.isPaidSucceeded === false" [errorMessage]="message"></app-payment-failed>
+  </div>
+</article>
+
+
+
+

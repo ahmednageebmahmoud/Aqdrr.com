@@ -1,0 +1,31 @@
+<div *ngIf="isCurrentUserProfile" class="row p-1">
+    <div class="container text-right p-0">
+        <a [routerLink]="[ './portfolio/new']" class="btn btn-primary btn-sm edit-profile">
+            <i class="fa fa-plus-circle fa-lg"></i> {{'Common.CRUD.Add' | translate }}
+        </a>
+    </div>
+</div>
+<div class="row no-padding-sm">
+    <ng-container *ngIf="userPortfolios?.length > 0; else nothingTemplate">
+        <div class="col-md-6 col-lg-4 col-12" *ngFor="let portfolio of userPortfolios; let i = index;">
+            <div class="card-deck">
+                <div class="card border-info mb-3 mx-1">
+                    <img class="card-img-top p-2" [src]="getImageUrl(portfolio?.photos[0]?.publicId ,300)"
+                        alt="Card image cap">
+                    <div class="card-body p-1">
+                        <h5 class="card-title text-info">{{portfolio?.title}}</h5>
+                        <a *ngIf="isCurrentUserProfile" [routerLink]="['/profile' , 'portfolio', 'edit', portfolio?.id ]" class="btn btn-outline-success btn-sm pull-right">{{'Common.CRUD.Update' | translate }}</a>
+                        <a [routerLink]="[ '/profile', 'portfolio', portfolio?.id , portfolio?.title ]" class="btn btn-outline-secondary btn-sm pull-right">{{'Common.Data.View' | translate}}</a>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-muted">{{portfolio?.createdDate | timeAgo}}</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+    <ng-template #nothingTemplate>
+        <p class="form-control-plaintext text-break text-secondary pt-0 text-center">
+            {{'Common.Messages.NoRecordWasAdded' | translate:{'value': 'Portfolios.Work' | translate} }}</p>
+    </ng-template>
+</div>

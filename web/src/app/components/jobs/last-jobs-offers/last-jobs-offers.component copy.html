@@ -1,0 +1,40 @@
+<!-- ======= Jobs Section ======= -->
+<section id="jobs" class="jobs"> 
+    <div class="container my-3">
+        <div class="col-md-12 p-0">
+            <h4 class="horizontal-Line text-left p-2 mb-5"><span class="section-header-behind-line behind-line-gray">{{'JobsOffers.FlexibleWork' | translate }}</span></h4>
+            <a *ngIf="!authService.isLoggedIn || permissions.canAddJobs" type="button" [routerLink]="['/jobs', 'new']" class="btn btn-sm btn-info jobs-btn px-3"><i class="fa fa-plus"></i>&nbsp;&nbsp;{{'JobsOffers.AddJobsOfferTitle' | translate }}</a>
+            <div class="tab-pane">
+                <ul class="list-group p-0 ">
+                    <div class="mb-1">
+                        <div class="row mx-1 title-tab-project">
+                            <div class="col-md-3 col-sm-5 px-1"><span>الوظيفة</span></div>
+                            <div class="col-md-2 col-sm-3 d-none d-md-block px-1"><span><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;الموقع</span></div>
+                            <div class="col-md-2 col-sm-3 d-none d-md-block px-1"><span><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp;الوقت</span></div>
+                            <div class="col-md-2 col-sm-2 d-none d-md-block px-1"><span><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;الفترة</span></div>
+                            <div class="col-md-2 col-sm-2 d-none d-md-block px-1"><span>الأجر</span></div>
+                            <div class="col-md-1 col-sm-2 d-none d-md-block px-1"></div>
+                        </div>
+                    </div>
+                    <li *ngIf="!jobOffers?.length" class="list-group-item mb-1 p-1">
+                        <div class="text-center text-info" ><p class="mb-2">{{'Common.Messages.NotFoundAnyRecord' | translate:{'value': 'Common.Data.Record' | translate} }}</p></div>
+                    </li>
+                    <li *ngFor="let jobOffer of jobOffers; let i=index" [@EnterItem]="{value:'', params:{delay: 100 * i}}" class="list-group-item mb-1 p-1">
+                        <app-job-offer-row [JobOffer]='jobOffer'></app-job-offer-row>
+                    </li>
+                </ul>
+                <div class="d-flex justify-content-between">
+                    <ngb-pagination class="d-flex justify-content-center" [pageSize]="query.pageSize" [collectionSize]="query.totalItems" 
+                                [(page)]="query.pageNumber"  [ellipses]="false" [maxSize]="3" [rotate]="true" (pageChange)="onPageChange($event);">
+                                <ng-template ngbPaginationFirst>&laquo;</ng-template>
+                                <ng-template ngbPaginationPrevious>&lsaquo;</ng-template>
+                                <ng-template ngbPaginationLast>&raquo;</ng-template>
+                                <ng-template ngbPaginationNext>&rsaquo;</ng-template>
+                    </ngb-pagination>
+                    <a [routerLink]="[ '/jobs', 'all' ]" class="text-info font-weight-bold h5 align-self-center">{{'Common.Form.ChooseAll' | translate:{'value': 'JobsOffers.Offers' | translate} }}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section><!-- End Jobs Section -->    
+

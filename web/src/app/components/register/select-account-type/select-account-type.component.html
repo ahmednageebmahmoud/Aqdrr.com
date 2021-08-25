@@ -1,0 +1,45 @@
+
+
+
+    <div class="text-center mt-4">
+        <h1 class="h2">حدد نوع الحساب</h1>
+    </div>
+    <div class="card-body">
+      <div class="m-sm-4" [formGroup]="formAccountType">
+        <div class="form-group">
+            <div class="container-radio">
+                <div class="container-radio-info">
+                    <input type="radio" formControlName="accountType" id="radio1" [value]="AccountType.visitorAccount" [checked]="formAccountType.controls['accountType'].value === AccountType.visitorAccount" />
+                    <label for="radio1">
+                        <h5 class="text-info mb-0">حساب زائر</h5>
+                        <span> حساب للبحث عن موهوبين وخبراء كمُقدمي خدمة مثل كوفيرة او استشارة او رسم أو طبخ  </span>
+                    </label>
+                </div>
+                <div class="container-radio-info">
+                    <input type="radio" formControlName="accountType" id="radio2" [value]="AccountType.studentAccount" [checked]="formAccountType.controls['accountType'].value === AccountType.studentAccount"/>
+                    <label for="radio2">
+                        <h5 class="text-info mb-0">حساب باحث عن عمل</h5>
+                        <span>حساب مُخصص للباحثين عن العمل الجزئي بنظام الساعة</span>
+                    </label>
+                </div>
+                <div class="container-radio-info">
+                    <input type="radio" formControlName="accountType" id="radio3" [value]="AccountType.taskerAccount" [checked]="formAccountType.controls['accountType'].value === AccountType.taskerAccount"/>
+                    <label for="radio3">
+                        <h5 class="text-info mb-0">حساب مُقدم خدمة</h5>
+                        <span>انشاء حساب للعمل الحُر لمن لديه موهبة أو مهارة للعمل بنظام الساعة، مثل مُستشار قانوني - كوفيرة - رسام - طباخ - ناقل عفش ...الخ</span>
+                    </label>
+                </div>
+                <div class="container-radio-info">
+                    <input type="radio" formControlName="accountType" id="radio4" [value]="AccountType.businessAccount" [checked]="formAccountType.controls['accountType'].value === AccountType.businessAccount"/>
+                    <label for="radio4">
+                        <h5 class="text-info mb-0">حساب أعمال</h5>
+                        <span>للنشاطات التجارية والشركات للبحث عن مُوظفين بنظام الساعة.</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group text-right">
+            <button class="toggle-flip btn btn-info" (click)="gotoNext()" data-toggle="flip" >التالي</button>
+        </div>
+      </div>
+    </div>

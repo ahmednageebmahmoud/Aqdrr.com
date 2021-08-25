@@ -1,0 +1,34 @@
+ 
+    <section class="aqdr-section" id="aqdr-freelancers">
+      <div class="aqdr-container">
+          <div class="aqdr-section-title-container">
+              <div class="aqdr-section-title">
+                  <img src="assets/images/title.png" alt="">
+                  {{'OrdersServices.Taskers' | translate }}
+              </div>
+              <a [routerLink]="['/taskers','list']" class="aqdr-more-link">
+                {{'OrdersServices.More' | translate }}
+                  <span class="aqdr-icon-btn">
+                      <i class="fa fa-arrow-left"></i>
+                  </span>
+              </a>
+          </div>
+
+          <div class="aqdr-freelancers-wrapper">
+              <div class="aqdr-freelancers">
+                 
+                  <app-tasker-card class="aqdr-freelancer" *ngFor="let tasker of taskers"  [taskerCard]="tasker" ></app-tasker-card>
+
+              
+              </div>
+              <div class="aqdr-freelancer-arrows">
+                  <span class=" aqdr-icon-btn rounded small aqdr-freelancer-prev">
+                      <i class="fa fa-angle-right"></i>
+                  </span>
+                  <span class=" aqdr-icon-btn rounded small  aqdr-freelancer-next">
+                      <i class="fa fa-angle-left"></i>
+                  </span>
+              </div>
+          </div>
+      </div>
+  </section>

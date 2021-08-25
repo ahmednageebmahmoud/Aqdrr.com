@@ -1,0 +1,46 @@
+<div class="member">
+    <div class="row d-flex flex-row m-0">
+      <div class="p-0">
+        <div class="pic"><app-small-avatar-img [ImageName]="taskerCard?.publicId" [Gender]='taskerCard?.gender' [Size]="250" [heightWidthSameSize]='false' [ImgClass]="'img-fluid img-thumbnail'"></app-small-avatar-img></div>
+        
+      </div>
+      <div class="flex-grow-1 p-0 pl-1">
+        <a [routerLink]="(taskerCard?.id) ? [ '/profile', taskerCard?.id , taskerCard?.fullName] : ['']"  >
+          <h4>{{taskerCard?.fullName}}</h4>
+        </a>
+        <div>
+            <ngb-rating  [max]="5" [(rate)]="taskerCard.totalRating" [readonly]="true">
+                <ng-template let-fill="fill" let-index="index">
+                  <span class="star" [class.filled]="fill === 100"><i class="fa fa-star"></i></span>
+                </ng-template>
+            </ngb-rating>
+        </div>
+        <i class="fa fa-check-circle-o text-success"></i>&nbsp;{{taskerCard?.totalDoneTasks}} مهام منجزه
+        <span class="last-span">{{'users.Profile.MemberSince' | translate }} {{taskerCard?.memberSince | timeAgo}}</span>
+
+      </div>
+    </div>
+    <div class="row m-0">
+      <div class="member-info w-100">
+        <ul class="list-group list-group-flush p-0 w-100">
+          <li class="list-group-item p-0 disabled"><strong>خدماتي :</strong></li>
+          <li *ngFor="let task of taskerCard?.favoriteTasks; let i = index;" class="list-group-item d-flex justify-content-between align-items-center p-0">
+            <div><i class="fa fa-check-circle-o text-info"></i>&nbsp;{{task.task?.name}}</div>
+            <div><strong>{{task.price}}</strong><img height="15px" src="assets/img/icons/rial.svg"/><strong>/س</strong></div>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+    <div class="row m-0">
+      <div class="member-info">
+        <p>{{taskerCard?.about}}</p>
+        <!-- <div class="social">
+          <a *ngIf="taskerCard?.socialMediaAccounts?.twitter || taskerCard?.socialMediaAccounts?.twitter !== ''" target="_blank" [href]="'https://twitter.com/' + taskerCard?.socialMediaAccounts?.twitter"><i class="fa fa-twitter-square pr-1"></i></a>
+          <a *ngIf="taskerCard?.socialMediaAccounts?.linkedin || taskerCard?.socialMediaAccounts?.linkedin !== ''" target="_blank" [href]="'http://ca.linkedin.com/in/' + taskerCard?.socialMediaAccounts?.linkedin"><i class="fa fa-linkedin-square pr-1"></i></a>
+          <a *ngIf="taskerCard?.socialMediaAccounts?.facebook || taskerCard?.socialMediaAccounts?.facebook !== ''" target="_blank" [href]="'https://www.facebook.com/' + taskerCard?.socialMediaAccounts?.facebook"><i class="fa fa-facebook-square pr-1"></i></a>
+          <a *ngIf="taskerCard?.socialMediaAccounts?.instagram || taskerCard?.socialMediaAccounts?.instagram !== ''"  target="_blank" [href]="'https://www.instagram.com/' + taskerCard?.socialMediaAccounts?.instagram"><i class="fa fa-instagram pr-1"></i></a>
+        </div> -->
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,60 @@
+<p *ngIf="!users"><em><i class="fa fa-spinner"></i> {{'Common.Data.Loading' | translate}}</em></p>
+<div class="btn-toolbar justify-content-between m-2" role="toolbar" aria-label="Toolbar with filter field">
+  <div class="form-inline">
+    <div class="input-group">
+      <input type="text" class="form-control" maxlength="30" [(ngModel)]="query.filterText" (keyup.esc)="resetFilter()" (keyup.enter)="onFilterChange()" placeholder="{{'Common.Data.SearchTip' | translate}}">
+      <div class="input-group-append" id="button-addon4">
+        <button id="LnkBtn_resetFilter" class="btn btn-danger" type="button" (click)="resetFilter()" title="{{'Common.Data.Reset' | translate}}"><span class="fa fa-remove"></span></button>
+      </div>
+    </div>
+  </div>
+  <div class="btn-group" role="group" aria-label="ToolBar">
+    <button id="btnToolbarrefreshData" type="button" class="btn btn-success" (click)="resetFilter()">
+      <span class="fa fa-refresh text-success" title="{{'Common.Data.Refresh' | translate}}"></span>
+    </button>
+  </div>
+</div>
+
+<div class="table-responsive">
+  <table class="table table-sm table-bordered table-hover">
+    <thead class="table-info">
+      <tr>
+        <th *ngFor="let c of columns">
+          <div *ngIf="c.isSortable" class="align-middle text-{{c.align}}" (click)="sortBy(c.key)">
+            {{ c.title }}
+            <i *ngIf="query.sortBy === c.key"
+               class="fa "
+               [class.fa-sort-asc]="query.isSortAscending"
+               [class.fa-sort-desc]="!query.isSortAscending"></i>
+          </div>
+          <div *ngIf="!c.isSortable" class="align-middle text-{{c.align}}">
+            {{ c.title }}
+          </div>
+        </th>
+      </tr>
+    </thead>
+    <tfoot>
+			<tr class="table-info">
+				<th colspan='100%' class="text-center" >عدد النتائج  [ {{query.totalItems || '0' }} ] </th>
+			</tr>
+		</tfoot>
+    <tbody>
+      <tr *ngFor="let user of users">
+        <th class="align-middle text-center" scope="row">{{user.id}}</th>
+        <td class="align-middle"><a class="text-dark font-weight-bold" [routerLink]="['/profile/' , user.id]">{{user.userName}}</a></td>
+        <td class="align-middle"><a class="text-dark font-weight-bold" [routerLink]="['/profile/' , user.id]">{{user.arFullName}}</a></td>
+        <td><span class="badge-md bg-secondary" *ngFor="let role of user.userRoles" title="{{role.description}}">{{role.name}}</span></td>
+        <td><button class="btn btn-info btn-sm" (click)="editRolesModal(user);">تعديل الصلاحيات</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="d-flex justify-content-center">
+    <ngb-pagination class="d-flex justify-content-center" [boundaryLinks]="true" [pageSize]="query.pageSize" [collectionSize]="query.totalItems" 
+                [(page)]="query.pageNumber"  [maxSize]="5" [rotate]="true" (pageChange)="onPageChange($event);">
+        <ng-template ngbPaginationFirst>&laquo;</ng-template>
+        <ng-template ngbPaginationPrevious>&lsaquo;</ng-template>
+        <ng-template ngbPaginationLast>&raquo;</ng-template>
+        <ng-template ngbPaginationNext>&rsaquo;</ng-template>
+    </ngb-pagination>
+</div>

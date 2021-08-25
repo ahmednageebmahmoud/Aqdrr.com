@@ -1,0 +1,7 @@
+<ng-container *ngFor="let ratingDetails of ratingsAndReviews; let i=index">
+    <app-rating-row-details [RatingAndReview]='ratingDetails'></app-rating-row-details>
+</ng-container>
+
+<div class="alert alert-info text-center" *ngIf="!ratingsAndReviews.length">
+    {{'Rating.NoRatinges'|translate}}
+</div>

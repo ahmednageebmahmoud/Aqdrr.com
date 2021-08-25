@@ -1,0 +1,137 @@
+
+
+<!-- ======= Breadcrumbs ======= -->
+<section id="breadcrumbs" class="breadcrumbs">
+  <div class="container">
+      <div class="d-flex justify-content-between align-items-center">
+          <div>
+              <h2>{{subscriptionPackage?.id}} - {{subscriptionPackage?.arTitle}}</h2>
+          </div>
+          <ol>
+              
+              <li><a [routerLink]="['/settings']">{{'Menu.Dashboard' | translate }}</a></li>
+              <li><a [routerLink]="['/subscription-packages']">{{'SubscriptionPackages.Caption' | translate }}</a></li>
+          </ol>
+      </div>
+  </div>
+</section><!-- End Breadcrumbs -->
+
+<article class="content">
+  <div class="container">
+    <div [ngClass]="{'disabled-spinner-container': isLoadingData}">
+      <app-spinner-container *ngIf="isLoadingData" class="spinner-container"></app-spinner-container>
+      <!-- start Normal Viw BootStrap CardForm Form -->
+      <div id ="formViwSubscriptionPackage" >
+        <div class="card">
+          <div class="card-header">
+            <h5><i class="fa fa-eye"></i>&nbsp;{{'SubscriptionPackages.ViwSubscriptionPackageTitle' | translate }}</h5>
+          </div>
+          <div class="card-body">
+            <div class="form-group row">
+              <label for="ronlyVewId" class="col-form-label col-sm-2 font-weight-bold">{{'SubscriptionPackages.Id' | translate }}</label>
+              <div class="col-sm-10">
+                <p class="form-control-plaintext">{{subscriptionPackage?.id}}</p>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="ronlyVewCategory" class="col-form-label col-sm-2 font-weight-bold">{{'SubscriptionPackages.Category' | translate }}</label>
+              <div class="col-sm-10">
+                <p class="form-control-plaintext">{{subscriptionPackage?.categoryDescription}}</p>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="ronlyVewArTitle" class="col-form-label col-sm-2 font-weight-bold">{{'SubscriptionPackages.ArTitle' | translate }}</label>
+              <div class="col-sm-10">
+                <p class="form-control-plaintext">{{subscriptionPackage?.arTitle}}</p>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="ronlyVewEnTitle" class="col-form-label col-sm-2 font-weight-bold">{{'SubscriptionPackages.EnTitle' | translate }}</label>
+              <div class="col-sm-10">
+                <p class="form-control-plaintext">{{subscriptionPackage?.enTitle}}</p>
+              </div>
+            </div>
+            <div class="form-group row" *ngIf="subscriptionPackage?.description">
+              <label for="ronlyVewDescription" class="col-form-label col-sm-2 font-weight-bold">{{'SubscriptionPackages.Description' | translate }}</label>
+              <div class="col-sm-10">
+                <p class="form-control-plaintext">{{subscriptionPackage?.description}}</p>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="chkVewIsFree" class="col-form-label col-sm-2 font-weight-bold">{{'SubscriptionPackages.Fee' | translate }}</label>
+              <div class="col-sm-10">
+                <p class="form-control  mb-0">
+                  <i class="fa fa-lg" [ngClass]="{'fa-check-circle text-success': subscriptionPackage?.isFree == true, 'fa-ban text-danger': subscriptionPackage?.isFree == false}"></i>
+                    &nbsp;{{(subscriptionPackage?.isFree ? 'SubscriptionPackages.IsFree' : 'SubscriptionPackages.PaidSubscription') | translate}}</p>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="ronlyVewOldPrice" class="col-form-label col-sm-2 font-weight-bold">{{'SubscriptionPackages.OldPrice' | translate }}</label>
+              <div class="col-sm-10">
+                <p class="form-control-plaintext">{{subscriptionPackage?.oldPrice | number:'1.1-2'}}</p>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="ronlyVewPrice" class="col-form-label col-sm-2 font-weight-bold">{{'SubscriptionPackages.Price' | translate }}</label>
+              <div class="col-sm-10">
+                <p class="form-control-plaintext">{{subscriptionPackage?.price | number:'1.1-2'}}</p>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="ronlyVewPriceSaudiRiyal" class="col-form-label col-sm-2 font-weight-bold">{{'SubscriptionPackages.PriceSaudiRiyal' | translate }}</label>
+              <div class="col-sm-10">
+                <p class="form-control-plaintext">{{subscriptionPackage?.priceSaudiRiyal | number:'1.1-2'}}</p>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="ronlyVewTotalDays" class="col-form-label col-sm-2 font-weight-bold">{{'SubscriptionPackages.TotalDays' | translate }}</label>
+              <div class="col-sm-10">
+                <p class="form-control-plaintext">{{subscriptionPackage?.totalDays}}</p>
+              </div>
+            </div>
+            <div class="form-group row" *ngIf="!(subscriptionPackage?.category === 1)">
+              <label for="ronlyVewEmploymentBags" class="col-form-label col-sm-2 font-weight-bold">{{'SubscriptionPackages.EmploymentBags' | translate }}</label>
+              <div class="col-sm-10">
+                <p class="form-control-plaintext">{{subscriptionPackage?.employmentBags}}</p>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="ronlyVewColor" class="col-form-label col-sm-2 font-weight-bold">{{'SubscriptionPackages.Color' | translate }}</label>
+              <div class="col-sm-10">
+                <p class="form-control-plaintext">{{subscriptionPackage?.colorDescription}}</p>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="chkVewIsEnabled" class="col-form-label col-sm-2  font-weight-bold">{{'SubscriptionPackages.IsEnabled' | translate }}</label>
+              <div class="col-sm-10">
+                <p class="form-control mb-0">
+                  <i class="fa fa-lg" [ngClass]="{'fa-check-circle text-success': subscriptionPackage?.isEnabled == true, 'fa-ban text-danger': subscriptionPackage?.isEnabled == false}"></i>
+                    &nbsp;{{(subscriptionPackage?.isEnabled ? 'Common.CRUD.Enabled' : 'Common.CRUD.Disabled') | translate}}</p>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="ronlyVewUpdatedDate" class="col-form-label col-sm-2 font-weight-bold">{{'SubscriptionPackages.UpdatedDate' | translate }}</label>
+              <div class="col-sm-10">
+                <p class="form-control-plaintext">{{subscriptionPackage?.updatedDate| date:'yyyy/MM/dd hh:mm'}}</p>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="ronlyVewCreatedDate" class="col-form-label col-sm-2 font-weight-bold">{{'SubscriptionPackages.CreatedDate' | translate }}</label>
+              <div class="col-sm-10">
+                <p class="form-control-plaintext">{{subscriptionPackage?.createdDate| date:'yyyy/MM/dd hh:mm'}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End Normal Viw BootStrap CardForm Form -->
+    </div>
+
+  </div>
+</article>
+
+
+
+
+
+

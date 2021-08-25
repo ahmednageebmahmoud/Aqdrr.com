@@ -1,0 +1,68 @@
+<!-- start Normal Add Form Bootstrap NGX Modal Dialog -->
+<div class="modal-header bg-info text-white d-block">
+    <div class="d-flex">
+        <h5 class="modal-title">{{'OrdersServices.AddOrdersServiceTitle' | translate }} - ({{userTask?.task?.name}})</h5>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="activeModal.close()">
+            <span aria-hidden="true">&times;</span>
+        </button>   
+    </div>
+    <h6 class="modal-title"><i class="fa fa-map-marker"></i> {{'OrdersServices.CityId' | translate }} ( {{cityName}} )</h6>
+</div>
+<div class="modal-body" [formGroup]="orderServiceForm">
+    <div *ngIf="userTask?.description || userTask?.description !== ''" class="form-group">
+        <div class="alert alert-warning alert-dismissible fade show py-2" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <h6 class="alert-heading">{{'Tasks.Description' | translate }}</h6>
+            <p class="form-control-plaintext p-0">{{userTask?.description}}</p>
+        </div>
+	</div>
+    <div class="form-group">
+		<label for="txtAddAddress" class="font-weight-bold" >{{'OrdersServices.Address' | translate }}<strong class="text-danger">*</strong></label>
+		<input id="txtAddAddress" name="txtAddAddress"  class= "form-control default"  formControlName="address" placeholder= "{{'OrdersServices.Address' | translate }}" [ngClass]="{'is-invalid' : orderValidator.address.errors && orderValidator.address.touched}"  >
+		<div *ngIf="orderValidator.address.touched && orderValidator.address.errors" class="invalid-feedback">
+			<div *ngIf="orderValidator.address.errors.required">{{'Common.Validation.Required' | translate }}</div>
+        </div>
+        <small id="addressHelp" class="form-text text-muted">{{'OrdersServices.AddressDescription' | translate }}</small>
+	</div>
+	<div class="form-group">
+		<label for="txtAddDescription" class="font-weight-bold" >{{'OrdersServices.Description' | translate }}</label>
+		<textarea id="txtAddDescription" name="txtAddDescription" class= "form-control default" rows="3"  maxlength="300" formControlName="description" placeholder="{{'Common.Form.MaxLength' | translate:{'value': 'OrdersServices.Description' | translate , 'max':'300'} }}" [ngClass]="{'is-invalid' : orderValidator.description.errors && orderValidator.description.touched}"  ></textarea>
+		<div *ngIf="orderValidator.description.touched && orderValidator.description.errors" class="invalid-feedback">
+			<div *ngIf="orderValidator.description.errors.minlength || orderValidator.description.errors.maxlength">{{'Common.Validation.Maxlength' | translate:{'value':'300'} }}</div>
+		</div>
+    </div>
+    <div class="form-group">
+		<label for="rdbAddTiming" class="font-weight-bold" >{{'OrdersServices.Timing' | translate }}<strong class="text-danger">*</strong></label>
+		<div *ngFor="let taskTime of taskTimeOptions"  class="form-check">
+			<input id="rdbAddTiming{{taskTime.id}}" class="form-check-input" type="radio" name="timing" formControlName="timing" value="{{taskTime.id}}" [ngClass]="{'is-invalid' : orderValidator.timing.errors && orderValidator.timing.touched}">
+			<label class="form-check-label pl-1" for="rdbAddTiming{{taskTime.id}}">{{taskTime.name}}</label>
+		</div>
+		<div *ngIf="orderValidator.timing.touched && orderValidator.timing.errors" class="invalid-feedback">
+			<div *ngIf="orderValidator.timing.errors.required">{{'Common.Validation.Required' | translate }}</div>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="dtpkrAddStartDate" class="font-weight-bold" >{{'OrdersServices.SelectDate' | translate }}<strong class="text-danger">*</strong></label>
+		<div class="input-group">
+			<input ngbDatepicker #dtpkrAddStartDate="ngbDatepicker" [maxDate]="maxDate" [minDate]="minDate" [firstDayOfWeek]="0" class="form-control"  formControlName="startDate" readonly (click)="dtpkrAddStartDate?.toggle()" [ngClass]="{'is-invalid' : orderValidator.startDate.errors && orderValidator.startDate.touched}" >
+			<div class="input-group-append">
+				<button class="btn btn-outline-secondary calendar" (click)="dtpkrAddStartDate?.toggle()" type="button"><i class="fa fa-calendar"></i></button>
+			</div>
+        </div>
+        <small id="startDateHelp" class="form-text text-muted">{{'OrdersServices.DateRange' | translate }}</small>
+		<div *ngIf="orderValidator.startDate.touched && orderValidator.startDate.errors" class="invalid-feedback">
+			<div *ngIf="orderValidator.startDate.errors.required">{{'Common.Validation.Required' | translate }}</div>
+		</div>
+	</div>
+
+</div>
+<div class="modal-footer  text-right">
+	<button id="btnAddOrdersService" class="btn btn-info" [disabled]="isSubmitting" type="button" (click)="addNewOrderService()">
+        <i *ngIf="isSubmitting" class='fa fa-circle-o-notch fa-spin'></i>&nbsp;{{!isSubmitting ? '' : 'Common.Data.SendingData'  | translate }}
+        <span *ngIf="!isSubmitting" >{{'Tasks.SelectService' | translate }}&nbsp;{{userTask.price| number:'1.1-2'}}&nbsp;{{'Common.Form.SaudiRiyal' | translate }}</span>
+	</button>
+</div>
+<!-- End Normal Add Form Bootstrap NGX Modal Dialog -->
+

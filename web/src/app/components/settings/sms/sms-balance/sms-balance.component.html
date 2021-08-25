@@ -1,0 +1,23 @@
+<div class="alert alert-info" role="alert">
+  <h5 class="alert-heading">الرصيد المتاح بمنصة الرسائل</h5>
+  <strong>{{balance?.balance}} رسالة</strong>
+  <hr>
+  <form class="form-inline" name="form" (ngSubmit)="f.form.valid && sendTestSMS()" #f="ngForm" >
+    <div class="input-group mb-3">
+      <input [(ngModel)]="phoneNumber" name="phoneNumber" #mobile="ngModel" autocomplete="mobile"  class= "form-control"  required maxlength="10"
+             placeholder= "{{'Common.Validation.SaudiPhoneNumber' | translate }}" [ngClass]="{'is-invalid' : mobile.errors && mobile.touched}" [disabled]="isSubmitting" >
+      <div class="input-group-prepend">
+        <button [disabled]="!f.form.valid" type="submit" class="btn btn-info" >
+          <i *ngIf="isSubmitting" class='fa fa-circle-o-notch fa-spin'></i>&nbsp;{{!isSubmitting ? '' : 'Common.Data.SendingData'  | translate}}
+                   &nbsp;{{isSubmitting ? '' : 'Sms.SendTest' | translate}}
+        </button>
+      </div>
+      <div *ngIf="mobile.touched && mobile.errors" class="invalid-feedback">
+        <div *ngIf="mobile.errors.required">{{'Common.Validation.Required' | translate }}</div>
+        <!-- <div *ngIf="mobile.errors.pattern">{{'Common.Validation.ValidPhoneNumber' | translate }}</div> -->
+      </div>
+    </div>
+  </form>
+
+
+</div>

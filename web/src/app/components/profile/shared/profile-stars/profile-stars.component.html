@@ -1,0 +1,7 @@
+<div class="profile-stars">
+    <ngb-rating  [max]="5" [(rate)]="rating" [readonly]="true">
+        <ng-template let-fill="fill" let-index="index">
+          <span class="star" [class.filled]="fill === 100"><i class="fa fa-star"></i></span>
+        </ng-template>
+    </ngb-rating>
+</div>

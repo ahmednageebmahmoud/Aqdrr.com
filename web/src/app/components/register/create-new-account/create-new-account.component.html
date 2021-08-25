@@ -1,0 +1,133 @@
+<div class="text-center mt-4">
+	<h1 class="h2">فضلاً املأ البيانات التالية</h1>
+</div>
+
+<div class="card-body">
+	<div class="m-sm-4">
+		<form (ngSubmit)="register()" [formGroup]="registerForm" autocomplete="on">
+			
+			<div class="form-row form-group">
+				<div class="col">
+					<input id="given-name" name="given-name" autocomplete="given-name" class="form-control default"
+						maxlength="70" formControlName="firstName"
+						placeholder="{{'Signup.FirstNameCaption' | translate }}"
+						[ngClass]="{'is-invalid' : addValidator.firstName.errors && addValidator.firstName.touched}">
+					<div *ngIf="addValidator.firstName.touched && addValidator.firstName.errors"
+						class="invalid-feedback">
+						<div *ngIf="addValidator.firstName.errors.required">{{'Common.Validation.Required' | translate
+							}}</div>
+						<div *ngIf="addValidator.firstName.errors.pattern">{{'Common.Validation.AllowOnlyText' |
+							translate }}</div>
+					</div>
+				</div>
+				<div class="col">
+					<input name="last_name" id="last_name" autocomplete="family-name" class="form-control default"
+						maxlength="70" formControlName="lastName"
+						placeholder="{{'Signup.LastNameCaption' | translate }}"
+						[ngClass]="{'is-invalid' : addValidator.lastName.errors && addValidator.lastName.touched}">
+					<div *ngIf="addValidator.lastName.touched && addValidator.lastName.errors" class="invalid-feedback">
+						<div *ngIf="addValidator.lastName.errors.required">{{'Common.Validation.Required' | translate }}
+						</div>
+						<div *ngIf="addValidator.lastName.errors.pattern">{{'Common.Validation.AllowOnlyText' |
+							translate }}</div>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text"><span class="fa fa-envelope"></span></span>
+					</div>
+					<input name="email" id="email" type="email" autocomplete="email"
+						class="form-control align-left text-ltr" maxlength="256" formControlName="email"
+						placeholder="{{'Common.Validation.EmailExample' | translate }}"
+						[ngClass]="{'is-invalid' : addValidator.email.errors && addValidator.email.touched}">
+					<div *ngIf="addValidator.email.touched && addValidator.email.errors" class="invalid-feedback">
+						<div *ngIf="addValidator.email.errors.required">{{'Common.Validation.Required' | translate }}
+						</div>
+						<div *ngIf="addValidator.email.errors.pattern">{{'Common.Validation.ValidEmail' | translate }}
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text"><span class="fa fa-phone"></span></span>
+					</div>
+					<input id="mobile" name="mobile" autocomplete="mobile" class="form-control default" maxlength="10"
+						formControlName="phoneNumber"
+						placeholder="{{'Common.Validation.SaudiPhoneNumber' | translate }}"
+						[ngClass]="{'is-invalid' : addValidator.phoneNumber.errors && addValidator.phoneNumber.touched}">
+					<div *ngIf="addValidator.phoneNumber.touched && addValidator.phoneNumber.errors"
+						class="invalid-feedback">
+						<div *ngIf="addValidator.phoneNumber.errors.required">{{'Common.Validation.Required' | translate
+							}}</div>
+						<div *ngIf="addValidator.phoneNumber.errors.pattern">{{'Common.Validation.ValidPhoneNumber' |
+							translate }}</div>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text"><i class="fa fa-building"></i>&nbsp;{{'Signup.City' | translate
+							}}</span>
+					</div>
+					<select id="ddlAddCityId" name="ddlAddCityId" formControlName="cityId" class="form-control"
+						[ngClass]="{'is-invalid' : addValidator.cityId.errors && addValidator.cityId.touched }">
+						<option value="0" disabled>{{'Common.Form.ChooseFromMenu' | translate }}</option>
+						<option *ngFor="let city of citiesList" value="{{city.id}}">{{city.name}}</option>
+					</select>
+					<div *ngIf="addValidator.cityId.touched && addValidator.cityId.errors" class="invalid-feedback">
+						<div *ngIf="addValidator.cityId.errors.required">{{'Common.Validation.SelectedRequiredMsg' |
+							translate }}</div>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<input ShowPassword formControlName="password" type="password"
+					[ngClass]="{'is-invalid' : addValidator.password.errors && addValidator.password.touched }"
+					class="form-control" placeholder="{{'Login.Password' | translate }}" autocomplete="new-password">
+				<div [hidden]="!(addValidator.password?.touched && addValidator.password?.errors)"
+					class="invalid-feedback">
+					<div [hidden]="!addValidator.password.errors?.required">{{'Common.Validation.Required' | translate
+						}}</div>
+					<div [hidden]="!addValidator.password.errors?.minlength">{{'Signup.PasswordMinLength' | translate }}
+					</div>
+					<div [hidden]="!addValidator.password.errors?.maxlength">{{'Signup.PasswordMaxLength' | translate }}
+					</div>
+					<div [hidden]="!addValidator.password.errors?.pattern">{{'Signup.PasswordExpressionMsg' | translate
+						}}</div>
+				</div>
+			</div>
+			<div class="form-group text-center">
+				<app-ngx-switch [status]='registerAccount?.gender' [showCaption]='true'
+					[offText]="'Signup.IAmMan' | translate" [offIcon]="'fa fa-male'" 
+					[onText]="'Signup.IAmWoman' | translate" [onIcon]="'fa fa-female'" 
+					(statusChange)="changeGender($event)">
+				</app-ngx-switch>
+			</div>
+			<div class="form-group form-check">
+				<label class="form-check-label" for="exampleCheck1">
+					<input type="checkbox" class="form-check-input" id="exampleCheck1" [checked]="acceptTrems"
+						(change)="acceptTheTremsChange($event)">&nbsp;{{'Signup.Accept' | translate }}&nbsp;<a
+						href="javascript:void(0)" (click)="acceptTheTrems()">{{'Signup.Terms' | translate }}</a>
+				</label>
+			</div>
+			<div class="form-group text-right">
+				<button [disabled]="isSubmitting" (click)="cancel()" class="btn btn-gray toggle-flip"
+					type="button">{{'Common.CRUD.Back' | translate }}</button>&nbsp;&nbsp;
+				<button class="btn btn-info btn-info-new" [disabled]="isSubmitting || !registerForm.valid" type="submit">
+					<i *ngIf="isSubmitting" class='fa fa-circle-o-notch fa-spin'></i>&nbsp;{{!isSubmitting ? '' :
+					'Common.Data.SendingData' | translate}}
+					&nbsp;{{isSubmitting ? '' : 'Signup.Create' | translate}}
+				</button>
+			</div>
+			<div class="animate__animated animate__fadeIn"  *ngIf="isSuucessRegister">
+				<small class="mb-2">{{'Signup.VerifyCodeWillSendMessage' | translate }}</small>
+			</div>
+
+		</form>
+	</div>
+</div>

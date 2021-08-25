@@ -1,0 +1,32 @@
+<div class="member">
+    <div class="row m-0">
+        <div class="member-info w-100">
+          <ul class="list-group list-group-flush p-0 w-100">
+              <li class="list-group-item d-flex justify-content-between align-items-center p-0">
+                  <div class="text-info h5 text-truncate"><strong>{{serviceCard?.task?.name}}</strong></div>
+              </li>
+          </ul>
+        </div>
+    </div>
+    <div class="row d-flex flex-row flex-nowrap m-0 mb-1">
+      <div class="p-0">
+        <div class="pic-sm"><app-small-avatar-img [ImageName]="serviceCard?.taskerCard?.publicId" [Gender]='serviceCard?.taskerCard?.gender' [Size]="120" [heightWidthSameSize]='true' [ImgClass]="'img-fluid img-thumbnail'"></app-small-avatar-img></div>
+      </div>
+      <div class="flex-grow-1 p-0 pl-1">
+        <a [routerLink]="(serviceCard?.taskerId) ? [ '/profile', serviceCard?.taskerId , serviceCard?.taskerCard?.fullName] : ['']"  >
+          <h6 class="mb-0 text-secondary"><strong>{{serviceCard?.taskerCard?.fullName}}</strong></h6>
+        </a>
+        <div>
+            <ngb-rating  [max]="5" [(rate)]="serviceCard.taskerCard.totalRating" [readonly]="true">
+                <ng-template let-fill="fill" let-index="index">
+                  <span class="star" [class.filled]="fill === 100"><i class="fa fa-star"></i></span>
+                </ng-template>
+            </ngb-rating>
+        </div>
+        <div class="h6 text-secondary text-truncate">(<i class="fa fa-map-marker" aria-hidden="true"></i> <strong>{{serviceCard?.taskerCard?.cityName}}</strong>) <small>{{'users.Profile.MemberSince' | translate }} {{serviceCard?.taskerCard?.memberSince | timeAgo}}</small></div>
+      </div>
+    </div>
+    <div class="row m-0">
+        <button type="button" [disabled]="(!authService.isLoggedIn) || isTaskerSameCurrentUser" (click)="showUserTaskOrderModal(serviceCard)" class="btn btn-sm btn-outline-info btn-block px-1" >{{'Tasks.SelectService' | translate }}&nbsp;{{serviceCard.price| number:'1.1-2'}}&nbsp;{{'Common.Form.SaudiRiyal' | translate }}</button>
+    </div>
+  </div>

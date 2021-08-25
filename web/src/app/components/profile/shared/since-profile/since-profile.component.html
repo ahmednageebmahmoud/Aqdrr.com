@@ -1,0 +1,6 @@
+<div *ngIf="createdDate" class="profile-since">
+    {{'users.Profile.MemberSince' | translate }} {{createdDate | timeAgo}}
+</div>
+<div *ngIf="lastActive" class="profile-since">
+    {{'users.Profile.LastActive' | translate }}: {{lastActive | timeAgo}}
+</div>

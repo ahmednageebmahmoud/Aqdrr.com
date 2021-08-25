@@ -1,0 +1,13 @@
+<a [class.disabled]="true" href="javascript:void(0);" href="#" class="list-group-item list-group-item-action px-2 py-2">
+    <div class="d-flex bd-highlight">
+        <div class="mr-3"><i class="fa fa-2x" [class]="notification.icon + ' ' + notification.colorDescription"></i></div>
+        <div class="flex-grow-1">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">{{notification.summary}}</h5>
+                <small>{{notification.createdDate | timeAgo}}</small>
+            </div>
+            <p class="mb-1">{{notification.content}}</p>
+            <!-- <small>{{notification.createdDate}}</small> -->
+        </div>
+    </div>
+</a>

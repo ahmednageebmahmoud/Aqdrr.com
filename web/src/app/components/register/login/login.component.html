@@ -1,0 +1,104 @@
+<section id="login">
+  <div class="container h-100">
+    <div class=" ">
+      <div class=" ">
+
+        <div class="  my-auto animate__animated" *ngIf="!isShowForgetPassword"
+          [ngClass]="{'animate__fadeIn':!isShowForgetPassword}">
+
+          <!-- ======= login Section ======= -->
+          <div class="row my-auto">
+            <div class="col-sm-10 col-md-8 col-lg-6 mx-auto d-table h-100">
+              <div class="d-table-cell align-middle">
+
+                <div class="text-center mt-4">
+                  <h1 class="h2">{{'app.Welcome' | translate }}</h1>
+
+                  <p class="lead" *ngIf="!loggedIn()"> {{'Login.FillFiledsMessage' | translate }}</p>
+
+                  <p class="lead" *ngIf="loggedIn()">{{authService.decodedToken?.knownAs | titlecase}}</p>
+
+                </div>
+
+                <div class="card">
+                  <div class="card-body">
+                    <div class="m-sm-4">
+                      <div *ngIf="loggedIn()">
+                        <div class="text-center mb-5">
+                          <img src="{{authService.currentUser?.photoURL  || 'assets/img/team/m-avatar.jpg'}}"
+                            alt="{{authService.decodedToken?.unique_name | titlecase}}" class="img-fluid rounded-circle"
+                            width="132" height="132">
+                        </div>
+                        <div class="form-group btn-container text-center">
+                          <a class="btn btn-primary btn-sm" [routerLink]="['/services']"><i class="fa fa-dashboard"
+                              aria-hidden="true"></i> {{'pageHeader.Dashboard' | translate }}</a>
+                          <button class="btn btn-danger btn-sm" (click)="logout()"><i class="fa fa-sign-out"
+                              aria-hidden="true"></i> {{'Navbar.Logout' | translate }}</button>
+                        </div>
+                      </div>
+                      <form *ngIf="!loggedIn()" #LoginForm="ngForm" (ngSubmit)="login()">
+                        <div class="form-group">
+                          <label>{{'Login.UserName' | translate }}</label>
+                          <input class="form-control form-control-lg" name="username" autocomplete="username"
+                            type="text" placeholder="{{'Login.UserName' | translate }}" [(ngModel)]="userLogin.userName"
+                            autoFocus required>
+                        </div>
+                        <div class="form-group">
+                          <label>{{'Login.Password' | translate }}</label>
+                          <div class="input-group">
+                            <input class="form-control form-control-lg" name="password" autocomplete="current-password"
+                            [type]="isShowPasswoed?'text':'password'" placeholder="{{'Login.Password' | translate }}"
+                              [(ngModel)]="userLogin.password" aria-describedby="passwordHelp" required>
+                          
+                              <div class="input-group-prepend" (click)="isShowPasswoed=!isShowPasswoed">
+                                <span class="input-group-text" style="cursor: pointer;"><i
+                                  class="fa  " [ngClass]="{'fa-eye':!isShowPasswoed,'fa-eye-slash':isShowPasswoed}"></i></span></div>
+                          </div>
+                          <small class="pt-1" [ngClass]="{'float-left':authService.language.value=='ar','float-right':authService.language.value=='en'}">
+                            <a class="toggle-flip ml-2" href="javascript:void(0)" (click)="flipCard()"
+                              data-toggle="flip">{{'Login.Forgotpassword' | translate }}</a>
+                          </small>
+                        </div>
+                        <div>
+                          <div class="custom-control custom-checkbox align-items-center">
+                            <input type="checkbox" class="custom-control-input" value="remember-me" name="remember-me"
+                              checked="">
+                            <label class="custom-control-label text-small">{{'Login.RememberMe' | translate }}</label>
+                          </div>
+                        </div>
+                        <div class="text-center mt-3">
+                          <button class="btn btn-info btn-lg" [disabled]="isSigningIn || !LoginForm.valid"
+                            type="submit">
+                            <i *ngIf="isSigningIn" class='fa fa-circle-o-notch fa-spin'></i>&nbsp;{{!isSigningIn ? '' :
+                            'Login.SigningIn' | translate}}
+                            <i *ngIf="!isSigningIn" class="fa fa-sign-in fa-lg fa-fw"></i>&nbsp;{{isSigningIn ? '' :
+                            'Login.Signin' | translate}}
+                          </button>
+
+                        </div>
+                        <div class="form-group mt-3">
+                          <p class="mb-0"><a [routerLink]="['/register']" [queryParams]="{'redirectURL':redirectURL}"
+                              routerLinkActive="router-link-active" class="toggle-flip" data-toggle="flip"><i
+                                class="fa fa-angle-left fa-fw"></i>&nbsp;{{'Login.NewAccount' | translate }}</a></p>
+                        </div>
+                        <!-- <h6 class="text-right">{{systemVersion}}</h6> -->
+                      </form>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div><!-- End login Section -->
+
+        </div>
+
+        <div class="my-auto animate__animated" *ngIf="isShowForgetPassword"
+          [ngClass]="{'animate__fadeIn':isShowForgetPassword}">
+          <app-forget-password (onBackToLogin)="isShowForgetPassword=false"></app-forget-password>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>

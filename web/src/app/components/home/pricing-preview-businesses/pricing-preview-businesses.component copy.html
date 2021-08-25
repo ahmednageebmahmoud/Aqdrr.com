@@ -1,0 +1,56 @@
+     <!-- ======= Pricing Section ======= -->
+  <section id="pricing" class="pricing pb-4">
+    <div class="container-fluid px-4" [ngClass]="{'disabled-spinner-container': isLoadingData}">
+      <app-spinner-container *ngIf="isLoadingData"></app-spinner-container>
+
+      <div class="section-title">
+        <h2>{{'PricingTable.BusinessAccountOffers' | translate }}</h2>
+        <p>اذا تبحث عن موظفين كل فتره راح نوفر عليك التعب برسوم بسيطه من خلال باقات متنوعه وعدد حقائب تلبي احتياجك من الموظفين في مجال نشاطك التجاري</p>
+      </div>
+
+      <div class="row justify-content-center">
+
+        <div class="text-center w-100" *ngIf="!subscriptionPackages?.length && isLoadingData === false">
+          <div class="text-center w-100" >
+            <div class="container d-flex h-100">
+              <div class="row align-self-center justify-content-center w-100">
+                <div class="d-flex flex-column">
+                  <div class="text-center mt-2 text-dark">
+                    <h5>{{'Common.Messages.DataLoadingFailed' | translate}}</h5>
+                  </div>
+                  <button type="button" class="btn btn-warning" (click)="getAllSubscriptionPackages()"><i class="fa fa-repeat" aria-hidden="true"></i>&nbsp;{{'Common.Data.Reload' | translate }}</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-3 col-sm-6 mb-4" *ngFor="let subscriptionPackage of subscriptionPackages; let i=index">
+          <div class="pricing-table h-100">
+              <div class="pricing-table-header">
+                  <h3 class="heading">{{subscriptionPackage?.title}}</h3>
+                  <span class="price-value">
+                    <span *ngIf="subscriptionPackage.oldPrice > 0 && !subscriptionPackage?.isFree" class="currency">
+                        <div class="previous-price">
+                          <del><span class="amount">{{subscriptionPackage?.oldPrice}}$</span></del>
+                        </div>
+                    </span>
+                    <strong *ngIf="!subscriptionPackage?.isFree">${{subscriptionPackage?.price}}</strong>
+                    <strong *ngIf="subscriptionPackage?.isFree">{{'SubscriptionPackages.IsFree' | translate}}</strong>
+                    <span class="month">&nbsp;{{'PricingTable.PerMonth' | translate:{'value': subscriptionPackage?.totalDays} }}</span>
+                  </span>
+              </div>
+              <div class="pricing-content">
+                <ul>
+                  <li><i class="fa fa-briefcase" aria-hidden="true"></i>&nbsp;{{'PricingTable.Bags' | translate:{'value': subscriptionPackage?.employmentBags} }}</li>
+                  <li><i class="fa fa-calendar-check-o" aria-hidden="true"></i>&nbsp;{{'PricingTable.ExpiresDuring' | translate:{'value':subscriptionPackage?.totalDays} }}</li>
+                </ul>
+                  <a class="read btn btn-info" [routerLink]="['/payments' , 'checkout' , subscriptionPackage?.id]" >{{'PricingTable.Subscribe' | translate }}</a>
+              </div>
+          </div>
+        </div>
+
+      </div>
+  </div>
+</section>
+<!-- End Pricing Section -->

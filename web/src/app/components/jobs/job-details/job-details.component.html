@@ -1,0 +1,252 @@
+<!-- ======= Breadcrumbs ======= -->
+<section id="breadcrumbs" class="breadcrumbs">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h5><span
+                        class="mr-1 job-title-badge badge badge-info">{{jobOffer?.jobCategory?.name}}</span>{{jobOffer?.jobName}}
+                </h5>
+                <span class="sub-title"><i class="fa fa-clock-o"></i>&nbsp;{{jobOffer?.createdDate | timeAgo}}</span>
+            </div>
+            <ol>
+                
+                <li><a [routerLink]="previousUrl">{{'JobsOffers.Offers' | translate }}</a></li>
+            </ol>
+        </div>
+    </div>
+</section><!-- End Breadcrumbs -->
+
+<section id="job-details" class="jobs">
+    <div class="container" [ngClass]="{'disabled-spinner-container': isLoading}">
+        <app-spinner-container *ngIf="isLoading" class="spinner-container"></app-spinner-container>
+        <div class="col-md-4 p-0 float-md-left">
+            <div class="card ">
+                <div class="card-header p-0">
+                    <a data-toggle="collapse" href="#job-card" aria-expanded="true" id="heading-example"
+                        class="d-flex align-self-stretch p-3">
+                        <h4 class="flex-grow-1 m-0 text-left">بطاقة الوظيفة</h4>
+                        <i class="fa fa-chevron-down m-0" style="align-self: center !important;"></i>
+                    </a>
+                </div>
+                <div id="job-card" class="collapse show">
+                    <div class="card-block text-left">
+                        <div class="row job-meta-row">
+                            <span class="col-4 text-plaintext card-block-title"><i
+                                    class="fa fa-map-marker"></i>&nbsp;{{'JobsOffers.CityId' | translate }}</span>
+                            <div class="col-8">
+                                <p class="text-plaintext">{{jobOffer?.city?.name}}</p>
+                            </div>
+                        </div>
+                        <hr class="mb-2 mt-2"> 
+                        <div class="row job-meta-row">
+                            <label class="col-4 text-plaintext card-block-title"><i
+                                    class="fa fa-calendar"></i>&nbsp;التاريخ</label>
+                            <div class="col-8">
+                                <p class="text-plaintext">من {{jobOffer?.startDate| date:'yyyy/MM/dd'}}</p>
+                                <p class="text-plaintext">الى {{jobOffer?.endDate| date:'yyyy/MM/dd'}}</p>
+                            </div>
+                        </div>
+                        <hr class="mb-2 mt-2"> 
+                        <div class="row job-meta-row">
+                            <label class="col-4 text-plaintext card-block-title"><i
+                                    class="fa fa-calendar"></i>&nbsp;{{'JobsOffers.TotelDays' | translate }}</label>
+                            <div class="col-8">
+                                <p class="text-plaintext">{{jobOffer?.totelDays}} أيام</p>
+                            </div>
+                        </div>
+                        <hr class="mb-2 mt-2"> 
+                        <div class="row job-meta-row">
+                            <label class="col-4 text-plaintext card-block-title"><i
+                                    class="fa fa-clock-o"></i>&nbsp;الفترة</label>
+                            <div class="col-8">
+                                <p class="text-plaintext">{{jobOffer?.startTime | timespan}}-{{jobOffer?.endTime |
+                                    timespan}}</p>
+                                <p class="text-plaintext">{{jobOffer?.totelHours | timespan : 'hh:mm'}} ساعات</p>
+                            </div>
+                        </div>
+                        <hr class="mb-2 mt-2"> 
+                        <div class="row job-meta-row">
+                            <label class="col-4 text-plaintext card-block-title"><i class="fa fa-usd"></i>&nbsp;الأجر
+                                الكلي</label>
+                            <div class="col-8">
+                                <p class="text-plaintext">{{jobOffer?.salary}} ريال</p>
+                            </div>
+                        </div>
+                        <hr class="mb-2 mt-2"> 
+                        <div class="row job-meta-row">
+                            <label class="col-4 text-plaintext card-block-title"><i
+                                    class="fa fa-user"></i>&nbsp;{{'JobsOffers.Gender' | translate }}</label>
+                            <div class="col-8">
+                                <p class="text-plaintext">{{getGenderTitle}}</p>
+                            </div>
+                        </div>
+                        <hr class="mb-2 mt-2"> 
+                        <div class="row job-meta-row">
+                            <label class="col-4 text-plaintext card-block-title"><i
+                                    class="fa fa-briefcase"></i>&nbsp;{{'JobsOffers.JobsNumber' | translate }}</label>
+                            <div class="col-8">
+                                <p class="text-plaintext">{{jobOffer?.jobsNumber}} {{'JobsOffers.Persons' | translate }}
+                                </p>
+                            </div>
+                        </div>
+                        <hr class="mb-2 mt-2"> 
+                        <div class="row job-meta-row ">
+                            <label class="col-12 text-plaintext"><i
+                                    class="fa fa-address-card-o"></i>&nbsp;المُعلن</label>
+                        </div>
+                        <div class="row job-meta-row">
+                            <div class="member d-flex align-items-start">
+                                <a [routerLink]="(jobOffer?.company) ? ['/profile', jobOffer?.company?.id , getUserFriendlyName] : ['']"
+                                    class="title-project">
+                                    <app-small-avatar-img [ImageName]="jobOffer?.company?.publicId" [Size]="35"
+                                        [Gender]="jobOffer?.company?.gender"></app-small-avatar-img>
+                                </a>
+                                <div class="member-info">
+                                    <a [routerLink]="(jobOffer?.company) ? ['/profile', jobOffer?.company?.id , jobOffer?.company?.fullName] : ['']"
+                                        class="title-project">
+                                        <h4>{{jobOffer?.company?.fullName}}</h4>
+                                    </a>
+                                    <span><i class="fa fa-map-marker"></i>&nbsp;{{jobOffer?.company?.cityName}}</span>
+                                    <div data-title="{{jobOffer?.company?.totalRating}}">
+                                        <app-display-rating-stars [Rating]='jobOffer?.company?.totalRating'>
+                                        </app-display-rating-stars>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8 p-0 pr-md-2 float-md-right h-100">
+
+            <div class="card">
+                <div class="card-header">
+                    <a data-toggle="collapse" href="#job-more-info" aria-expanded="true" id="heading-example"
+                        class="d-flex align-self-stretch p-3">
+                        <h4 class="flex-grow-1 m-0 text-left">{{'JobsOffers.Description' | translate }}</h4>
+                        <i class="fa fa-chevron-down m-0" style="align-self: center !important;"></i>
+                    </a>
+                </div>
+                <div id="job-more-info" class="collapse show">
+                    <div class="card-block  text-left">{{jobOffer?.description}}</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header p-0">
+                    <a data-toggle="collapse" href="#job-skill" aria-expanded="true" id="heading-example"
+                        class="d-flex align-self-stretch p-3">
+                        <h4 class="flex-grow-1 m-0 text-left">{{'JobsOffers.Skills' | translate }}</h4>
+                        <i class="fa fa-chevron-down m-0" style="align-self: center !important;"></i>
+                    </a>
+                </div>
+                <div id="job-skill" class="collapse show">
+                    <div class="card-block text-left">
+                        <span class="h6 badge-xl bg-info" *ngFor="let skill of jobOffer?.requiredSkills"><i
+                                class="fa fa-asterisk"></i>&nbsp;{{skill?.skill?.name}}</span>
+                    </div>
+                </div>
+                <div class="card-footer text-right">
+                    <button *ngIf="permissions.canApplyToTheJobs && !jobOffer?.isRegistedBefore" class="btn btn-success"
+                        [disabled]="isSubmitting || jobOffer?.isClosed || isLoading" (click)="registerNewApplicant()">
+                        <i *ngIf="isSubmitting" class='fa fa-circle-o-notch fa-spin'></i>&nbsp;{{!isSubmitting ? '' :
+                        'Common.Data.SendingData' | translate }}
+                        <i *ngIf="!isSubmitting" class="fa fa-check-circle"></i>&nbsp;{{isSubmitting ? '' :
+                        'Applicants.HireMe' | translate}}&nbsp;
+                    </button>
+                    <div *ngIf="!permissions.canApplyToTheJobs" class="alert alert-warning text-center" role="alert">
+                        <div>{{'Permissions.SearcherOnly' | translate }}</div>
+                    </div>
+                    <div *ngIf="jobOffer?.isRegistedBefore" class="alert alert-success text-center animate__animated"
+                        role="alert" [ngClass]="{'animate__fadeOut':isHideSuccessAlert}">
+                        <div>{{'Common.Data.Successfully' | translate:{'value': 'Common.CRUD.Registered' | translate} }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card"
+                *ngIf="permissions.canManageAppliesToTheJobs && jobOffer?.companyId == authService.getCurrentUserIdUsingToken()">
+                <div class="card-header p-0">
+                    <a data-toggle="collapse" href="#job-suggest-experts" aria-expanded="true" id="heading-example"
+                        class="d-flex align-self-stretch p-3">
+                        <h4 class="flex-grow-1 m-0 text-left">نقترح عليك خبراء لتوظيفهم</h4>
+                        <i class="fa fa-chevron-down m-0" style="align-self: center !important;"></i>
+                    </a>
+                </div>
+                <div id="job-suggest-experts" class="collapse show">
+                    <div class="card-block text-left">
+                        <ng-container *ngFor="let suggestUser of suggestUsersList">
+                            <app-suggest-applicant-row (addSuccessfully)="removeAddedSuggestUserFromList($event)"
+                                *ngIf="suggestUsersList?.length > 0" [JobOfferId]="currentJobOfferId"
+                                [User]="suggestUser"></app-suggest-applicant-row>
+                        </ng-container>
+                        <div *ngIf="suggestUsersList?.length <= 0" class="alert alert-info text-center" role="alert">
+                            <div>{{'Applicants.NoSuggest' | translate }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header p-0">
+                    <a data-toggle="collapse" href="#job-applicants" aria-expanded="true" id="heading-example"
+                        class="d-flex align-self-stretch p-3">
+                        <h4 class="flex-grow-1 m-0 text-left">المتقدمون للوظيفة</h4>
+                        <i class="fa fa-chevron-down m-0" style="align-self: center !important;"></i>
+                    </a>
+                </div>
+                <div id="job-applicants" class="collapse show">
+                    <div class="card-block text-left">
+                        <ng-container *ngFor="let applicant of jobOffer?.applicants">
+                            <app-applicant-row *ngIf="jobOffer?.applicants"
+                                [IsThisUserIsTheOwner]="isOfferOwnerSameCurrentUser" [CurrentUserId]="currentUserId"
+                                [Applicant]="applicant"></app-applicant-row>
+                        </ng-container>
+                        <div *ngIf="!jobOffer?.applicants" class="alert alert-info text-center" role="alert">
+                            <div>{{'Applicants.NoApplicants' | translate }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="d-none d-sm-block" style="height: 200px;">
+            </div>
+
+        </div>
+        <div class="col-md-4 p-0 float-md-left">
+            <div class="card ">
+                <div class="card-header p-0">
+                    <a data-toggle="collapse" href="#job-test" aria-expanded="true" id="heading-example"
+                        class="d-flex align-self-stretch p-3">
+                        <h4 class="flex-grow-1 m-0 text-left">{{'Portfolios.Shared' | translate }}</h4>
+                        <i class="fa fa-chevron-down m-0" style="align-self: center !important;"></i>
+                    </a>
+                </div>
+                <div id="job-test" class="collapse show">
+                    <div class="card-block text-left">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" [value]="currentUrl">
+                        </div>
+                        <div class="form-group text-center">
+                            <a target="blank" href="https://www.facebook.com/sharer/sharer.php?u={{currentUrl}}"
+                                class="fa fa-facebook social-button social-button-facebook"
+                                title="المشاركة على الفيسبوك"></a>
+                            <a target="blank" href="https://twitter.com/intent/tweet?url={{currentUrl}}"
+                                class="fa fa-twitter social-button social-button-twitter"
+                                title="المشاركة على تويتر"></a>
+                            <a target="blank" href="https://www.linkedin.com/sharing/share-offsite/?url={{currentUrl}}"
+                                class="fa fa-linkedin social-button social-button-linkedin"
+                                title="المشاركة على لينكدين"></a>
+                            <a target="blank" href="https://wa.me/?text={{currentUrl}}"
+                                class="fa fa-whatsapp social-button social-button-whatsapp"
+                                title="المشاركة على الواتس اب"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

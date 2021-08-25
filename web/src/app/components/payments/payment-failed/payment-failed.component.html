@@ -1,0 +1,19 @@
+<div class="jumbotron text-center">
+  <h1 class="display-5 text-danger">نعتذر لم تكتمل عملية الدفع!</h1>
+  <div class="lead">
+    لم يتم تأكيد عملية الدفع الخاصه بك ويمكنك معاودة المحاولة مرةً أخرى .
+  </div>
+  <div class="container">
+    <img src="assets/img/payment-security-bank-svgrepo-com.svg" class="img-fluid mx-auto d-block" style="max-width: 400px;" alt="">
+  </div>
+  <div *ngIf="errorMessage" class="alert alert-danger small" >{{errorMessage}}</div>
+  <span class="lead text-info">
+    <strong class="h6 text-dark">. في حالة استمرار المشكلة أو تم خصم مبلغ منك دون تفعيل اشتراكك في الموقع فضلاً تواصل معنا من خلال الزر الذي بالأسفل أو عبر الواتس أب</strong>
+    <div class="align-self-center my-3">
+      <a class="btn btn-warning w-50 btn-sm " [routerLink]="['/contact-us']" >تواصل معنا لمساعدتك</a>
+    </div>
+    <div class="align-self-center my-3">
+       <a class="btn btn-success w-50 btn-sm " href="https://wa.me/message/Z5QMRKHHIEKYL1" target="_blank"><i class="fa fa-whatsapp px-1" aria-hidden="true"></i> {{'SocialMedias.WhatsApp' | translate }}</a>
+    </div>
+  </span>
+</div>

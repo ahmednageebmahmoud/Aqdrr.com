@@ -1,0 +1,20 @@
+<div class="modal-header">
+  <h4 class="modal-title">تعديل الصلاحيات الممنوحه لـ {{user.userName}}</h4>
+</div>
+<div class="modal-body">
+  <form #rolesForm="ngForm" id="rolesForm">
+    <div class="animated-checkbox" *ngFor="let role of roles">
+      <label>
+        <input type="checkbox" value="role.value"
+               [checked]="role.checked"
+               (change)="role.checked = !role.checked"
+               [disabled]="role.value === 'Admin' && user.userName ==='Admin'">
+        <span class="label-text">{{role.name}}</span>
+      </label>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-default" form="rolesForm" (click)="updateRoles();">اعتماد</button>
+  <button type="button" class="btn btn-default" (click)="activeModal.close()">إغلاق</button>
+</div>

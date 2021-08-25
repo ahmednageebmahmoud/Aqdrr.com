@@ -1,0 +1,25 @@
+    <section class="aqdr-section" id="aqdr-partners">
+      <div class="aqdr-container">
+          <div class="aqdr-section-title center">
+              <img src="assets/images/title.png" alt="">
+              {{'Clients.Title'|translate}}
+          </div>
+
+          <!-- Custom Swipper -->
+          <div class="aqdr-partners-wrapper">
+              <div class="aqdr-partners">
+                <div class="aqdr-partner" *ngFor="let c of clients; let i=index;"> 
+                  <img [src]="'assets/img/clients/client-'+(i+1)+'.svg'"  loading="lazy"  />
+                </div>
+              </div>
+              <div class="aqdr-partner-arrows">
+                  <span class=" aqdr-icon-btn rounded small aqdr-partner-prev">
+                      <i class="fa fa-angle-right"></i>
+                  </span>
+                  <span class=" aqdr-icon-btn rounded small  aqdr-partner-next">
+                      <i class="fa fa-angle-left"></i>
+                  </span>
+              </div>
+          </div>
+      </div>
+  </section>

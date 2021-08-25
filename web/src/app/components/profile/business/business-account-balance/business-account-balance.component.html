@@ -1,0 +1,19 @@
+<div class="profile-details px-2 py-2 bg-silver">
+    <ul class="list-unstyled">
+        <li *ngIf="isShortDetails" class="d-flex"><i class="fa fa-archive pl-1"></i><span class="px-1 ml-1">الرصيد المتبقي:</span><span class="number">{{accountBalance?.remainingBalance}} من {{accountBalance?.employmentBags}}</span></li>
+        <li *ngIf="!isShortDetails" class="d-flex"><i class="fa fa-archive pl-1"></i><span class="px-1 ml-1">الرصيد المتبقي:</span><span class="number">{{accountBalance?.remainingBalance}} من {{accountBalance?.employmentBags}} حقيبة توظيف</span></li>
+        <li *ngIf="!isShortDetails" class="d-flex"><i class="fa fa-briefcase pl-1"></i><span class="px-1 ml-1">حقائب محجوزه في طلبات العروض: </span><span class="number">{{accountBalance?.lockedBalance}}</span></li>
+        <li *ngIf="!isShortDetails" class="d-flex">
+          <i class="fa fa-id-card pl-1"></i><span class="px-1 ml-1"> انتهاء الاشتراك الخاص بك: </span>
+          <span class="number">{{accountBalance?.expireAt | date:'yyyy/MM/dd'}}</span>
+        </li>
+
+        <li class="d-flex"><i class="fa fa-id-card pl-1"></i><span class="px-1 ml-1"> الحالة: </span></li>
+        <li class="d-flex"><span class="number">{{accountBalance?.message}}</span></li>
+    </ul>
+    <div *ngIf="isCurrentUserProfile" class="profile-message-btn center-block text-center">
+      <a class="btn btn-block btn-sm py-1 px-2 p btn-primary text-white" (click)="showAccountBalanceTab()">
+          <i class="fa fa-briefcase"></i> تفاصيل أكثر
+      </a>
+    </div>
+</div>

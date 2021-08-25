@@ -1,0 +1,49 @@
+<!-- start Bootstrap Ngb Modal (View Details Form) -->
+<div class="modal-header">
+	<h5 class="modal-title">
+    <div class="badge badge-pill" [ngClass]="getStatusStyle(ticket?.status)"><i [ngClass]="getStatusIconStyle(ticket?.status)"></i>&nbsp;{{ticket.statusDescription}}</div>
+    &nbsp;{{ticket?.title}}
+  </h5>
+	<button type="button" class="close pull-right" aria-label="Close" (click)="activeModal.close()">
+		<span aria-hidden="true">&times;</span>
+	</button>
+</div>
+<div class="modal-body">
+  <div class="form-group row">
+    <label for="ronlyVewId" class="col-form-label col-sm-2 font-weight-bold">{{'Tickets.Id' | translate }}</label>
+    <div class="col-sm-4">
+      <input type="text" class= "form-control default" value="{{ticket?.id}}" readonly>
+    </div>
+    <label for="ronlyVewCategory" class="col-form-label col-sm-2 font-weight-bold">{{'Tickets.Category' | translate }}</label>
+    <div class="col-sm-4">
+      <p class="form-control-plaintext"><span class="badge-xl align-middle text-left" [ngClass]="getCategoryStyle(ticket?.category)"><i [ngClass]="getCategoryIconStyle(ticket?.category)"></i>&nbsp;{{ticket.categoryDescription}}</span></p>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="ronlyVewFullName" class="col-form-label col-sm-2 font-weight-bold">{{'Tickets.Sender' | translate }}</label>
+    <div class="col-sm-4">
+      <input type="text" class= "form-control default" value="{{ticket?.fullName}}" readonly>
+    </div>
+    <label for="ronlyVewCreatedDate" class="col-form-label col-sm-2 font-weight-bold">{{'Tickets.CreatedDate' | translate }}</label>
+    <div class="col-sm-4">
+      <input type="text" class= "form-control default" value="{{ticket?.createdDate | date:'yyyy/MM/dd hh:mm'}}" readonly>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="ronlyVewPhone" class="col-form-label col-sm-2 font-weight-bold">{{'Tickets.Phone' | translate }}</label>
+    <div class="col-sm-4">
+      <input type="text" class= "form-control default" value="{{ticket?.phone}}" readonly>
+    </div>
+    <label for="ronlyVewEmail" class="col-form-label col-sm-2 font-weight-bold">{{'Tickets.Email' | translate }}</label>
+    <div class="col-sm-4">
+      <input type="text" class= "form-control default" value="{{ticket?.email}}" readonly>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="ronlyVewMessage" class="font-weight-bold" >{{'Tickets.Message' | translate }}</label>
+    <p #messageField class="form-control-plaintext">{{ticket?.message}}</p>
+    <button [hidden]='!showMoreMessageContent' class="btn btn-sm btn-outline-primary" (click)="messageField.innerText = ticket?.message;showMoreMessageContent=false;">{{'Common.CRUD.ReadMore' | translate }}</button>
+    <button [hidden]='showMoreMessageContent' class="btn btn-sm btn-outline-secondary" (click)="messageField.innerText = ticket?.message.slice(0,200);showMoreMessageContent=true;">{{'Common.CRUD.ReadLess' | translate }}</button>
+  </div>
+</div>
+<!-- End Bootstrap Ngb Modal (View Details Form) -->

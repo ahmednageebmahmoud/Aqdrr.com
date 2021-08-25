@@ -1,0 +1,145 @@
+
+<!-- ======= Breadcrumbs ======= -->
+<section id="breadcrumbs" class="breadcrumbs">
+  <div class="container">
+      <div class="d-flex justify-content-between align-items-center">
+          <div>
+            <h2><i class="fa fa-book" aria-hidden="true"></i>&nbsp;{{'Invoices.invoiceCaption' | translate }}</h2>
+          </div>
+          <ol>
+            
+            <li><span class="text-muted" >{{'Invoices.invoiceCaption' | translate }}</span></li>
+          </ol>
+      </div>
+  </div>
+</section><!-- End Breadcrumbs -->
+
+<article id="profile" class="content">
+  <div class="container-fluid">
+
+    <div class="d-sm-flex flex-wrap justify-content-between p-2 mb-2 border rounded-lg bg-light" >
+      <div class="form-inline">
+        <div class="input-group input-group-sm">
+          <input type="text" class="form-control" maxlength="30" [(ngModel)]="query.filterText" (keyup.esc)="resetFilter()" (keyup.enter)="onFilterChange()" placeholder="{{'Common.Data.SearchTip' | translate}}">
+          <div class="input-group-append" id="button-addon4">
+            <button id="btnResetFilter" class="btn btn-danger" type="button" (click)="resetFilter()" title="{{'Common.Data.Reset' | translate}}"><i class="fa fa-remove"></i></button>
+          </div>
+        </div>
+      </div>
+      <div class="mb-2"></div>
+      <div class="btn-group">
+        <button id="btnRefreshData" type="button" class="btn btn-sm btn-light border btn-vertical" (click)="refreshData()">
+          <i class="fa fa-refresh text-success" title="{{'Common.Data.Refresh' | translate}}"></i>
+          <div>{{'Common.Data.Refresh' | translate}}</div>
+        </button>
+      </div>
+    </div>
+
+    <div [ngClass]="{'disabled-spinner-container': isLoadingData}">
+      <app-spinner-container *ngIf="isLoadingData" class="spinner-container"></app-spinner-container>
+      <div class="table-responsive table-sm-vertical">
+        <table class="table table-sm table-bordered table-striped table-light">
+          <thead class="table-info">
+            <tr>
+              <th *ngFor="let c of columns" class="{{c.style}}">
+                <div *ngIf="c.isSortable" class="align-middle text-{{c.align}} " (click)="sortBy(c.key)">
+                  {{ c.title }}
+                  <i *ngIf="query.sortBy === c.key"
+                    class="fa "
+                    [class.fa-sort-asc]="query.isSortAscending"
+                    [class.fa-sort-desc]="!query.isSortAscending"></i>
+                </div>
+                <div *ngIf="!c.isSortable" class="align-middle text-{{c.align}}">
+                  {{ c.title }}
+                </div>
+              </th>
+            </tr>
+          </thead>
+          <tfoot>
+            <tr class="table-info">
+              <th colspan='100%' class="text-center" >{{'Common.Data.ResultsFound' | translate }} [ {{query.totalItems || '0' }} ] </th>
+            </tr>
+          </tfoot>
+          <tbody>
+            <tr *ngIf="!invoices?.length">
+              <th colspan='100%' class="text-center" >
+                <div class="container d-flex h-100">
+                  <div class="row align-self-center justify-content-center w-100">
+                    <div class="d-flex flex-column bd-highlight">
+                      <div class="text-center">
+                        <span class="fa-stack fa-3x">
+                          <i class="fa fa-sticky-note-o fa-stack-1x text-primary"></i>
+                          <i class="fa fa-ban fa-stack-2x text-gold"></i>
+                        </span>
+                      </div>
+                      <div class="text-center mt-2 text-info">
+                        <h5>{{'Common.Messages.NotFoundAnyRecord' | translate:{'value': 'Common.Data.Record' | translate} }}</h5>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </th>
+            </tr>
+            <tr *ngFor="let invoice of invoices; let i=index" [@EnterItem]="{value:'', params:{delay: 100 * i}}">
+              <td [attr.data-title]="columns[0]?.title" class="align-middle text-center ">
+                <a class="text-info" [routerLink]="[ '/payments', 'invoices' , invoice?.id , 'details']">{{invoice.id}}</a>
+              </td>
+              <td [attr.data-title]="columns[1]?.title" class="align-middle text-left ">
+                <div>{{invoice.description}}</div>
+                <div class="badge badge-pill badge-info text-light">
+                  <a class="text-light" [routerLink]="['/subscription-packages' , invoice?.subscriptionPackageId , 'details']"><strong>{{'Invoices.SubscriptionPackageId' | translate}}:</strong> {{invoice.subscriptionPackage?.title}}</a>
+                </div>
+                <div class="small" *ngIf="invoice.subscriptionPackage?.category === PackageCategoryEnum.Business">
+                  <strong>{{'Invoices.EmploymentBagsBalance' | translate}}:</strong><span *ngIf="invoice.subscriptionPackage?.category === PackageCategoryEnum.Business" class="badge badge-pill badge-info text-light">{{invoice.employmentBagsBalance}} من {{invoice.subscriptionPackage?.employmentBags}}</span>
+                </div>
+                <div class="small"><strong><a class="text-primary font-weight-bold" [routerLink]="['/profile/' , invoice.userId]">[{{invoice.userId}}] {{invoice.subscriber?.fullName || invoice.subscriber?.userName}}</a></strong></div>
+              </td>
+              <td [attr.data-title]="columns[2]?.title" class="align-middle text-left ">
+                <div class="badge badge-pill badge-warning text-dark">{{invoice.chargeId}}</div>
+                <div class="small"><strong>{{'Invoices.ChargeStatus' | translate}}: </strong><i class="fa" [ngClass]="getChargeStatusEnumIconStyle(invoice?.chargeStatus)"></i> {{invoice.chargeStatusDescription}}</div>
+                <div class="small"><strong>{{'Invoices.CreatedDate' | translate}}:</strong> {{invoice.createdDate| date:'yyyy/MM/dd hh:mm'}}</div>
+                <div class="small"><strong>{{'Common.Data.LastUpdate' | translate}}:</strong> {{invoice.updatedDate| date:'yyyy/MM/dd hh:mm'}}</div>
+              </td>
+              <td [attr.data-title]="columns[3]?.title" class="align-middle text-center ">
+                <div>
+                  <span><strong>{{invoice.packagePrice | number:'1.1-2'}}</strong> ريال </span>
+                  <span>لمدة <strong>{{invoice.totalDays}}</strong> يوماً</span>
+                </div>
+                <hr class="m-0 py-1 p-0">
+                <div class="small text-left"><strong>{{'Invoices.IsPaid' | translate}}:</strong></div>
+                <div class="small text-left"><i class="fa" [ngClass]="getPaymentStatusIconStyle(invoice?.status)"></i> {{invoice.statusDescription}}</div>
+              </td>
+              <td [attr.data-title]="columns[4]?.title" class="align-middle text-center ">
+                <ng-container *ngIf="invoice?.status === PaymentStatusEnum.Confirmed">
+                  <div class=""><span class="badge badge-pill badge-primary" >{{invoice.expiryDate | date:'yyyy/MM/dd'}}</span></div>
+                  <div class="small"><strong>{{'Invoices.IsExpiry' | translate}}:</strong>
+                    <div class="badge badge-xl align-middle text-left">
+                      <i class="fa" *ngIf="invoice" [ngClass]="invoice.isExpiry === true ? 'fa-times-circle text-danger' : 'fa-check-circle text-success'"></i>
+                      <span class="text-success" *ngIf="invoice && invoice.isExpiry === false"> {{'Invoices.Valid' | translate }}</span>
+                      <span class="text-danger" *ngIf="invoice && invoice.isExpiry === true"> {{'Invoices.Expired' | translate }}</span>
+                    </div>
+                  </div>
+                </ng-container>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <ngb-pagination class="d-flex justify-content-center" [boundaryLinks]="true" [pageSize]="query.pageSize" [collectionSize]="query.totalItems"
+              [(page)]="query.pageNumber"  [maxSize]="5" [rotate]="true" (pageChange)="onPageChange($event);">
+          <ng-template ngbPaginationFirst>&laquo;</ng-template>
+          <ng-template ngbPaginationPrevious>&lsaquo;</ng-template>
+          <ng-template ngbPaginationLast>&raquo;</ng-template>
+          <ng-template ngbPaginationNext>&rsaquo;</ng-template>
+      </ngb-pagination>
+
+    </div>
+
+  </div>
+</article>
+
+
+
+
+

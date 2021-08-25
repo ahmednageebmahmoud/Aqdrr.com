@@ -1,0 +1,18 @@
+<a [routerLink]="(getContentDetails) ? ['/orders', getContentDetails.orderId , 'details'] : ['']" class="list-group-item list-group-item-action px-2 py-2" >
+  <div class="d-flex bd-highlight">
+      <div class="mr-3"><i class="fa fa-2x" [class]="notification.icon + ' ' + notification.colorDescription"></i></div>
+      <div class="flex-grow-1">
+          <div class="w-100">
+              <h5 class="mb-1 text-secondary">
+                  تم حجز خدمة جديده
+              </h5>
+          </div>
+          <p class="mb-0">
+              تم طلب الخدمة <strong class="text-info">{{getContentDetails.serviceName}}</strong> من قبل العضو [<strong class="text-info">{{getContentDetails.requesterName}}</strong>] ، تاريخ موعد الحجز (<strong class="text-info">{{getContentDetails.startDate | date:'yyyy/MM/dd'}}</strong>) .</p>
+          <div class="d-flex w-100 justify-content-between">
+              <small class="badge badge-pill badge-info">(قم بتأكيد الطلب أو رفضه قبل تاريخ موعد الحجز)</small>
+              <small>{{notification.createdDate | timeAgo}}</small>
+          </div>
+      </div>
+  </div>
+</a>

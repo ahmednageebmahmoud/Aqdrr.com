@@ -1,0 +1,39 @@
+<!-- start Normal Add Form Bootstrap NGX Modal Dialog -->
+<div class="modal-header">
+	<h5 class="modal-title"><span class="fa fa-plus"></span>&nbsp;{{'Common.Form.AddFormTitle' | translate:{'value': 'Tasks.Service' | translate} }}</h5>
+	<button type="button" class="close pull-right" aria-label="Close" (click)="activeModal.dismiss()">
+		<span aria-hidden="true">&times;</span>
+	</button>
+</div>
+<div class="modal-body" [formGroup]="addUserTaskForm">
+	<div class="form-group">
+		<label class="font-weight-bold" >{{'Tasks.Type' | translate }}<strong class="text-danger">*</strong></label>
+		<select formControlName="taskId" class="form-control" [ngClass]="{'is-invalid' : addValidator.taskId.errors && addValidator.taskId.touched }">
+			<option [value]="''||0" disabled>{{'Common.Form.SelectFromMenu' | translate:{'value': 'Tasks.Type' | translate} }}</option>
+			<option *ngFor="let task of tasksList" value="{{task.id}}">{{task.name}}</option>
+		</select>
+		<div *ngIf="addValidator.taskId.touched && addValidator.taskId.errors" class="invalid-feedback">
+			<div *ngIf="addValidator.taskId.errors.required">{{'Common.Validation.Required' | translate }}</div>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="font-weight-bold" >{{'Tasks.Price' | translate }}<strong class="text-danger">*</strong></label>
+		<input type="number" step="0.01" min="0.01" max="1000" class="form-control"  formControlName="price" placeholder= "0.00 ريال" [ngClass]="{'is-invalid' : addValidator.price.errors && addValidator.price.touched}"  >
+		<div *ngIf="addValidator.price.touched && addValidator.price.errors" class="invalid-feedback">
+			<div *ngIf="addValidator.price.errors.required">{{'Common.Validation.Required' | translate }}</div>
+			<div *ngIf="addValidator.price.errors.pattern">{{'Common.Validation.Number' | translate }}</div>
+		</div>
+	</div>
+	<div class="form-group">
+		<label id="lblCap_txtAddDescription" for="txtAddDescription" class="font-weight-bold" >{{'Tasks.Description' | translate }}</label>
+		<textarea id="txtAddDescription" name="txtAddDescription" class= "form-control default" rows="3"  maxlength="250" formControlName="description" placeholder= "{{'Common.Form.MaxThreeHundred' | translate:{'value': 'Tasks.Description' | translate} }}" [ngClass]="{'is-invalid' : addValidator.description.errors && addValidator.description.touched}"  ></textarea>
+	</div>
+</div>
+<div class="modal-footer  text-right">
+	<button id="btnAddUserTask" class="btn btn-info" [disabled]="isSubmitting" type="button" (click)="addNewUserTask()">
+		<i *ngIf="isSubmitting" class='fa fa-circle-o-notch fa-spin'></i>&nbsp;{{!isSubmitting ? '' : 'Common.Data.SendingData'  | translate }}
+		<i *ngIf="!isSubmitting" class="fa fa-plus-circle" ></i>&nbsp;{{isSubmitting ? '' : 'Common.CRUD.Add' | translate}}&nbsp;
+	</button>
+</div>
+<!-- End Normal Add Form Bootstrap NGX Modal Dialog -->
+

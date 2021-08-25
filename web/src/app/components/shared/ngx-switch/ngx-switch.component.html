@@ -1,0 +1,7 @@
+<div #main class="bootstrap-switch bootstrap-switch-wrapper bootstrap-switch-animate bootstrap-switch-off" [ngClass]="_sizeClass + ' ' + _disabledClass" (click)="toggleStatus()">
+    <div #container class="bootstrap-switch-container" [@statusChange]="_statusStr">
+        <span #on class="bootstrap-switch-handle-on" [ngClass]="_onColor" [ngStyle]="{'min-width': _minWidth +'px'}">{{ onText }}&nbsp;&nbsp;<i class='{{onIcon}}'></i></span>
+        <span #mid class="bootstrap-switch-label"><span *ngIf="showCaption">{{status ? offText : onText}}</span></span>
+        <span #off class="bootstrap-switch-handle-off " [ngClass]="_offColor">{{ offText }}&nbsp;&nbsp;<i class='{{offIcon}}'></i></span>
+    </div>
+</div>

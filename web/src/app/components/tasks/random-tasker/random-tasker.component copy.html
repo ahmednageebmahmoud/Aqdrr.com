@@ -1,0 +1,28 @@
+<!-- ======= Team Section ======= -->
+<section id="team" class="team bg-gradient">
+    <div class="container" data-aos="fade-up">
+  
+      <div class="section-title">
+        <h2>{{'OrdersServices.Taskers' | translate }}</h2>
+      </div>
+  
+      <div class="row m-0 no-padding-sm">
+  
+        <div class="col-md-6 col-lg-4 mt-2 p-0 px-1" *ngFor="let tasker of taskers">
+          <app-tasker-card [taskerCard]="tasker"></app-tasker-card>
+        </div>
+      </div>
+  
+      <div class="d-flex justify-content-between  mt-3">
+        <ngb-pagination class="d-flex justify-content-center" [pageSize]="query.pageSize" [collectionSize]="query.totalItems" 
+                    [(page)]="query.pageNumber"  [ellipses]="false" [maxSize]="3" [rotate]="true" (pageChange)="onPageChange($event);">
+                    <ng-template ngbPaginationFirst>&laquo;</ng-template>
+                    <ng-template ngbPaginationPrevious>&lsaquo;</ng-template>
+                    <ng-template ngbPaginationLast>&raquo;</ng-template>
+                    <ng-template ngbPaginationNext>&rsaquo;</ng-template>
+        </ngb-pagination>
+        <a [routerLink]="[ '/taskers', 'list' ]" class="text-light font-weight-bold h5 align-self-center">{{'Common.Form.ChooseAll' | translate:{'value': 'Tasks.Services' | translate} }}</a>
+    </div>
+
+    </div>
+  </section><!-- End Team Section -->

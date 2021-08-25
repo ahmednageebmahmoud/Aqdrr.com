@@ -1,0 +1,15 @@
+.star {
+  color: #dadada;
+  font-size: 15px !important;
+}
+
+.filled {
+  color: orange;
+}
+
+/* .bad {
+    color: #deb0b0;
+  }
+  .filled.bad {
+    color: #ff1e1e;
+  } */

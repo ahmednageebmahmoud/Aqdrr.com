@@ -1,0 +1,82 @@
+<!-- ======= Breadcrumbs ======= -->
+<section id="breadcrumbs" class="breadcrumbs">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h2><i class="fa fa-address-book"></i> {{'Applicants.ApplicantsList' | translate }}</h2>
+                <!-- <span class="sub-title"><i class="fa fa-clock-o"></i>&nbsp;ييسسسسس</span> -->
+            </div>
+            <div>
+                <div  class="text-center" >{{'Common.Data.ResultsFound' | translate }} [ {{query.totalItems || '0' }} ] </div>
+            </div>
+            <ol>
+                
+                <li><a [routerLink]="['/jobs', 'applicants']">{{'Applicants.ApplicantsList' | translate }}</a></li>
+            </ol>
+        </div>
+    </div>
+</section><!-- End Breadcrumbs -->
+
+<article id="profile" class="content">
+    <div class="container-fluid" [ngClass]="{'disabled-spinner-container': isLoading}">
+        <app-spinner-container *ngIf="isLoading" class="spinner-container"></app-spinner-container>
+
+
+        <div class="btn-toolbar justify-content-between m-2" role="toolbar" aria-label="Toolbar with filter field">
+            <div class="form-inline">
+                <div class="input-group">
+                    <input type="text" class="form-control" maxlength="30" [(ngModel)]="query.filterText" (keyup.esc)="resetFilter()" (keyup.enter)="onFilterChange()" placeholder="{{'Common.Data.SearchTip' | translate}}">
+                    <div class="input-group-append" id="button-addon4">
+                        <button id="LnkBtn_resetFilter" class="btn btn-danger" type="button" (click)="resetFilter()" title="{{'Common.Data.Reset' | translate}}"><span class="fa fa-remove"></span></button>
+                    </div>
+                </div>
+            </div>
+            <button type="button" class="btn btn-success" (click)="refreshData()">
+                <span class="fa fa-refresh text-success" title="{{'Common.Data.Refresh' | translate}}"></span>
+            </button>
+        </div>
+
+
+        <div class="aqdr-table">
+            <div class="aqdr-table-row aqdr-table-header">
+                <div class="aqdr-table-column w50prec">{{'Applicants.Applicant'|translate}}</div>
+                <div class="aqdr-table-column w50prec">{{'JobsOffers.jobOfferCaption'|translate}}</div>
+            </div>
+            <div *ngIf="!applicants?.length">
+                <div colspan='100%' class="text-center text-info" >
+                    <p class="mb-2">{{'Common.Messages.NotFoundAnyRecord' | translate:{'value': 'Common.Data.Record' | translate} }}</p>
+                </div>
+            </div>
+            <div class="aqdr-table-row" *ngFor="let applicant of applicants">
+                <div class="aqdr-table-column w50prec display-unset"  >
+                    <a class="text-info font-weight-bold" [routerLink]="['/profile' , applicant.userId]">{{applicant.user?.firstName + ' ' + applicant.user?.lastName}}</a>
+                    <div [ngClass]="getApplicantStatusStyle(applicant.status)">
+                        <i class="fa" [ngClass]="getApplicantStatusIcon(applicant.status)"></i>&nbsp;{{applicant.statusDescription}}
+                    </div>
+                    <div><strong>{{'Applicants.CreatedDate' | translate }}: </strong><span class="badge badge-secondary">{{applicant.createdDate | date:'yyyy/MM/dd'}}</span></div> 
+                    <div *ngIf="applicant.workerRating > 0" title='{{applicant.workerRating.toString() + "/5"}}'><app-display-rating-stars [Rating]='applicant?.workerRating' ></app-display-rating-stars></div>
+                    <button type="button" *ngIf="isRatingAllowedToWorker(applicant);" (click)="showRatingModal(applicant);" class="btn btn-warning btn-sm btn-block mt-1"><i class="fa fa-star"></i>&nbsp;{{'Rating.RatingTheWorker' | translate }}</button>
+                </div>
+                <div class="aqdr-table-column w50prec display-unset"  >
+                    <a class="text-info font-weight-bold" [routerLink]="['/jobs' , 'details' , applicant.jobOfferId]">
+                        {{'Applicants.JobOffer' | translate }} #{{applicant.jobOfferId}}
+                        <div>{{applicant.jobOffer.jobName}}</div>
+                        <div>
+                            <span class="badge badge-secondary">{{applicant.jobOffer.startDate | date:'yyyy/MM/dd'}}</span> - <span class="badge badge-secondary">{{applicant.jobOffer.endDate | date:'yyyy/MM/dd'}}</span>
+                        </div> 
+                    </a>
+                </div>
+            </div>
+        </div>
+<br>
+    <ngb-pagination class="d-flex justify-content-center" *ngIf="applicants?.length" [boundaryLinks]="true" [pageSize]="query.pageSize" [collectionSize]="query.totalItems" 
+                [(page)]="query.pageNumber"  [maxSize]="5" [rotate]="true" (pageChange)="onPageChange($event);">
+        <ng-template ngbPaginationFirst>&laquo;</ng-template>
+        <ng-template ngbPaginationPrevious>&lsaquo;</ng-template>
+        <ng-template ngbPaginationLast>&raquo;</ng-template>
+        <ng-template ngbPaginationNext>&rsaquo;</ng-template>
+    </ngb-pagination>
+
+
+    </div>
+</article>

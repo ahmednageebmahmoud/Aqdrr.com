@@ -1,0 +1,51 @@
+<div class="aqdr-package-container">
+    <h3 class="aqdr-package-container-title">{{'PricingTable.BusinessAccountOffers' | translate }}</h3>
+    <p class="aqdr-package-container-description">
+        {{'PricingTable.BusinessAccountOffersDiscription' | translate }}
+    </p>
+    <div class="aqdr-packages">
+        <div class="aqdr-package" *ngFor="let subscriptionPackage of subscriptionPackages; let i=index">
+            <div class="aqdr-package-title">
+                {{subscriptionPackage?.title}}
+                <span class="price" *ngIf="subscriptionPackage?.oldPrice">{{subscriptionPackage?.oldPrice}}$</span>
+            </div>
+            <div class="aqdr-package-content">
+                <div class="aqdr-package-features">
+                    <div class="aqdr-package-feature">
+                        <div class="aqdr-feature-name">
+                            {{'PricingTable.PackagePrice' | translate }}:
+                        </div>
+                        <div class="aqdr-feature-value" *ngIf="!subscriptionPackage?.isFree">
+                            {{subscriptionPackage?.price}}$
+                        </div>
+                        <div class="aqdr-feature-value" *ngIf="subscriptionPackage?.isFree">
+                            {{'SubscriptionPackages.IsFree' | translate}}
+                        </div>
+                    </div>
+                    <div class="aqdr-package-feature">
+                        <div class="aqdr-feature-name">
+                            {{'PricingTable.ValidityPeriod' | translate }}:
+                        </div>
+                        <div class="aqdr-feature-value">
+                            {{'PricingTable.PerMonth' | translate:{'value': subscriptionPackage?.totalDays} }}
+                        </div>
+                    </div>
+                    <div class="aqdr-package-feature">
+                        <div class="aqdr-feature-name">
+                            عدد الحقائب:
+                        </div>
+                        <div class="aqdr-feature-value">
+                            {{subscriptionPackage?.employmentBags }} {{'PricingTable.Bag' | translate }}
+                        </div>
+                    </div>
+                </div>
+
+                <a class="aqdr-btn lg subscribe" 
+                [routerLink]="['/payments' , 'checkout' , subscriptionPackage?.id]" 
+                >
+                <img src="assets/images/white-title.png" alt="">
+                {{'PricingTable.Subscribe' | translate }}</a>
+            </div>
+        </div>
+    </div>
+</div>

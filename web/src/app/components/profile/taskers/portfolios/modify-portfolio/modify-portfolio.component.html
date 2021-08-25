@@ -1,0 +1,145 @@
+<app-article-spinner *ngIf="!portfolio"></app-article-spinner>
+
+<!-- ======= Breadcrumbs ======= -->
+<section *ngIf="portfolio" id="breadcrumbs" class="breadcrumbs">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h2><span class="mr-1 job-title-badge badge badge-info">{{'Portfolios.Work'| translate}}</span>{{portfolio?.title}}</h2>
+                <span class="sub-title"><i class="fa fa-clock-o"></i>&nbsp;{{portfolio?.createdDate | timeAgo}}</span>
+            </div>
+            <ol>
+                
+                <li><a [routerLink]="['/profile']">{{'Portfolios.portfolio' | translate }}</a></li>
+            </ol>
+        </div>
+    </div>
+</section><!-- End Breadcrumbs -->
+
+<ng-container *ngIf="portfolio">
+   <!-- ======= Job details Section ======= -->
+   <section id="job-details" class="jobs text-left"> 
+        <div class="container my-3">
+            <div>
+                <div class="col-md-12 p-0 h-100">
+                    <div class="card">
+                        <div class="card-header">
+                            <a data-toggle="collapse" href="#portfolio-images" aria-expanded="true" 
+                            id="heading-example" class="d-flex align-self-stretch p-3">
+                            <h4 class="flex-grow-1 m-0 text-left">{{'Common.Upload.Images' | translate }}</h4>
+                            <i class="fa fa-chevron-down m-0" style="align-self: center !important;"></i>
+                            </a>
+                        </div>
+                        <div id="portfolio-images" class="collapse show">
+                            <div class="card-block">
+                                <div class="mx-2 img-wrapper" style="display: inline-block;" *ngFor="let photo of portfolio?.photos; let i=index">
+                                  <img [src]="getImageUrl(photo?.publicId ,200)" class="img-thumbnail">
+                                  <div class="text-center mb-2" >
+                                    <button type="button" (click)="setMainPhoto(photo)" [disabled]="photo.isMain" [ngClass]="photo.isMain ? 'btn btn-sm btn-info btn-down' : 'btn btn-sm btn-outline-info btn-down' ">
+                                      <strong>{{'Common.CRUD.IsMain' | translate }}</strong>
+                                    </button>
+                                    <button type="button" [disabled]="photo.isMain" (click)="delete(photo.id)" class="btn btn-sm btn-outline-danger btn-down"><i class="fa fa-trash-o"></i></button>
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                        <label class="hidden-xs">{{'Common.Upload.SelectFiles' | translate:{'value': 'Common.Upload.Images' | translate} }}</label>
+                                        <div ng2FileDrop class="drop-container dropzone" [ngClass]="{'nv-file-over': hasBaseDropZoneOver}" (fileOver)="fileOverBase($event)" [uploader]="uploader" >
+                                            <p class="m-0">
+                                            {{'Common.Upload.DropZone' | translate:{'value': 'Common.Upload.Images' | translate} }}
+                                            <label class="upload-button">
+                                                <input type="file" #uploadMult ng2FileSelect [uploader]="uploader" multiple>{{'Common.Upload.SelectManually' | translate }}
+                                            </label>
+                                            </p>
+                                            <p class="m-0">
+                                            {{'Common.Upload.Allowed' | translate }} <span class="badge badge-info mr-1">{{'Common.Upload.Only' | translate:{'value': 'Common.Upload.Images' | translate} }}</span> |
+                                            {{'Common.Upload.MaxSize' | translate }} <span class="badge badge-dark"> {{'Common.Upload.SizeMega' | translate:{'value':'1'} }} </span>
+                                            </p>
+                                            <div *ngIf="uploader?.queue?.length">
+                                            <p class="m-0">{{'Common.Upload.SelectedFiles' | translate:{'value': 'Common.Upload.Images' | translate} }} {{ uploader?.queue?.length }} <i class="fa fa-paperclip"></i></p>
+                                            </div>
+                                        </div>
+                                        <div *ngIf="uploader?.queue?.length">
+                                            <div class="table-responsive">
+                                                <table class="table table-sm table-bordered table-hover table-light">
+                                                    <thead class="table-info">
+                                                        <tr>
+                                                        <th class="text-center" width="50%">{{'Common.Upload.FileName' | translate }}</th>
+                                                        <th class="text-center">{{'Common.Upload.TheSize' | translate }}</th>
+                                                        <th colspan="3"></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr *ngFor="let item of uploader.queue">
+                                                        <td class="text-left" style="overflow: hidden;"><img thumbnail [image]="item?._file">{{ item?.file?.name | slice : 0 : 25 }}</td>
+                                                        <td class="text-center" *ngIf="uploader.options.isHTML5" nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} mb</td>
+                                                        <td class="text-center"><button type="button" class="btn btn-success btn-sm pt-0" (click)="item.upload()" [disabled]="item.isReady || item.isUploading || item.isSuccess"><i class="fa fa-upload"></i></button></td>
+                                                        <td class="text-center"><button type="button" class="btn btn-warning btn-sm pt-0" (click)="item.cancel()" [disabled]="!item.isUploading"><i class="fa fa-ban"></i></button></td>
+                                                        <td class="text-center"><button type="button" class="btn btn-danger btn-sm pt-0" (click)="item.remove()"><i class="fa fa-trash-o"></i></button></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div>
+                                                <div class="progress">
+                                                    <div class="progress-bar progress-bar-striped bg-success" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
+                                                </div>
+                                                <div class="text-center p-3">
+                                                    <button type="button" class="btn btn-outline-success btn-sm m-1" (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
+                                                        <i class="fa fa-upload"></i> تحميل الكل
+                                                    </button>
+                                                    <button type="button" class="btn btn-outline-warning btn-sm m-1" (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading">
+                                                        <i class="fa fa-ban"></i> إلغاء الكل
+                                                    </button>
+                                                    <button type="button" class="btn btn-outline-danger btn-sm m-1" (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
+                                                        <i class="fa fa-trash-o"></i> حذف الكل
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- start Normal Add BootStrap CardForm Form -->
+                    <div class="card">
+                        <form id ="formAddPortfolio" [formGroup]="editPortfolioForm" (ngSubmit)="updatePortfolio()">
+                            <div class="card-header">
+                                <a data-toggle="collapse" href="#portfolio-description" aria-expanded="true" 
+                                id="heading-example" class="d-flex align-self-stretch p-3">
+                                <h4 class="flex-grow-1 m-0 text-left">{{'Portfolios.DescriptionPlaceHolder' | translate }}</h4>
+                                <i class="fa fa-chevron-down m-0" style="align-self: center !important;"></i>
+                                </a>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label class="font-weight-bold" >{{'Portfolios.Title' | translate }}<strong class="text-danger">*</strong></label>
+                                    <input class= "form-control default"  maxlength="150" formControlName="title" [ngClass]="{'is-invalid' : editValidator.title.errors && editValidator.title.touched}"  >
+                                    <div *ngIf="editValidator.title.touched && editValidator.title.errors" class="invalid-feedback">
+                                        <div *ngIf="editValidator.title.errors.required">{{'Common.Validation.Required' | translate }}</div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="font-weight-bold" >{{'Portfolios.Description' | translate }}</label>
+                                    <textarea class= "form-control default" rows="6"  maxlength="300" formControlName="description" placeholder= "{{'Common.Form.MaxThreeHundred' | translate:{'value': 'Portfolios.DescriptionPlaceHolder' | translate} }}" [ngClass]="{'is-invalid' : editValidator.description.errors && editValidator.description.touched}"  ></textarea>
+                                    <div *ngIf="editValidator.description.touched && editValidator.description.errors" class="invalid-feedback">
+                                        <div *ngIf="editValidator.description.errors.minlength || editValidator.description.errors.maxlength" > {{'Common.Form.MaxThreeHundred' | translate:{'value': 'Portfolios.DescriptionPlaceHolder' | translate} }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer text-right">
+                                <button id="btnAddPortfolio" class="btn btn-primary" [disabled]="isSubmitting" type="submit">
+                                <i *ngIf="isSubmitting" class='fa fa-circle-o-notch fa-spin'></i>&nbsp;{{!isSubmitting ? '' : 'Common.Data.SendingData'  | translate }}
+                                <i *ngIf="!isSubmitting" class="fa fa-save" ></i>&nbsp;{{isSubmitting ? '' : 'Common.CRUD.Save' | translate}}&nbsp;
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- End Normal Add BootStrap CardForm Form -->
+                    <div class="d-none d-sm-block" style="height: 200px;">
+                    </div>
+
+                </div>
+            </div>
+        </div>
+   </section><!-- End Job details Section -->   
+</ng-container>

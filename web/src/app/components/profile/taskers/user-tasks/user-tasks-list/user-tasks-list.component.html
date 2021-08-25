@@ -1,0 +1,91 @@
+<div class="row my-0">
+    <h4 class="profile-horizontal-Line text-left px-2 my-3">
+        <span class="section-header-behind-line profile-head-line px-2">{{'Tasks.UserTasks' | translate }}</span>
+        <button type="button" *ngIf="isCurrentUserProfile" class="btn btn-success btn-sm action-btn pull-right" (click)="showUserTaskAddModal()">
+            <i class="fa fa-plus-circle"></i>&nbsp;{{'Common.CRUD.Add' | translate }}
+        </button>
+    </h4>
+
+    <ng-container *ngIf="userTasks?.length > 0; else nothingTemplate">
+        <ul class="list-group list-group-flush w-100 p-0 mt-3" >
+            <li class="list-group-item py-1 mb-1" *ngFor="let userTask of userTasks; let i = index;">
+                <div class="form-group row my-0" >
+                    <div class="col-12 col-lg-9">
+                        <h5 [ngClass]="!userTask.isEnabled ? 'text-secondary': 'text-info'"><i class="fa fa-check-circle-o"></i>&nbsp;&nbsp;{{userTask.task?.name}}
+                         <span class="badge badge-secondary" *ngIf="isCurrentUserProfile" >{{userTask.price| number:'1.1-2'}}&nbsp;{{'Common.Form.SaudiRiyal' | translate }}</span></h5>
+                        <p [ngClass]="{'text-secondary': !userTask.isEnabled }">{{userTask?.description}}</p>
+                    </div>
+                    <div class="col-12 col-lg-3 text-center">
+                        <button *ngIf="!isCurrentUserProfile" type="button" [disabled]="!userTask.isEnabled" (click)="showUserTaskOrderModal(userTask)" class="btn btn-primary btn-block px-1" ><span>{{'Tasks.SelectService' | translate }}</span><br>&nbsp;{{userTask.price| number:'1.1-2'}}&nbsp;{{'Common.Form.SaudiRiyal' | translate }}</button>
+                        <button *ngIf="isCurrentUserProfile" type="button" (click)="getUserTaskToEdit(userTask)" class="btn btn-success px-1" >{{'Common.CRUD.Update' | translate }}</button>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </ng-container>
+    <ng-template #nothingTemplate>
+        <p class="form-control-plaintext text-break text-secondary text-center pt-0">{{'Common.Messages.NoRecordWasAdded' | translate:{'value': 'Tasks.Service' | translate} }}</p>
+    </ng-template>
+</div>
+
+<!-- 
+<div class="row" >
+    <h4 class="profile-horizontal-Line text-left px-2 my-3">
+        <span class="section-header-behind-line profile-head-line px-2">{{'Tasks.UserTasks' | translate }}</span>
+        <button type="button" *ngIf="isCurrentUserProfile()" class="btn btn-success btn-sm action-btn pull-right" (click)="showUserTaskAddModal()">
+            <i class="fa fa-plus-circle"></i>&nbsp;{{'Common.CRUD.Add' | translate }}
+        </button>
+    </h4>
+
+    <div class="table-responsive">
+
+        <table class="table table-sm table-light">
+            <thead *ngIf="userTasks?.length">
+                <tr>
+                    <th *ngFor="let c of columns" class="{{c.style}}">
+                        <div *ngIf="c.isSortable" class="align-middle text-{{c.align}}" >{{ c.title }}</div>
+                        <div *ngIf="!c.isSortable" class="align-middle text-{{c.align}}">{{ c.title }}</div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngIf="!userTasks?.length">
+                    <th colspan='100%' class="text-center text-secondary" ><span class="mb-2">{{'Common.Messages.NoRecordWasAdded' | translate:{'value': 'Tasks.Service' | translate} }}</span></th>
+                </tr>
+                <ng-container *ngFor="let userTask of userTasks">
+                    <tr [ngClass]="{'text-secondary': !userTask.isEnabled }" class="profile-details">
+                        <td class="align-middle text-left" [ngClass]="{'text-info': userTask.isEnabled }"><strong>{{userTask.task?.name}}</strong></td>
+                        <td class="align-middle text-center">{{userTask.price| number:'1.1-2'}}&nbsp;{{'Common.Form.SaudiRiyal' | translate }}</td>
+                        <td class="align-middle text-right">
+                            <div class="btn-group  btn-sm" role="group" aria-label="...">
+                                <button type="button" class="link link-outline-danger btn-sm" title="Delete" (click)="removeUserTask(userTask.id)"><i class="fa fa-trash"></i></button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr [ngClass]="{'text-secondary': !userTask.isEnabled }">
+                        <td colspan='100%' class="text-left" ><span class="mb-2">{{userTask?.description}}</span></td>
+                    </tr>
+                </ng-container>
+                
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<ng-template #popTitle let-vUserTask="vUserTask">{{'Common.Data.MoreInformations' | translate }}</ng-template> 
+<ng-template #popContent let-vUserTask="vUserTask">
+	<div class="form-group">
+		<label class="font-weight-bold text-info" >{{'UserTasks.Price' | translate }}&nbsp;:</label>
+		<p class="form-control-Static">{{vUserTask.price}}</p>
+	</div>
+	<div class="form-group">
+		<label class="font-weight-bold text-info" >{{'UserTasks.Description' | translate }}&nbsp;:</label>
+		<p class="form-control-Static">{{vUserTask.description}}</p>
+	</div>
+	<div class="form-group">
+		<label class="font-weight-bold text-info" >{{'UserTasks.IsEnabledCHeader' | translate }}&nbsp;:</label>
+		<p class="form-control-Static">{{vUserTask.isEnabled}}</p>
+	</div>
+</ng-template>  -->

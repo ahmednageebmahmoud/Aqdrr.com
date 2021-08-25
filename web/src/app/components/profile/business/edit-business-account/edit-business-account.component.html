@@ -1,0 +1,131 @@
+<app-breadcrumbs title="{{userProfile.fullName || userProfile.enFullName }}" currentPageTitle="{{userProfile.fullName || userProfile.enFullName }}"></app-breadcrumbs>
+
+<article id="profile" class="content">
+    <div class="container">
+        <!-- start Normal Edt BootStrap Form -->
+        <form id ="formEdtExtendedBusinessAccount" [formGroup]="edtBusinessAccountForm" (ngSubmit)="editBusinessAccount()">
+            <div class="card">
+                <!-- <div class="card-header bg-info">
+                    <h5><span class="fa fa-pencil"></span>&nbsp;{{'users.Business.businessAccount' | translate }}</h5>
+                </div> -->
+                <div class="card-body">
+                    <h4 class="profile-horizontal-Line text-left px-2 mb-5">
+                        <span class="section-header-behind-line profile-head-line px-2">{{'users.Profile.GeneralInfo' | translate }}</span>
+                    </h4>
+
+                    <div class="form-group">
+                        <label id="lblCap_txtEditArFullName" for="txtEditArFullName" class="font-weight-bold" >{{'users.Business.ArFullName' | translate }}<strong class="text-danger">*</strong></label>
+                        <input id="txtEditArFullName" name="txtEditArFullName"  class= "form-control default"  maxlength="100" formControlName="arFullName" placeholder= "{{'users.Business.NamePlaceHolder' | translate }}" [ngClass]="{'is-invalid' : updateValidator.arFullName.errors && updateValidator.arFullName.touched}"  >
+                        <div *ngIf="updateValidator.arFullName.touched && updateValidator.arFullName.errors" class="invalid-feedback">
+                            <div *ngIf="updateValidator.arFullName.errors.required">{{'Common.Validation.Required' | translate }}</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label id="lblCap_txtEditEnFullName" for="txtEditEnFullName" class="font-weight-bold" >{{'users.Business.EnFullName' | translate }}<strong class="text-danger">*</strong></label>
+                        <input id="txtEditEnFullName" name="txtEditEnFullName"  
+                        class= "form-control default"  maxlength="100" formControlName="enFullName" 
+                        placeholder= "{{'users.Business.NamePlaceHolder' | translate }}" 
+                        [ngClass]="{'is-invalid' : updateValidator.enFullName.errors && updateValidator.enFullName.touched}"
+                        >
+                        <div *ngIf="updateValidator.enFullName.touched && updateValidator.enFullName.errors" class="invalid-feedback">
+                            <div *ngIf="updateValidator.enFullName.errors.pattern">{{'Common.Validation.EnglishName' | translate }}</div>
+                            <div *ngIf="updateValidator.enFullName.errors.required">{{'Common.Validation.Required' | translate }}</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-building"></i>&nbsp;{{'users.Business.City' | translate }}</span>
+                            </div>
+                            <select id="ddlAddCityId" name="ddlAddCityId" formControlName="cityId" class="form-control" [ngClass]="{'is-invalid' : updateValidator.cityId.errors && updateValidator.cityId.touched }">
+                                <option value="0" disabled>{{'Common.Form.ChooseFromMenu' | translate }}</option>
+                                <option *ngFor="let city of citiesList" value="{{city.id}}">{{city.name}}</option>
+                            </select>
+                            <div *ngIf="updateValidator.cityId.touched && updateValidator.cityId.errors" class="invalid-feedback">
+                                <div *ngIf="updateValidator.cityId.errors.required">{{'Common.Validation.SelectedRequiredMsg' | translate }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label id="lblCap_txtEditAddress" for="txtEditAddress" class="font-weight-bold" >{{'users.Business.Address' | translate }}</label>
+                        <textarea id="txtEditAddress" name="txtEditAddress" class= "form-control default" rows="2"  maxlength="300" formControlName="address" placeholder= "{{'Common.Form.MaxThreeHundred' | translate:{'value': 'users.Business.Address' | translate} }}"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label id="lblCap_txtEditAbout" for="txtEditAbout" class="font-weight-bold" >{{'users.Business.About' | translate }}</label>
+                        <textarea id="txtEditAbout" name="txtEditAbout" class= "form-control default" rows="5"  maxlength="1000" formControlName="about" placeholder= "{{'Common.Form.MaxThousand' | translate:{'value': 'users.Business.About' | translate} }}"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label id="lblCap_txtEditVision" for="txtEditVision" class="font-weight-bold" >{{'users.Business.Vision' | translate }}</label>
+                        <textarea id="txtEditVision" name="txtEditVision" class= "form-control default" rows="3"  maxlength="1000" formControlName="vision" placeholder= "{{'Common.Form.MaxThousand' | translate:{'value': 'users.Business.Vision' | translate} }}" ></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label id="lblCap_txtEditMessage" for="txtEditMessage" class="font-weight-bold" >{{'users.Business.Message' | translate }}</label>
+                        <textarea id="txtEditMessage" name="txtEditMessage" class= "form-control default" rows="3"  maxlength="1000" formControlName="message" placeholder= "{{'Common.Form.MaxThousand' | translate:{'value': 'users.Business.Message' | translate} }}" ></textarea>
+                    </div>
+
+                    <h4 class="profile-horizontal-Line text-left px-2 mb-4">
+                        <span class="section-header-behind-line profile-head-line px-2">{{'SocialMedias.Title' | translate }}</span>
+                    </h4>
+
+                    <div class="form-row">
+                        <div class="form-group col-lg-6">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                <span class="input-group-text"><span class="fa fa-instagram"></span></span>
+                            </div>
+                                <input id="txtEditInstagram" name="txtEditInstagram"  class= "form-control default"  formControlName="instagram" placeholder= "{{'SocialMedias.PlaceHolder' | translate:{'value': 'SocialMedias.Instagram' | translate} }}" [ngClass]="{'is-invalid' : updateValidator.instagram.errors && updateValidator.instagram.touched}"  >
+                                <div *ngIf="updateValidator.instagram.touched && updateValidator.instagram.errors" class="invalid-feedback">
+                                    <div *ngIf="updateValidator.instagram.errors.pattern">{{'SocialMedias.RegularExpression' | translate }}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><span class="fa fa-linkedin-square"></span></span>
+                                </div>
+                                <input id="txtEditLinkedin" name="txtEditLinkedin"  class= "form-control default"  formControlName="linkedin" placeholder= "{{'SocialMedias.PlaceHolder' | translate:{'value': 'SocialMedias.Linkedin' | translate} }}" [ngClass]="{'is-invalid' : updateValidator.linkedin.errors && updateValidator.linkedin.touched}"  >
+                                <div *ngIf="updateValidator.linkedin.touched && updateValidator.linkedin.errors" class="invalid-feedback">
+                                    <div *ngIf="updateValidator.linkedin.errors.pattern">{{'SocialMedias.RegularExpression' | translate }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-lg-6">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><span class="fa fa-twitter"></span></span>
+                                </div>
+                                <input id="txtEditTwitter" name="txtEditTwitter"  class= "form-control default"  formControlName="twitter" placeholder= "{{'SocialMedias.PlaceHolder' | translate:{'value': 'SocialMedias.Twitter' | translate} }}" [ngClass]="{'is-invalid' : updateValidator.twitter.errors && updateValidator.twitter.touched}"  >
+                                <div *ngIf="updateValidator.twitter.touched && updateValidator.twitter.errors" class="invalid-feedback">
+                                    <div *ngIf="updateValidator.twitter.errors.pattern">{{'SocialMedias.RegularExpression' | translate }}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><span class="fa fa-facebook-square"></span></span>
+                                </div>
+                                <input id="txtEditFacebook" name="txtEditFacebook"  class= "form-control default"  formControlName="facebook" placeholder= "{{'SocialMedias.PlaceHolder' | translate:{'value': 'SocialMedias.Facebook' | translate} }}" [ngClass]="{'is-invalid' : updateValidator.facebook.errors && updateValidator.facebook.touched}"  >
+                                <div *ngIf="updateValidator.facebook.touched && updateValidator.facebook.errors" class="invalid-feedback">
+                                    <div *ngIf="updateValidator.facebook.errors.pattern">{{'SocialMedias.RegularExpression' | translate }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-right">
+                <button id="btnEdtExtendedBusinessAccount" class="btn btn-success" [disabled]="isSubmitting || !edtBusinessAccountForm.valid" type="submit">
+                    <i *ngIf="isSubmitting" class='fa fa-circle-o-notch fa-spin'></i>&nbsp;{{!isSubmitting ? '' : 'Common.Data.SendingData'  | translate }}
+                    <i *ngIf="!isSubmitting" class="fa fa-save" ></i>&nbsp;{{isSubmitting ? '' : 'Common.CRUD.UpdateData' | translate}}&nbsp;
+                </button>
+                </div>
+            </div>
+        </form><!-- End Normal Edt BootStrap Form -->
+    </div>
+</article>
+
+

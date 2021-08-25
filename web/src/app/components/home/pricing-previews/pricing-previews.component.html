@@ -1,0 +1,24 @@
+<section class="aqdr-section" id="aqdr-packages">
+  <div class="aqdr-container">
+    <div class="aqdr-section-title-container">
+      <div class="aqdr-section-title">
+        <img src="assets/images/title.png" alt="">
+        {{'PricingTable.Packages'|translate}}
+      </div>
+      <a href="#" class="aqdr-more-link">
+        {{'PricingTable.More'|translate}}
+        <span class="aqdr-icon-btn">
+          <i class="fa fa-arrow-left"></i>
+        </span>
+      </a>
+    </div>
+
+    <div class="aqdr-packages-container">
+      <app-pricing-preview-businesses *ngIf="!loggedIn() || permissions.canAddJobs"></app-pricing-preview-businesses>
+
+
+      <app-pricing-preview-taskers *ngIf="!loggedIn() || permissions.canAddServicesProvider">
+      </app-pricing-preview-taskers>
+    </div>
+  </div>
+</section>

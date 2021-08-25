@@ -1,0 +1,43 @@
+<div class="row" >
+    <h4 class="profile-horizontal-Line text-left px-2 my-3">
+        <span class="section-header-behind-line profile-head-line px-2">{{'users.Students.Educations' | translate }}</span>
+    </h4>
+    <div class="col-md-12 pl-4">
+        <div class="form-group row my-0">
+            <label  class="col-sm-4 col-form-label profile-info-title">{{'users.Students.University' | translate }}</label>
+            <div class="col-sm-8">
+                <p class="form-control-plaintext profile-info-details">{{userProfile?.studentAccountData?.university?.name}}</p>
+            </div>
+        </div>
+        <div class="form-group row my-0">
+            <label  class="col-sm-4 col-form-label profile-info-title">{{'users.Students.Certificate' | translate }}</label>
+            <div class="col-sm-8">
+                <p class="form-control-plaintext profile-info-details">{{userProfile?.studentAccountData?.certificateName}}</p>
+            </div>
+        </div>
+        <div class="form-group row my-0">
+            <label  class="col-sm-4 col-form-label profile-info-title">{{'users.Students.EducationDegree' | translate }}</label>
+            <div class="col-sm-8">
+                <p class="form-control-plaintext profile-info-details">{{userProfile?.studentAccountData?.educationLevel?.educationDegree?.name}}</p>
+            </div>
+        </div>
+        <div class="form-group row my-0">
+            <label  class="col-sm-4 col-form-label profile-info-title">{{'users.Students.EducationLevel' | translate }}</label>
+            <div class="col-sm-8">
+                <p class="form-control-plaintext profile-info-details">{{userProfile?.studentAccountData?.educationLevel?.name}}</p>
+            </div>
+        </div>
+        <div class="form-group row my-0">
+            <label  class="col-sm-4 col-form-label profile-info-title">{{'users.Students.Major' | translate }}</label>
+            <div class="col-sm-8">
+                <p class="form-control-plaintext profile-info-details">{{userProfile?.studentAccountData?.subMajor?.major?.name}}</p>
+            </div>
+        </div>
+        <div class="form-group row my-0">
+            <label  class="col-sm-4 col-form-label profile-info-title">{{'users.Students.SubMajor' | translate }}</label>
+            <div class="col-sm-8">
+                <p class="form-control-plaintext profile-info-details">{{userProfile?.studentAccountData?.subMajor?.name}}</p>
+            </div>
+        </div>
+    </div>
+</div>

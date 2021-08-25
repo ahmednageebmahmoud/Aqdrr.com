@@ -1,0 +1,20 @@
+<!-- ======= Breadcrumbs ======= -->
+<section  id="breadcrumbs" class="breadcrumbs">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h2>{{'JobsOffers.Title'|translate}} {{categoryName}}</h2>
+            </div>
+            <ol>
+                
+            </ol>
+        </div>
+    </div>
+</section><!-- End Breadcrumbs -->
+
+<article   class="content bg-white">
+
+        <app-features [Random]='0' [isGoToJobsList]="true"></app-features>
+
+        <app-last-jobs-offers *ngIf="categoryId" [query]="query" [getAllJobOffers]="getAllJobOffersEvent"></app-last-jobs-offers>
+</article>

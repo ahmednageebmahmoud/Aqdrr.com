@@ -1,0 +1,23 @@
+
+
+<ng-container *ngIf="isCurrentUserProfile; else notMyProfile">
+    <div class="picture-container">
+        <div class="picture">
+            <img src="{{photoUrl || (isFemaleAccount() ? 'assets/img/team/w-avatar.jpg' : 'assets/img/team/m-avatar.jpg')}}" alt="" class="profile-img img-fluid">
+            <input [hidden]="isUploading" type="file" id="wizard-picture" (change)="onFileChange($event, $event.target.files)" [attr.accept]="allowTypeToUpload.join(', ')" >
+        </div>
+        <div *ngIf="uploadResponse?.status === uploadStatusEnum.progress" class="progress">
+            <div class="progress-bar progress-bar-striped bg-info" role="progressbar" [style.width.%]="uploadResponse.message" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">{{uploadResponse.message}}%</div>
+        </div>
+        <h6 [hidden]="isUploading" [ngClass]="isUploading ? 'text-secondary' : 'text-info'"><i class="fa fa-upload" ></i>&nbsp;<strong>تغيير الصورة</strong></h6>
+    </div>
+</ng-container>
+
+<ng-template #notMyProfile>
+    <img src="{{photoUrl || (isFemaleAccount() ? 'assets/img/team/w-avatar.jpg' : 'assets/img/team/m-avatar.jpg')}}" alt="" class="profile-img img-fluid">
+</ng-template>
+
+
+<div class="profile-label">
+    <span class="lead"><span class="badge badge-secondary">{{userProfile.jobTitle}}</span></span>
+</div>

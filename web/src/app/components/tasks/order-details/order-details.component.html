@@ -1,0 +1,207 @@
+<!-- ======= Breadcrumbs ======= -->
+<section id="breadcrumbs" class="breadcrumbs">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h2>{{'OrdersServices.ViwOrdersServiceTitle' | translate:{'value': orderService?.id.toString()} }}</h2>
+            </div>
+            <ol>
+                
+                <li><a [routerLink]="['/orders']">{{'OrdersServices.orderServiceCaption' | translate }}</a></li>
+            </ol>
+        </div>
+    </div>
+</section><!-- End Breadcrumbs -->
+
+<section id="job-details" class="jobs">
+    <div class="container" [ngClass]="{'disabled-spinner-container': isLoading}">
+        <app-spinner-container *ngIf="isLoading" class="spinner-container"></app-spinner-container>
+        <div class="col-md-4 p-0 float-md-left">
+            <div class="card ">
+                <div class="card-header p-0">
+                    <a data-toggle="collapse" href="#order-card" aria-expanded="true"
+                       id="heading-example" class="d-flex align-self-stretch p-3">
+                       <h5 class="flex-grow-1 m-0 text-left">{{'Tasks.Card' | translate }}</h5>
+                       <i class="fa fa-chevron-down m-0" style="align-self: center !important;"></i>
+                    </a>
+                </div>
+                <div id="order-card" class="collapse show">
+                    <div class="card-block text-left">
+                        <div class="row job-meta-row">
+                            <label class="col-4 text-plaintext text-secondary"><i class="fa fa-calendar"></i>&nbsp;{{'Tasks.Type' | translate }}</label>
+                            <div class="col-8">
+                                <p class="text-plaintext">{{orderService?.userTask?.task?.name}}</p>
+                            </div>
+                        </div>
+                        <div class="row job-meta-row">
+                            <span class="col-4 text-plaintext text-secondary"><i class="fa fa-map-marker"></i>&nbsp;{{'JobsOffers.CityId' | translate }}</span>
+                            <div class="col-8">
+                                <p class="text-plaintext">{{orderService?.cityName}}</p>
+                            </div>
+                        </div>
+                        <div class="row job-meta-row">
+                            <label class="col-4 text-plaintext text-secondary"><i class="fa fa-usd"></i>&nbsp;{{'Tasks.Price' | translate }}</label>
+                            <div class="col-8">
+                                <p class="text-plaintext">{{orderService?.price}} ريال</p>
+                            </div>
+                        </div>
+                        <hr >
+                        <div class="row job-meta-row">
+                            <label class="col-12 text-plaintext text-info">{{'Tasks.Description' | translate }}</label>
+                        </div>
+                        <div class="row job-meta-row">
+                            <p class="text-plaintext">{{orderService?.userTask?.description}}</p>
+                        </div>
+                        <hr >
+                        <div class="row job-meta-row">
+                            <label class="col-12 text-plaintext  text-info"><i class="fa fa-address-card-o"></i>&nbsp;{{'OrdersServices.Tasker' | translate }}</label>
+                        </div>
+                        <div class="row job-meta-row">
+                            <div class="member d-flex align-items-start" >
+                              <a [routerLink]="(orderService?.userTask?.user) ? ['/profile', orderService?.userTask?.userId , getTaskerUserName] : ['']" class="title-project">
+                                <app-small-avatar-img [ImageName]="orderService?.userTask?.user?.publicId" [Size]="35" ></app-small-avatar-img>
+                              </a>
+                              <div class="member-info">
+                                <a [routerLink]="(orderService?.userTask?.user) ? ['/profile', orderService?.userTask?.userId , getTaskerUserName] : ['']" class="title-project">
+                                    <h4>{{getTaskerUserName}}</h4>
+                                </a>
+                                <span><i class="fa fa-map-marker"></i>&nbsp;{{orderService?.userTask?.user?.cityName}}</span>
+                                <div data-title="{{orderService?.userTask?.user?.totalRating}}">
+                                  <app-display-rating-stars [Rating]='orderService?.userTask?.user?.totalRating'></app-display-rating-stars>
+                                </div>
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8 p-0 pr-md-2 float-md-right h-100">
+            <div class="card">
+                <div class="card-header">
+                    <a data-toggle="collapse" href="#order-more-info" aria-expanded="true"
+                       id="heading-example" class="d-flex align-self-stretch p-3">
+                       <h5 class="flex-grow-1 m-0 text-left">{{'OrdersServices.ViwOrdersServiceTitle' | translate:{'value': orderService?.id.toString()} }}</h5>
+                       <i class="fa fa-chevron-down m-0" style="align-self: center !important;"></i>
+                    </a>
+                </div>
+                <div id="order-more-info" class="collapse show">
+                    <div class="card-block  text-left">
+                        <div class="row job-meta-row mb-2">
+                            <label class="col-3 text-plaintext text-secondary"><i class="fa fa-calendar"></i>&nbsp;{{'OrdersServices.BookingDate' | translate }}</label>
+                            <div class="col-9">
+                                <p class="text-plaintext">{{orderService?.startDate| date:'yyyy/MM/dd'}}</p>
+                            </div>
+                        </div>
+                        <div class="row job-meta-row mb-2">
+                            <label class="col-3 text-plaintext text-secondary"><i class="fa fa-clock-o"></i>&nbsp;{{'OrdersServices.Timing' | translate }}</label>
+                            <div class="col-9">
+                                <p class="text-plaintext"><span class="badge-xl rounded bg-info">{{orderService?.timingDescription}}</span></p>
+                            </div>
+                        </div>
+                        <div class="row job-meta-row mb-2">
+                            <span class="col-3 text-plaintext text-secondary"><i class="fa fa-map-marker"></i>&nbsp;{{'OrdersServices.Address' | translate }}</span>
+                            <div class="col-9">
+                                <p class="text-plaintext">{{orderService?.address}}</p>
+                            </div>
+                        </div>
+                        <hr >
+                            <div class="row job-meta-row mb-2">
+                                <label class="col-3 text-plaintext text-secondary"><i class="fa fa-check-circle text-secondary"></i>&nbsp;{{'OrdersServices.OrderStatus' | translate }}</label>
+                                <div class="col-9">
+                                    <p class="text-plaintext">{{orderService?.orderStageDescription}}</p>
+                                </div>
+                            </div>
+                            <div class="row job-meta-row mb-2">
+                                <label class="text-plaintext  text-secondary"><i class="fa fa-info-circle"></i>&nbsp;{{'OrdersServices.Description' | translate }}</label>
+                            </div>
+                            <div class="row job-meta-row mb-2">
+                                <div class="col-12">
+                                    <p class="text-plaintext">{{orderService?.description}}</p>
+                                </div>
+                            </div>
+                        <hr >
+                        <div class="row job-meta-row">
+                            <div class="member d-flex align-items-start" >
+                              <a [routerLink]="(orderService?.user) ? ['/profile', orderService?.user?.id , getRequestUserName] : ['']" class="title-project">
+                                <app-small-avatar-img [ImageName]="orderService?.user?.publicId" [Size]="35" ></app-small-avatar-img>
+                              </a>
+                              <div class="member-info">
+                                <a [routerLink]="(orderService?.user) ? ['/profile', orderService?.user?.id , getRequestUserName] : ['']" class="title-project mb-0"> <h5 class="mb-0">{{getRequestUserName}}</h5></a>
+                                <span><i class="fa fa-map-marker"></i>&nbsp;{{orderService?.userTask?.user?.cityName}}</span>
+                              </div>
+                            </div>
+                        </div>
+                        <div class="col-12" *ngIf="orderService?.taskerResponse === 0 && orderService?.isBookDateExceeded">
+                            <div class="alert alert-danger" role="alert">
+                                <h4 class="alert-heading"><i class="fa fa-calendar-times-o" ></i> {{orderService?.startDate| date:'yyyy/MM/dd'}}</h4>
+                                <div>{{'OrdersServices.DateExceeded' | translate }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="" class="card-footer text-right">
+
+                </div>
+                <div *ngIf="orderService?.isAllowToRate" class="card-footer text-right">
+                    <button type="button" *ngIf="orderService?.isAllowToRate" (click)="showRatingOrderModal(orderService);" class="btn btn-warning"><i class="fa fa-star"></i>&nbsp;{{'Common.CRUD.Rate' | translate }}</button>
+                </div>
+            </div>
+
+            <app-display-rating-details [OrderDetails]="orderService"></app-display-rating-details>
+
+            <div class="card" *ngIf="!orderService?.isBookDateExceeded">
+                <div class="card-header p-0">
+                    <a data-toggle="collapse" href="#order-confirm" aria-expanded="true"
+                       id="heading-example" class="d-flex align-self-stretch p-3">
+                       <h5 class="flex-grow-1 m-0 text-left">{{'OrdersServices.Confirm' | translate }}</h5>
+                       <i class="fa fa-chevron-down m-0" style="align-self: center !important;"></i>
+                    </a>
+                </div>
+                <div  id="order-confirm" class="collapse show">
+                    <div class="card-block text-left">
+                        <div *ngIf="(orderService?.taskerResponse === 0 && !isCurrentUserIsTheTasker) || orderService?.taskerResponse > 0" class="row job-meta-row">
+                            <div class="col-12">
+                                <div [ngClass]="getOrderStatusStyle()" role="alert">
+                                    <h4 class="alert-heading"><i [ngClass]="getOrderStatusIconStyle()" ></i> {{orderService?.taskerResponseDescription}}</h4>
+                                    <div *ngIf="orderService?.taskerComment">{{orderService?.taskerComment}}</div>
+                                </div>
+                            </div>
+                            <hr *ngIf="orderService?.taskerResponse === 0 && isCurrentUserIsTheTasker">
+                        </div>
+
+                        <div *ngIf="orderService?.taskerResponse === 0 && isCurrentUserIsTheTasker" class="form-group" [formGroup]="confirmOrDiscardOrderForm">
+                            <label for="txtEditTaskerComment" class="font-weight-bold" >{{'Common.Data.MoreInformations' | translate }}</label>
+                            <textarea name="txtEditTaskerComment" class= "form-control default" rows="3" maxlength="300" formControlName="taskerComment" placeholder="{{'Common.Form.MaxLength' | translate:{'value': 'Common.Data.MoreInformations' | translate , 'max':'300'} }}" [ngClass]="{'is-invalid' : updateValidator.taskerComment.errors && updateValidator.taskerComment.touched}"  ></textarea>
+                            <div *ngIf="updateValidator.taskerComment.touched && updateValidator.taskerComment.errors" class="invalid-feedback">
+                                <div *ngIf="updateValidator.taskerComment.errors.minlength || updateValidator.taskerComment.errors.maxlength">{{'Common.Validation.Maxlength' | translate:{'value':'300'} }}</div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <div *ngIf="orderService?.taskerResponse === 0 && isCurrentUserIsTheTasker" class="card-footer text-right">
+                   
+                    <button *ngIf="permissions.canConfirmOrDiscardOrder && orderService?.taskerResponse === 0" class="btn btn-success" [disabled]="isSubmitting || orderService?.taskerResponse !== 0 || isLoading || orderService?.isBookDateExceeded" (click)="confirmOrDiscardOrder(TaskerResponseEnum.Accepted)">
+                        <i *ngIf="isSubmitting" class='fa fa-circle-o-notch fa-spin'></i><i *ngIf="!isSubmitting" class="fa fa-check-circle" ></i>
+                        &nbsp;{{!isSubmitting ? '' : 'Common.Data.SendingData'  | translate }} {{isSubmitting ? '' : 'OrdersServices.Confirm' | translate}}
+                    </button>&nbsp;
+                    
+                    
+                    <button *ngIf="permissions.canConfirmOrDiscardOrder && orderService?.taskerResponse === 0" class="btn btn-outline-secondary" [disabled]="isSubmitting || orderService?.taskerResponse !== 0 || isLoading || orderService?.isBookDateExceeded" (click)="confirmOrDiscardOrder(TaskerResponseEnum.Rejected)">
+                        <i *ngIf="isSubmitting" class='fa fa-circle-o-notch fa-spin'></i><i *ngIf="!isSubmitting" class="fa fa-times-circle-o" ></i>&nbsp;
+                        {{!isSubmitting ? '' : 'Common.Data.SendingData'  | translate }} {{isSubmitting ? '' : 'OrdersServices.Discard' | translate}}
+                    </button>
+                </div>
+
+
+            </div>
+            <div class="d-none d-sm-block" style="height: 200px;"></div>
+        </div>
+    </div>
+</section>
+
+
+

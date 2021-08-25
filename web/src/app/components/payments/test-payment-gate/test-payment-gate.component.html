@@ -1,0 +1,77 @@
+
+<!-- ======= Breadcrumbs ======= -->
+<section id="breadcrumbs" class="breadcrumbs">
+  <div class="container">
+      <div class="d-flex justify-content-between align-items-center">
+          <div>
+              <h2><i class="fa fa-cogs" aria-hidden="true"></i>&nbsp;{{'Payments.TestPayment' | translate }}</h2>
+          </div>
+          <ol>
+              
+              <li><a [routerLink]="['/settings']">{{'Menu.Dashboard' | translate }}</a></li>
+          </ol>
+      </div>
+  </div>
+</section><!-- End Breadcrumbs -->
+
+<article id="profile" class="content">
+  <div class="container-fluid">
+        <!-- ======= Nav Buttons Section ======= -->
+      <div class="container px-0">
+          <div class="row">
+
+            <div class="container-fluid px-1 px-md-2 px-lg-4 py-5 mx-auto" [ngClass]="{'disabled-spinner-container': isLoadingData || isSubmitting}">
+              <app-spinner-container *ngIf="isLoadingData" class="spinner-container"></app-spinner-container>
+              <div class="row d-flex justify-content-center">
+                  <div class="col-xl-7 col-lg-8 col-md-9 col-sm-11">
+                      <div class="card border-0">
+                        <div class="card-body px-2 py-4">
+                          <form #checkout="ngForm" (ngSubmit)="onSubmit()" class="container">
+                            <div class="row justify-content-center">
+                                <h3 class="mb-4 text-info text-center">{{'Payments.TestPayment' | translate }}</h3>
+                            </div>
+                            <div class="row">
+
+                              <div class="col-sm-4 text-center justify-content-center align-content-center">
+
+                                <!-- <small class="text-sm text-muted">الباقة</small>
+                                <h5 class="mb-2">{{subscriptionPackage.title}}</h5> -->
+                                <ng-container>
+                                  <small class="text-sm text-muted">اجمالي المبلغ</small>
+                                  <div class="col-12 px-3 justify-content-sm-center">
+                                    <h2 class=""><span class="text-info">1</span><span class="text-md font-weight-bold mr-2">ريال</span></h2>
+                                  </div>
+                                </ng-container>
+
+                              </div>
+
+                              <div class="col-sm-8 split-border pr-4 mt-3">
+                                <!-- Tap element will be here -->
+                                <div id="card-info" #cardInfo ></div>
+                                <div id="success" style="display: none;position: relative;float: left;">Success! Your token is <span id="token"></span></div>
+                                <div class="alert alert-danger mx-2" id="card-errors" role="alert" *ngIf="error">{{ error }}</div>
+                              </div>
+                            </div>
+                            <div class="row justify-content-center">
+                              <!-- Tap pay button -->
+                              <button class="btn w-50 btn-info mt-4" id="tap-btn" [disabled]="isSubmitting || isLoadingData">
+                                <i class='fa ' [ngClass]="isSubmitting ? 'fa-circle-o-notch fa-spin' : 'fa-credit-card'"></i>&nbsp;
+                                {{(isSubmitting ? 'Common.Data.SendingData' : 'SubscriptionPackages.Subscription') | translate}}&nbsp;
+                              </button>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+
+
+          </div>
+      </div>
+  </div>
+</article>
+
+
+

@@ -1,0 +1,60 @@
+<div class="row mx-1" [ngClass]="{'disabled-tag': jobOffer.isPassStartDate || jobOffer.isCountCompleted}">
+ 
+    <div *ngIf="jobOffer.isPassStartDate || jobOffer.isCountCompleted" class="disabled-tag-container">
+        <div class="disabled-tag-text">
+            {{'JobsOffers.OfferExpired' | translate }}
+        </div>
+  </div>
+  
+  <div class="col-md-3 col-sm-12 col-12 text-left align-self-center px-1">
+      <div class="d-flex flex-row p-0">
+          <div class="">
+              <a [routerLink]="[ '/profile', jobOffer.company?.id , jobOffer?.company?.fullName]" class="title-project" title="{{jobOffer?.company?.fullName}}">
+                  <app-small-avatar-img [ImageName]="jobOffer?.company?.publicId" [Size]="35" [ImgClass]="'avatar mr-2'" [Gender]="jobOffer?.company?.gender" ></app-small-avatar-img>
+              </a>
+          </div>
+          <div class="">
+              <a [routerLink]="[ '/jobs','details', jobOffer.id, jobOffer.jobName ]" title="{{jobOffer.jobCategory?.name}}" class="project-item-title">
+                <!-- {{jobOffer.jobName}} -->
+                <!-- <span class="badge badge-pill badge-secondary">{{jobOffer.jobCategory?.name}}</span> -->
+                <div>{{jobOffer.jobCategory?.name}}</div>
+                <span class="badge badge-pill badge-secondary">{{jobOffer?.company?.fullName}}</span>
+               </a>
+          </div>
+      </div>
+  </div>
+  <div class="col-md-2 col-sm-2 col-6 align-self-center px-1 split-border bottom-border">
+        <span>{{jobOffer.city?.name}}</span>
+        <div class="job-gender" data-title="{{getGenderTitle}}">
+            <span [ngClass]="{'job-gender-active': jobOffer.gender === GenderEnum.male || jobOffer.gender === GenderEnum.none}"><i class="fa fa-male"></i></span>
+            &nbsp;|&nbsp;
+            <span [ngClass]="{'job-gender-active': jobOffer.gender === GenderEnum.female || jobOffer.gender === GenderEnum.none}"><i class="fa fa-female"></i></span>
+        </div>
+  </div>
+  <div class="col-md-2 col-sm-3 col-6 align-self-center px-1 bottom-border">
+      <div class="d-flex flex-column">
+          <div>{{jobOffer.startTime | timespan}}-{{jobOffer.endTime | timespan}}</div>
+          <div>{{jobOffer.totelHours | timespan : 'hh:mm'}} ساعات</div>
+      </div>
+  </div>
+  <div class="col-md-2 col-sm-3 col-6 align-self-center px-1 split-border">
+      <div class="d-flex flex-column">
+          <div>من {{jobOffer.startDate| date:'yyyy/MM/dd'}}</div>
+          <div>الى {{jobOffer.endDate| date:'yyyy/MM/dd'}}</div>
+      </div>
+  </div>
+  <div class="col-md-2 col-sm-2 col-6 align-self-center px-1 ">
+      <div class="d-flex flex-column">
+          <div>{{jobOffer.salary}} ريال</div>
+          <div>{{'JobsOffers.ForPeriod' | translate:{'value':jobOffer.totelDays} }}</div>
+      </div>
+  </div>
+  <!-- <div class="col-md-2 col-sm-2 align-self-center px-1"><span class="budget-project">{{jobOffer.salary}} ريال</span></div> -->
+  <div class="col-md-1 col-sm-2 col-12 align-self-center px-1">
+        <a *ngIf="(!authService.isLoggedIn) || (authService.isLoggedIn && permissions.canApplyToTheJobs) || (!isOfferOwnerSameCurrentUser)" [routerLink]="[ '/jobs','details', jobOffer.id, jobOffer.jobName ]" type="button" class="btn btn-sm btn-block btn-info px-1">
+            <span *ngIf="(!authService.isLoggedIn) || (authService.isLoggedIn && permissions.canApplyToTheJobs)">{{'JobsOffers.HireMe' | translate }}</span>
+            <span *ngIf="(authService.isLoggedIn && !permissions.canApplyToTheJobs && !isOfferOwnerSameCurrentUser)">{{'Common.Data.View' | translate}}</span>
+        </a>
+        <a *ngIf="authService.isLoggedIn && permissions.canManageJobs && isOfferOwnerSameCurrentUser" type="button" class="btn btn-sm btn-block btn-success px-1 " [routerLink]="(jobOffer?.applicants <= 0 && jobOffer?.isPassStartDate == false) ? ['/jobs','edit', jobOffer.id] : null" [class.disabled]="(jobOffer?.applicants <= 0 && jobOffer?.isPassStartDate == false) ? null : true" >{{'Common.Form.Edit' | translate }}</a>
+  </div>
+</div>

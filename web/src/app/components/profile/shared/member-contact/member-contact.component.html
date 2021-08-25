@@ -1,0 +1,22 @@
+<div class="row profile-user-info">
+    <h4 class="profile-horizontal-Line text-left px-2 my-3">
+        <span class="section-header-behind-line profile-head-line px-2">{{'users.Profile.Contact' | translate }}</span>
+    </h4>
+    <div class="col-sm-8 pl-4">
+        <div class="form-group row my-0">
+            <label  class="col-sm-4 col-form-label profile-info-title">{{'Signup.Phone' | translate }}</label>
+            <div class="col-sm-8">
+                <p class="form-control-plaintext profile-info-details">{{userProfile?.phoneNumber}}&nbsp;<a class="text-success" [href]="'https://wa.me/' + userProfile?.whatsApp" target="_blank"><i class="fa fa-whatsapp"></i></a></p>
+            </div>
+        </div>
+        <div class="form-group row my-0">
+            <label  class="col-sm-4 col-form-label profile-info-title">{{'users.management.Email' | translate }}</label>
+            <div class="col-sm-8">
+                <p class="form-control-plaintext profile-info-details">{{userProfile?.email}}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-4 profile-social">
+        <app-social-media [SocialMediaUserAccounts]="userProfile?.socialMediaAccounts"></app-social-media>
+    </div>
+</div>

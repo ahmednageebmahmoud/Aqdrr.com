@@ -1,0 +1,126 @@
+
+<!-- ======= Breadcrumbs ======= -->
+<section id="breadcrumbs" class="breadcrumbs">
+  <div class="container">
+      <div class="d-flex justify-content-between align-items-center">
+          <div>
+              <h2>{{'SubscriptionPackages.Caption' | translate }}</h2>
+          </div>
+          <ol>
+              
+              <li><a [routerLink]="['/settings']">{{'Menu.Dashboard' | translate }}</a></li>
+          </ol>
+      </div>
+  </div>
+</section><!-- End Breadcrumbs -->
+
+<article class="content">
+  <div class="container">
+    <div class="d-sm-flex flex-wrap justify-content-between p-2 mb-2 border rounded-lg bg-light" >
+      <div class="form-inline">
+        <div class="input-group input-group-sm">
+          <input type="text" class="form-control" maxlength="30" [(ngModel)]="query.filterText" (keyup.esc)="resetFilter()" (keyup.enter)="onFilterChange()" placeholder="{{'Common.Data.SearchTip' | translate}}">
+        </div>
+      </div>
+      <div class="mb-2"></div>
+      <div class="btn-group">
+        <button id="btnRefreshData" type="button" class="btn btn-sm btn-light border btn-vertical" (click)="refreshData()">
+          <i class="fa fa-refresh text-success" title="{{'Common.Data.Refresh' | translate}}"></i>
+          <div>{{'Common.Data.Refresh' | translate}}</div>
+        </button>
+      </div>
+    </div>
+
+    <div [ngClass]="{'disabled-spinner-container': isLoadingData}">
+      <app-spinner-container *ngIf="isLoadingData" class="spinner-container"></app-spinner-container>
+      <div class="table-responsive table-sm-vertical">
+        <table class="table table-sm table-bordered table-hover table-light">
+          <thead class="table-info">
+            <tr>
+              <th *ngFor="let c of columns" class="{{c.style}}">
+                <div *ngIf="c.isSortable" class="align-middle text-{{c.align}} " (click)="sortBy(c.key)">
+                  {{ c.title }}
+                  <i *ngIf="query.sortBy === c.key"
+                    class="fa "
+                    [class.fa-sort-asc]="query.isSortAscending"
+                    [class.fa-sort-desc]="!query.isSortAscending"></i>
+                </div>
+                <div *ngIf="!c.isSortable" class="align-middle text-{{c.align}}">
+                  {{ c.title }}
+                </div>
+              </th>
+            </tr>
+          </thead>
+          <tfoot>
+            <tr class="table-info">
+              <th colspan='100%' class="text-center" >{{'Common.Data.ResultsFound' | translate }} [ {{query.totalItems || '0' }} ] </th>
+            </tr>
+          </tfoot>
+          <tbody>
+            <tr *ngIf="!subscriptionPackages?.length">
+              <th colspan='100%' class="text-center" >
+                <div class="container d-flex h-100">
+                  <div class="row align-self-center justify-content-center w-100">
+                    <div class="d-flex flex-column bd-highlight">
+                      <div class="text-center">
+                        <span class="fa-stack fa-3x">
+                          <i class="fa fa-sticky-note-o fa-stack-1x text-primary"></i>
+                          <i class="fa fa-ban fa-stack-2x text-gold"></i>
+                        </span>
+                      </div>
+                      <div class="text-center mt-2 text-dark">
+                        <h5>{{'Common.Messages.NotFoundAnyRecord' | translate:{'value': 'Common.Data.Record' | translate} }}</h5>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </th>
+            </tr>
+            <tr *ngFor="let subscriptionPackage of subscriptionPackages; let i=index" [@EnterItem]="{value:'', params:{delay: 100 * i}}" [ngClass]="{'text-deleted': !subscriptionPackage.isEnabled }">
+              <td [attr.data-title]="columns[0]?.title" class="align-middle text-center ">{{subscriptionPackage.id}}</td>
+              <td [attr.data-title]="columns[1]?.title" class="align-middle text-center ">
+                <div>{{subscriptionPackage.categoryDescription}}</div>
+                <div class="badge badge-pill badge-warning">&nbsp;{{subscriptionPackage.updatedDate| date:'yyyy/MM/dd hh:mm'}}</div>
+              </td>
+              <td [attr.data-title]="columns[2]?.title" class="align-middle text-center "><a class="text-info font-weight-bold" [routerLink]="['/subscription-packages', subscriptionPackage.id ,'details']">{{subscriptionPackage.arTitle}}</a></td>
+              <td [attr.data-title]="columns[3]?.title" class="align-middle text-center ">{{subscriptionPackage.enTitle}}</td>
+              <td [attr.data-title]="columns[4]?.title" class="align-middle text-center "><i class="fa  fa-lg" [ngClass]="{'fa-check-circle text-success': subscriptionPackage.isFree == true, 'fa-times-circle text-danger': subscriptionPackage.isFree == false}"></i></td>
+              <td [attr.data-title]="columns[5]?.title" class="align-middle text-center ">{{subscriptionPackage.oldPrice | number:'1.1-2'}}</td>
+              <td [attr.data-title]="columns[6]?.title" class="align-middle text-center ">{{subscriptionPackage.price | number:'1.1-2'}}</td>
+              <td [attr.data-title]="columns[7]?.title" class="align-middle text-center ">{{subscriptionPackage.priceSaudiRiyal | number:'1.1-2'}}</td>
+              <td [attr.data-title]="columns[8]?.title" class="align-middle text-center ">{{subscriptionPackage.totalDays}}</td>
+              <td [attr.data-title]="columns[9]?.title" class="align-middle text-center ">{{subscriptionPackage.employmentBags}}</td>
+              <td [attr.data-title]="columns[10]?.title" class="align-middle text-center ">{{subscriptionPackage.colorDescription}}</td>
+              <td [attr.data-title]="columns[11]?.title" class="align-middle text-center ">
+                <div class="toggle lg">
+                  <label><input type="checkbox" (change)="changeSubscriptionPackageStatus(subscriptionPackage, $event)" [checked]="subscriptionPackage.isEnabled" ><span class="button-indecator"></span></label>
+                </div>
+              </td>
+              <td class="align-middle text-center">
+                <div class="btn-group  btn-sm" role="group" aria-label="...">
+                  <button *ngIf="true" class="btn btn-outline-warning btn-sm" type="button" title="{{'Common.CRUD.Edit' | translate}}" (click)="getSubscriptionPackageToEdit(subscriptionPackage)"><i class="fa fa-pencil"></i></button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+
+      <ngb-pagination class="d-flex justify-content-center" [boundaryLinks]="true" [pageSize]="query.pageSize" [collectionSize]="query.totalItems"
+              [(page)]="query.pageNumber"  [maxSize]="5" [rotate]="true" (pageChange)="onPageChange($event);">
+          <ng-template ngbPaginationFirst>&laquo;</ng-template>
+          <ng-template ngbPaginationPrevious>&lsaquo;</ng-template>
+          <ng-template ngbPaginationLast>&raquo;</ng-template>
+          <ng-template ngbPaginationNext>&rsaquo;</ng-template>
+      </ngb-pagination>
+
+
+    </div>
+
+
+  </div>
+</article>
+
+
+

@@ -1,0 +1,42 @@
+<!-- start Bootstrap Ngb Modal (Update Form) -->
+<div class="modal-header">
+	<h5 class="modal-title"><span class="fa fa-pencil"></span>&nbsp;{{'Tasks.EdtTaskTitle' | translate }}</h5>
+	<button type="button" class="close pull-right" aria-label="Close" (click)="activeModal.close()">
+		<span aria-hidden="true">&times;</span>
+	</button>
+</div>
+<div class="modal-body" [formGroup]="edtTaskForm">
+	<div class="form-group position-relative">
+		<label for="ronlyEditId" class="font-weight-bold" >{{'Tasks.Id' | translate }}</label>
+		<input type="text" class= "form-control default" formControlName="id" readonly>
+	</div>
+	<div class="form-group position-relative">
+		<label for="txtEditArName" class="font-weight-bold" >{{'Tasks.ArName' | translate }}<strong class="text-danger">*</strong></label>
+		<input  class="form-control default"  formControlName="arName" placeholder="{{'Tasks.ArName' | translate }}" [ngClass]="{'is-invalid' : updateValidator.arName.errors && updateValidator.arName.touched}"  >
+		<div *ngIf="updateValidator.arName.touched && updateValidator.arName.errors" class="invalid-tooltip">
+			<div *ngIf="updateValidator.arName.errors.required">{{'Common.Validation.Required' | translate }}</div>
+		</div>
+	</div>
+	<div class="form-group position-relative">
+		<label for="txtEditEnName" class="font-weight-bold" >{{'Tasks.EnName' | translate }}<strong class="text-danger">*</strong></label>
+		<input  class="form-control default"  formControlName="enName" placeholder="{{'Tasks.EnName' | translate }}" [ngClass]="{'is-invalid' : updateValidator.enName.errors && updateValidator.enName.touched}"  >
+		<div *ngIf="updateValidator.enName.touched && updateValidator.enName.errors" class="invalid-tooltip">
+			<div *ngIf="updateValidator.enName.errors.required">{{'Common.Validation.Required' | translate }}</div>
+		</div>
+	</div>
+	<div class="form-group position-relative">
+		<label for="txtEditDescription" class="font-weight-bold" >{{'Tasks.Description' | translate }}</label>
+		<textarea id="txtEditDescription" name="txtEditDescription" class= "form-control default" rows="6"  maxlength="300" formControlName="description" placeholder="{{'Common.Form.MaxLength' | translate:{'value': 'Tasks.Description' | translate , 'max':'300'} }}" [ngClass]="{'is-invalid' : updateValidator.description.errors && updateValidator.description.touched}"  ></textarea>
+		<div *ngIf="updateValidator.description.touched && updateValidator.description.errors" class="invalid-tooltip">
+			<div *ngIf="updateValidator.description.errors.minlength || updateValidator.description.errors.maxlength">{{'Common.Validation.Maxlength' | translate:{'value':'300'} }}</div>
+		</div>
+	</div>
+</div>
+<div class="modal-footer  text-right">
+	<button id="btnEdtTask" class="btn btn-success" [disabled]="isSubmitting || !edtTaskForm.valid" type="button" (click)="editTask()">
+		<i class='fa ' [ngClass]="isSubmitting ? 'fa-circle-o-notch fa-spin' : 'fa-send'"></i>&nbsp;
+		{{(isSubmitting ? 'Common.Data.SendingData' : 'Common.CRUD.Save') | translate}}&nbsp;
+	</button>
+</div>
+<!-- End Bootstrap Ngb Modal (Update Form) -->
+

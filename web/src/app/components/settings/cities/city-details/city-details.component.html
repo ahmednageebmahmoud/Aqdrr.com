@@ -1,0 +1,50 @@
+<div>
+	<!-- start Bootstrap Ngb Modal (View Details Form) -->
+	<div class="modal-header">
+		<h5 class="modal-title"><span class="fa fa-eye"></span>&nbsp;{{'Cities.ViwCityTitle' | translate }}</h5>
+		<button type="button" class="close pull-right" aria-label="Close" (click)="activeModal.close()">
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+	<div class="modal-body">
+		<div class="form-group row">
+			<label for="ronlyVewId" class="col-form-label col-sm-2 font-weight-bold">{{'Common.Form.Id' | translate }}</label>
+			<div class="col-sm-4">
+				<p class="form-control-plaintext">{{city?.id}}</p>
+			</div>
+			<label for="ronlyVewCode" class="col-form-label col-sm-2 font-weight-bold">{{'Cities.Code' | translate }}</label>
+			<div class="col-sm-4">
+				<p class="form-control-plaintext">{{city?.code}}</p>
+			</div>
+		</div>
+		<div class="form-group row">
+			<label for="ronlyVewArName" class="col-form-label col-sm-2 font-weight-bold">{{'Cities.ArName' | translate }}</label>
+			<div class="col-sm-4">
+				<p class="form-control-plaintext">{{city?.arName}}</p>
+			</div>
+			<label for="ronlyVewEnName" class="col-form-label col-sm-2 font-weight-bold">{{'Cities.EnName' | translate }}</label>
+			<div class="col-sm-4">
+				<p class="form-control-plaintext">{{city?.enName}}</p>
+			</div>
+		</div>
+		<div class="form-group row">
+			<label for="chkVewIsEnabled" class="col-form-label col-sm-2">{{'Cities.IsEnabled' | translate }}</label>
+			<div class="col-sm-4">
+				<div class="animated-checkbox">
+					<label><input id="chkVewIsEnabled" name="chkVewIsEnabled" [checked]="city?.isEnabled" type="checkbox" >&nbsp;<span class="label-text default"></span></label>
+				</div>
+			</div>
+			<label for="ronlyVewRegionId" class="col-form-label col-sm-2 font-weight-bold">{{'Cities.RegionId' | translate }}</label>
+			<div class="col-sm-4">
+				<p class="form-control-plaintext">{{city?.regionName}}</p>
+			</div>
+		</div>
+		<div class="form-group row">
+			<label for="ronlyVewUpdatedDate" class="col-form-label col-sm-2 font-weight-bold">{{'Cities.UpdatedDate' | translate }}</label>
+			<div class="col-sm-4">
+				<p class="form-control-plaintext">{{city.updatedDate| date:'yyyy/MM/dd hh:mm'}}</p>
+			</div>
+		</div>
+	</div>
+	<!-- End Bootstrap Ngb Modal (View Details Form) -->
+</div>

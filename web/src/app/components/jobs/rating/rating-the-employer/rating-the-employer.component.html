@@ -1,0 +1,42 @@
+<!-- start Normal Add Form Bootstrap NGX Modal Dialog -->
+<div class="modal-header">
+    <h5 class="modal-title text-waring"><span class="fa fa-star"></span>&nbsp;{{'Rating.RateThis' | translate }}
+      <div class="text-small text-info">
+            [<b>{{applicantDetails?.jobOffer?.jobName}}</b>]
+            <br><span class="text-small text-secondary"><i class="fa fa-user-circle-o" aria-hidden="true"></i> {{applicantDetails?.jobOffer?.company?.firstName}}</span>
+        </div>
+    </h5>
+    
+      <button type="button" class="close pull-right" aria-label="Close" (click)="activeModal.close()">
+          <span aria-hidden="true">&times;</span>
+      </button>
+  </div>
+  <div class="modal-body" [formGroup]="ratingForm">
+      <div class="mb-0 form-group mx-auto  text-center">
+      <ngb-rating  max="5" [formControl]="addValidator.rating" (hover)="showRatingDescriptionText($event);" (leave)="showRatingDescriptionText(0);">
+        <ng-template let-fill="fill" let-index="index">
+          <span class="star" [class.filled]="fill === 100"  [class.bad]="index < 2"><i class="fa fa-star"></i>&nbsp;</span>
+        </ng-template>
+      </ngb-rating>
+      <div class="form-text text-info" *ngIf="ratingDescriptionText">
+        <b>{{ratingDescriptionText}}</b>
+      </div>
+          <div *ngIf="addValidator.rating.touched && addValidator.rating.errors" class="invalid-feedback">
+              <div *ngIf="addValidator.rating.errors.required">{{'Common.Validation.Required' | translate }}</div>
+          </div>
+      </div>
+      <div class="form-group">
+          <label class="hidden-xs" >{{'Rating.RateNote' | translate }}<strong class="text-danger">*</strong></label>
+          <textarea class= "form-control default" rows="5" maxlength="300" placeholder="{{'Common.Form.MaxThreeHundred' | translate:{'value':''} }}" formControlName="comment"  [ngClass]="{'is-invalid' : addValidator.comment.errors && addValidator.comment.touched}"  ></textarea>
+          <div *ngIf="addValidator.comment.touched && addValidator.comment.errors" class="invalid-feedback">
+              <div *ngIf="addValidator.comment.errors.required">{{'Common.Validation.Required' | translate }}</div>
+              <div *ngIf="addValidator.comment.errors.minlength || addValidator.comment.errors.maxlength" > {{'Common.Validation.Maxlength' | translate:{'value':'300'} }}</div>
+          </div>
+    </div>
+  </div>
+  <div class="modal-footer  text-right">
+      <button id="btnViwTicketReview" class="btn btn-primary" [disabled]="!ratingForm.valid" type="button" (click)="ratingTheEmployerByTheWorker()"> <span class="fa fa-send" ></span>&nbsp;&nbsp;{{'Common.CRUD.Send' | translate }}&nbsp;</button>
+  </div>
+  <!-- End Normal Add Form Bootstrap NGX Modal Dialog -->
+  
+  

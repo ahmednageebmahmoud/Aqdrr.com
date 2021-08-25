@@ -1,0 +1,19 @@
+<a [routerLink]="(getContentDetails) ? ['/orders', getContentDetails.orderId , 'details'] : ['']" class="list-group-item list-group-item-action px-2 py-2" >
+  <div class="d-flex bd-highlight">
+      <div class="mr-3"><i class="fa fa-2x" [class]="notification.icon + ' ' + notification.colorDescription"></i></div>
+      <div class="flex-grow-1">
+          <div class="w-100">
+              <h5 class="mb-1 text-secondary">
+                  تم تغيير حالة طلب [{{getContentDetails.serviceName}}]
+              </h5>
+          </div>
+          <p class="mb-0">
+            <strong class="text-info">{{getContentDetails.orderStageDescription}}</strong> رقم <strong class="text-info">(#{{getContentDetails.orderId}})</strong> من قِبل مُقدم الخدمة [<strong class="text-info">{{getContentDetails.taskerName}}</strong>] .
+          </p>
+          <div class="d-flex w-100 justify-content-between">
+              <small class="badge badge-pill badge-info">(يمكنك التواصل مع مقدم الخدمة لطلب طريقة التواصل معه في حال الموافقة)</small>
+              <small>{{notification.createdDate | timeAgo}}</small>
+          </div>
+      </div>
+  </div>
+</a>

@@ -1,0 +1,22 @@
+<!-- ======= Breadcrumbs ======= -->
+<section id="breadcrumbs" class="breadcrumbs">
+  <div class="container">
+
+    <div class="d-flex justify-content-between align-items-center">
+      <h2 *ngIf="title">{{title}}</h2>
+      <span *ngIf="subTitle" class="sub-title">{{subTitle}}</span>
+      <ol>
+        <li><a [routerLink]="['']" routerLinkActive="router-link-active">{{'Menu.Home' | translate }}</a></li>
+        <li *ngFor="let link of links">
+          <ng-container *ngIf="!link.param; else elseTemplate">
+            <a [routerLink]="['/' + link.path]">{{ link.title }}</a>
+          </ng-container>
+          <ng-template #elseTemplate>
+            <a [routerLink]="['/' + link.path, link.param || ''  ]">{{ link.title }}</a>
+          </ng-template>
+        </li>
+        <li>{{currentPageTitle}}</li>
+      </ol>
+    </div>
+  </div>
+</section><!-- End Breadcrumbs -->

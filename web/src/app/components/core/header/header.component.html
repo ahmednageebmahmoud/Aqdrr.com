@@ -1,0 +1,143 @@
+<nav>
+    <div class="aqdr-container">
+        <div class="aqdr-nav">
+            <div class="aqdr-logo-container">
+                <a  [routerLink]="['']" routerLinkActive="router-link-active" ><img src="assets/images/logo.png" alt="" ></a>
+            </div>
+            <div class="aqdr-menu-container">
+                <ul class="aqdr-nav-menu">
+                    <li class="aqdr-nav-item" *ngIf="!loggedIn()"><a class="aqdr-nav-link"
+                            href="#aqdr-stage">{{'app.AppName'|translate}}</a></li>
+                    <li class="aqdr-nav-item"><a class="aqdr-nav-link" href="#aqdr-jobs"
+                            *ngIf="!loggedIn()">{{'Navbar.Members' | translate }}</a></li>
+                    <li class="aqdr-nav-item"><a class="aqdr-nav-link" href="#aqdr-freelancers" *ngIf="!loggedIn()">
+                            {{'Navbar.Business' | translate }}</a></li>
+                    <li class="aqdr-nav-item"><a class="aqdr-nav-link" href="#aqdr-packages"
+                            *ngIf="!loggedIn()">{{'Navbar.Packages' | translate }}</a></li>
+
+
+                    <ng-container *ngIf="loggedIn() && permissions.canManageUsers; else actionsTemplate">
+                        <li *ngIf="loggedIn() && permissions.canViewUsers"><a routerLinkActive="active"
+                                [routerLink]="['/settings']" (click)="hideMenu()">{{'Menu.Dashboard' | translate }}</a>
+                        </li>
+                    </ng-container>
+                    <ng-template #actionsTemplate>
+                        <li class="aqdr-nav-item" *ngIf="loggedIn() && permissions.canManageJobs"><a
+                                routerLinkActive="active" [routerLink]="['/jobs' , 'manage']"
+                                (click)="hideMenu()">{{'JobsOffers.ManageJobs' | translate }}</a></li>
+                        <li class="aqdr-nav-item" *ngIf="loggedIn() && permissions.canManageJobs"><a
+                                routerLinkActive="active" [routerLink]="['/jobs', 'applicants']"
+                                (click)="hideMenu()">{{'Applicants.ApplicantsList' | translate }}</a></li>
+                        <li class="aqdr-nav-item" *ngIf="loggedIn() && permissions.canApplyToTheJobs"><a
+                                routerLinkActive="active" [routerLink]="['/jobs']"
+                                (click)="hideMenu()">{{'JobsOffers.jobOfferCaption' | translate }}</a></li>
+                        <li class="aqdr-nav-item" *ngIf="loggedIn() && permissions.canApplyToTheJobs"><a
+                                routerLinkActive="active" [routerLink]="['/jobs', 'my', 'requests']"
+                                (click)="hideMenu()">{{'Applicants.SearcherRequests' | translate }}</a></li>
+                        <li class="aqdr-nav-item" *ngIf="loggedIn() && permissions.canManageOrders"><a
+                                routerLinkActive="active" [routerLink]="['/orders', 'manage']"
+                                (click)="hideMenu()">{{'OrdersServices.Manage' | translate }}</a></li>
+                    </ng-template>
+
+                    <!--Help-->
+                    <li id="drop-help" class="aqdr-nav-item aqdr-drop-down-menu" *ngIf="!loggedIn()" (click)="slideToggle('drop-help')">
+                        <a href="javascript:void()" class="aqdr-drop-down-menu-title aqdr-nav-link">{{'Navbar.Help' |
+                            translate }} <i class="fa fa-angle-down"></i> </a>
+                        <ul class="menu">
+                            <li><a class="aqdr-nav-link" [routerLink]="['/contact-us']">{{'Navbar.ContactUs' | translate
+                                    }}</a></li>
+                            <li><a class="aqdr-nav-link" href="javascript:void()">{{'Navbar.Location' | translate }}
+                                </a></li>
+                            <li><a class="aqdr-nav-link" [routerLink]="['/faq']">{{'Navbar.FAQ' | translate }} </a></li>
+                        </ul>
+                    </li>
+
+                    <!--Language-->
+                    <li id="drop-language" class="aqdr-nav-item aqdr-drop-down-menu language mobile" *ngIf="!loggedIn()" (click)="slideToggle('drop-language')">
+                        <a href="javascript:void()" class="aqdr-drop-down-menu-title aqdr-nav-link">
+                            <span>
+                                <img [src]="authService.language.value=='en'?'assets/images/lang-en.png':'assets/images/lang-ar.png'"
+                                    alt="">
+                                {{authService.language.value=='en'?'English':'عربي'}}
+                            </span>
+                            <i class="fa fa-angle-down"></i>
+                        </a>
+                        <ul class="menu">
+                            <li><a class="aqdr-nav-link" (click)="changeLanguage('ar')"
+                                    onclick="selectPageDirection('rtl')" (click)="hideMenu()"><img
+                                        src="assets/images/lang-ar.png" alt="" /> عربي</a></li>
+                            <li><a class="aqdr-nav-link" (click)="changeLanguage('en')"
+                                    onclick="selectPageDirection('ltr')" (click)="hideMenu()"><img
+                                        src="assets/images/lang-en.png" alt="" /> English</a></li>
+                        </ul>
+                    </li>
+
+                    <!--Login-->
+                    <li *ngIf="!loggedIn()" class="aqdr-nav-item  mobile"><a [routerLink]="['/login']"
+                            (click)="hideMenu()" class="aqdr-btn login"><img src="assets/images/white-title.png" alt="">
+                            {{'Login.Signin' | translate }}</a></li>
+
+                    <!--Notificaions-->
+                    <li *ngIf="loggedIn()" class="icon-badge-group aqdr-nav-item">
+                        <a routerLinkActive="active" [routerLink]="['/notifications']"
+                            title="{{'Notifications.List' | translate }}" (click)="hideMenu()">
+                            <div class="icon-badge-container">
+                                <i class="fa fa-bell-o icon-badge-icon" aria-hidden="true"></i>
+                                <div class="icon-badge">{{newNotificationsCount}}</div>
+                            </div>
+                        </a>
+                    </li>
+
+                    <!--Profile-->
+                    <li id="drop-profile" class="aqdr-nav-item aqdr-drop-down-menu   " *ngIf="loggedIn()" (click)="slideToggle('drop-profile')">
+                        <a href="javascript:void()"
+                            class="aqdr-drop-down-menu-title aqdr-nav-link">{{authService.currentUser?.fullName |
+                            titlecase}} <i class="fa fa-angle-down"></i> </a>
+                        <ul class="menu">
+                            <li class="aqdr-nav-item"><a class="aqdr-nav-link old-menu" href="javascript:void(0)"
+                                    [routerLink]="['/profile']" (click)="hideMenu()"><i class="fa fa-user"></i>
+                                    {{'Navbar.Profile' | translate }}</a></li>
+                            <li class="aqdr-nav-item"><a class="aqdr-nav-link old-menu" href="javascript:void(0)"
+                                    [routerLink]="['/orders']" (click)="hideMenu()"><i class="fa fa-shopping-cart"></i>
+                                    {{'OrdersServices.orderServiceCaption' | translate }}</a></li>
+                            <li class="aqdr-nav-item"><a class="aqdr-nav-link old-menu" href="javascript:void(0)"
+                                    [routerLink]="['/profile' , 'messages']" (click)="hideMenu()"><i
+                                        class="fa fa-comments"></i> {{'Chatbox.Chats' | translate }}</a></li>
+                            <li class="aqdr-nav-item"><a class="aqdr-nav-link old-menu" href="javascript:void(0)"
+                                    [routerLink]="['']" (click)="logout()" class="text-danger" (click)="hideMenu()"><i
+                                        class="fa fa-sign-out"></i> {{'Navbar.Logout' | translate }}</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="aqdr-tools-container computer" *ngIf="!loggedIn()">
+                <div id="drop-language-desk" class="aqdr-drop-down-menu language" (click)="slideToggle('drop-language-desk')">
+                    <a href="javascript:void()" class="aqdr-drop-down-menu-title aqdr-nav-link">
+                        <span>
+                            <img [src]="authService.language.value=='en'?'assets/images/lang-en.png':'assets/images/lang-ar.png'"
+                                alt="">
+                            {{authService.language.value=='en'?'English':'عربي'}}
+                        </span>
+                        <i class="fa fa-angle-down"></i>
+                    </a>
+                    <ul class="menu">
+                        <li><a href="javascript:void()" class="aqdr-nav-link" (click)="changeLanguage('ar')"
+                                onclick="selectPageDirection('rtl')" (click)="hideMenu()"><img
+                                    src="assets/images/lang-ar.png" alt="" /> عربي</a></li>
+                        <li><a href="javascript:void()" class="aqdr-nav-link" (click)="changeLanguage('en')"
+                                onclick="selectPageDirection('ltr')" (click)="hideMenu()"><img
+                                    src="assets/images/lang-en.png" alt="" /> English</a></li>
+                    </ul>
+                </div>
+                <a [routerLink]="['/login']" (click)="hideMenu()" class="aqdr-btn login"><img
+                        src="assets/images/white-title.png" alt=""> {{'Login.Signin' | translate }}</a>
+            </div>
+
+            <div class="aqdr-tools-container mobile">
+                <button class="aqdr-icon-btn" id="toggle-main-menu"><i class="fa fa-bars"></i></button>
+            </div>
+
+        </div>
+    </div>
+</nav>

@@ -1,0 +1,24 @@
+<!-- ======= Features Section ======= -->
+<section id="features" class="features">
+  <div class="container">
+
+    <div class="section-title" data-aos="fade-up">
+      <h2>ما هي الفرص المتاحة؟</h2>
+      <p>نعرض لك فرص عمل مرنة قريبة منك وتناسب جدولك وأوقات تفرّغك</p>
+    </div>
+
+    <div class="row" data-aos="fade-up" data-aos-delay="300">
+      <div *ngFor="let category of jobCategories" class="col-lg-3 col-md-4 mt-4">
+        <div class="icon-box">
+          <img src="assets/img/icons/{{category.icon}}" height="45px" class="mr-2" />
+          <h3><a [routerLink]="isGoToJobsList?['/jobs-list',category.id,category.name]:['/looking-for-work']">{{category.name}}</a></h3>
+        </div>
+      </div>
+      <div *ngIf="random > 0" class="col-lg-3 col-md-4 mt-4" >
+        <div class="icon-box text-center" style="height: 65px;">
+          <h3><a [routerLink]="['/looking-for-work']">عرض المزيد</a></h3>
+        </div>
+      </div>
+    </div>
+  </div>
+</section><!-- End Features Section -->

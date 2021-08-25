@@ -1,0 +1,27 @@
+{
+    "files.exclude": {
+        ".*": true,
+       "*.js": true,
+        "*.md": true,
+        "**/*.json": false,
+        "*.json": true,
+        "**/**/*.spec.ts": true,
+         
+        "e2e": true,
+        "node_modules": true,
+        "src/*.ico": true,
+        "src/*.ts": true,
+        "src/assets/.gitkeep": true,
+        "src/assets/css": false,
+        "src/assets/fonts": false,
+        "src/assets/scss": false,
+        "src/styles.css": false
+    },
+   
+           "javascript.referencesCodeLens.showOnAllFunctions": true,
+    "typescript.implementationsCodeLens.enabled": true,
+    "typescript.referencesCodeLens.enabled": true,
+    "javascript.referencesCodeLens.enabled": true,
+    "typescript.referencesCodeLens.showOnAllFunctions": true
+        
+}

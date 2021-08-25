@@ -1,0 +1,38 @@
+<!-- start Bootstrap Ngb Modal (Add Form) -->
+<div class="modal-header">
+	<h5 class="modal-title"><span class="fa fa-plus"></span>&nbsp;{{'Tasks.AddTaskTitle' | translate }}</h5>
+	<button type="button" class="close pull-right" aria-label="Close" (click)="activeModal.close()">
+		<span aria-hidden="true">&times;</span>
+	</button>
+</div>
+<div class="modal-body" [formGroup]="addTaskForm">
+	<div class="form-group position-relative">
+		<label for="txtAddArName" class="font-weight-bold" >{{'Tasks.ArName' | translate }}<strong class="text-danger">*</strong></label>
+		<input  class="form-control default"  formControlName="arName" placeholder="{{'Tasks.ArName' | translate }}" [ngClass]="{'is-invalid' : addValidator.arName.errors && addValidator.arName.touched}"  >
+		<div *ngIf="addValidator.arName.touched && addValidator.arName.errors" class="invalid-tooltip">
+			<div *ngIf="addValidator.arName.errors.required">{{'Common.Validation.Required' | translate }}</div>
+		</div>
+	</div>
+	<div class="form-group position-relative">
+		<label for="txtAddEnName" class="font-weight-bold" >{{'Tasks.EnName' | translate }}<strong class="text-danger">*</strong></label>
+		<input  class="form-control default"  formControlName="enName" placeholder="{{'Tasks.EnName' | translate }}" [ngClass]="{'is-invalid' : addValidator.enName.errors && addValidator.enName.touched}"  >
+		<div *ngIf="addValidator.enName.touched && addValidator.enName.errors" class="invalid-tooltip">
+			<div *ngIf="addValidator.enName.errors.required">{{'Common.Validation.Required' | translate }}</div>
+		</div>
+	</div>
+	<div class="form-group position-relative">
+		<label for="txtAddDescription" class="font-weight-bold" >{{'Tasks.Description' | translate }}</label>
+		<textarea id="txtAddDescription" name="txtAddDescription" class= "form-control default" rows="3"  maxlength="300" formControlName="description" placeholder="{{'Common.Form.MaxLength' | translate:{'value': 'Tasks.Description' | translate , 'max':'300'} }}" [ngClass]="{'is-invalid' : addValidator.description.errors && addValidator.description.touched}"  ></textarea>
+		<div *ngIf="addValidator.description.touched && addValidator.description.errors" class="invalid-tooltip">
+			<div *ngIf="addValidator.description.errors.minlength || addValidator.description.errors.maxlength">{{'Common.Validation.Maxlength' | translate:{'value':'300'} }}</div>
+		</div>
+	</div>
+</div>
+<div class="modal-footer  text-right">
+	<button id="btnAddTask" class="btn btn-primary" [disabled]="isSubmitting || !addTaskForm.valid" type="button" (click)="addNewTask()">
+		<i class='fa ' [ngClass]="isSubmitting ? 'fa-circle-o-notch fa-spin' : 'fa-send'"></i>&nbsp;
+		{{(isSubmitting ? 'Common.Data.SendingData' : 'Common.CRUD.Add') | translate}}&nbsp;
+	</button>
+</div>
+<!-- End Bootstrap Ngb Modal (Add Form) -->
+

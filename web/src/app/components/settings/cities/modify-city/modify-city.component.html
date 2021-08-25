@@ -1,0 +1,42 @@
+<!-- start Bootstrap Ngb Modal (Update Form) -->
+<div class="modal-header">
+	<h5 class="modal-title"><span class="fa fa-pencil"></span>&nbsp;{{'Cities.EdtCityTitle' | translate }}</h5>
+	<button type="button" class="close pull-right" aria-label="Close" (click)="activeModal.close()">
+		<span aria-hidden="true">&times;</span>
+	</button>
+</div>
+<div class="modal-body" [formGroup]="edtCityForm">
+	<div class="form-group position-relative">
+		<label for="ronlyEditId" class="font-weight-bold" >{{'Common.Form.Id' | translate }}</label>
+		<input type="text" class= "form-control default" formControlName="id" readonly>
+	</div>
+	<div class="form-group position-relative">
+		<label for="txtEditCode" class="font-weight-bold" >{{'Cities.Code' | translate }}<strong class="text-danger">*</strong></label>
+		<input  class="form-control default"  formControlName="code" placeholder="{{'Cities.Code' | translate }}" [ngClass]="{'is-invalid' : updateValidator.code.errors && updateValidator.code.touched}"  >
+		<div *ngIf="updateValidator.code.touched && updateValidator.code.errors" class="invalid-tooltip">
+			<div *ngIf="updateValidator.code.errors.required">{{'Common.Validation.Required' | translate }}</div>
+		</div>
+	</div>
+	<div class="form-group position-relative">
+		<label for="txtEditArName" class="font-weight-bold" >{{'Cities.ArName' | translate }}<strong class="text-danger">*</strong></label>
+		<input  class="form-control default"  formControlName="arName" placeholder="{{'Cities.ArName' | translate }}" [ngClass]="{'is-invalid' : updateValidator.arName.errors && updateValidator.arName.touched}"  >
+		<div *ngIf="updateValidator.arName.touched && updateValidator.arName.errors" class="invalid-tooltip">
+			<div *ngIf="updateValidator.arName.errors.required">{{'Common.Validation.Required' | translate }}</div>
+		</div>
+	</div>
+	<div class="form-group position-relative">
+		<label for="txtEditEnName" class="font-weight-bold" >{{'Cities.EnName' | translate }}<strong class="text-danger">*</strong></label>
+		<input  class="form-control default"  formControlName="enName" placeholder="{{'Cities.EnName' | translate }}" [ngClass]="{'is-invalid' : updateValidator.enName.errors && updateValidator.enName.touched}"  >
+		<div *ngIf="updateValidator.enName.touched && updateValidator.enName.errors" class="invalid-tooltip">
+			<div *ngIf="updateValidator.enName.errors.required">{{'Common.Validation.Required' | translate }}</div>
+		</div>
+	</div>
+</div>
+<div class="modal-footer  text-right">
+	<button id="btnEdtCity" class="btn btn-success" [disabled]="isSubmitting || !edtCityForm.valid" type="button" (click)="editCity()">
+		<i class='fa ' [ngClass]="isSubmitting ? 'fa-circle-o-notch fa-spin' : 'fa-send'"></i>&nbsp;
+		{{(isSubmitting ? 'Common.Data.SendingData' : 'Common.CRUD.Save') | translate}}&nbsp;
+	</button>
+</div>
+<!-- End Bootstrap Ngb Modal (Update Form) -->
+

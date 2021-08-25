@@ -1,0 +1,5 @@
+.animated {
+  -webkit-transition: height 0.5s;
+  -moz-transition: height 0.5s;
+  transition: height 0.5s;
+}

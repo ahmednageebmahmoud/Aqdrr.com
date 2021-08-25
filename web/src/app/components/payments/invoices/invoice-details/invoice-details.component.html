@@ -1,0 +1,157 @@
+
+<!-- ======= Breadcrumbs ======= -->
+<section id="breadcrumbs" class="breadcrumbs">
+  <div class="container">
+      <div class="d-flex justify-content-between align-items-center">
+          <div>
+            <h2><i class="fa fa-list-alt" aria-hidden="true"></i>&nbsp;{{'Invoices.Id' | translate }}: # </h2>
+          </div>
+          <ol>
+            
+            <li><a [routerLink]="['/payments' , 'invoices' , 'list']">{{'Invoices.invoiceCaption' | translate }}</a></li>
+            <li><span class="text-muted" >{{'Invoices.ViwInvoiceTitle' | translate }}</span></li>
+          </ol>
+      </div>
+  </div>
+</section><!-- End Breadcrumbs -->
+
+<article id="profile" class="content">
+  <div class="container" [ngClass]="{'disabled-spinner-container': isLoadingData}">
+    <app-spinner-container *ngIf="isLoadingData" class="spinner-container"></app-spinner-container>
+      <!-- begin invoice Collapse Card -->
+      <div class="card">
+        <div id="invoice-body" class=" p-3">
+          <div class="card-block text-left">
+            <div class="form-row mb-2">
+              <label class="col-4 h6 mb-0"><i class="fa fa-plus"></i>&nbsp;{{'Invoices.Id' | translate }}</label>
+              <div class="col-8">
+                <p class="h6 mb-0">{{invoice?.id}}</p>
+              </div>
+            </div>
+
+            <div class="form-row mb-2">
+              <label class="col-4 h6 mb-0"><i class="fa fa-plus"></i>&nbsp;{{'Invoices.Description' | translate }}</label>
+              <div class="col-8">
+                <p class="h6 mb-0">{{invoice?.description}}</p>
+              </div>
+            </div>
+            <div class="form-row mb-2">
+              <label class="col-4 h6 mb-0"><i class="fa fa-plus"></i>&nbsp;{{'Invoices.UserId' | translate }}</label>
+              <div class="col-8">
+                <p class="h6 mb-0"><strong><a *ngIf="invoice" class="text-primary font-weight-bold" [routerLink]="['/profile/' , invoice?.userId]">[{{invoice?.userId}}] {{invoice?.subscriber?.fullName || invoice.subscriber?.userName}}</a></strong></p>
+              </div>
+            </div>
+            <div class="form-row mb-2">
+              <label class="col-4 h6 mb-0"><i class="fa fa-plus"></i>&nbsp;{{'Common.Data.LastUpdate' | translate }}</label>
+              <div class="col-8">
+                <p class="h6 mb-0" *ngIf="invoice">{{invoice?.updatedDate | date:'yyyy/MM/dd hh:mm'}}</p>
+              </div>
+            </div>
+            <div class="form-row mb-2">
+              <label class="col-4 h6 mb-0"><i class="fa fa-plus"></i>&nbsp;{{'Invoices.CreatedDate' | translate }}</label>
+              <div class="col-8">
+                <p class="h6 mb-0" *ngIf="invoice">{{invoice?.createdDate | date:'yyyy/MM/dd hh:mm'}}</p>
+              </div>
+            </div>
+            <div class="form-row mb-2">
+              <label class="col-4 h6 mb-0"><i class="fa fa-plus"></i>&nbsp;{{'Invoices.PaymentDate' | translate }}</label>
+              <div class="col-8">
+                <p class="h6 mb-0" *ngIf="invoice">{{invoice?.paymentDate | date:'yyyy/MM/dd hh:mm'}}</p>
+              </div>
+            </div>
+            <div class="form-row mb-2">
+              <label class="col-4 h6 mb-0"><i class="fa fa-plus"></i>&nbsp;{{'Invoices.SubscriptionPackageId' | translate }}</label>
+              <div class="col-8">
+                <p class="h6 mb-0"><a  *ngIf="invoice" class="text-info" [routerLink]="['/subscription-packages' , invoice?.subscriptionPackageId , 'details']"><strong>{{invoice?.subscriptionPackage?.title}}</strong> </a></p>
+              </div>
+            </div>
+            <div class="form-row mb-2">
+              <label class="col-4 h6 mb-0"><i class="fa fa-plus"></i>&nbsp;{{'Invoices.PackagePrice' | translate }}</label>
+              <div class="col-8">
+                <p class="h6 mb-0">
+                  <span><strong *ngIf="invoice">{{invoice?.packagePrice | number:'1.1-2'}}</strong> ريال </span>
+                  <span>لمدة <strong *ngIf="invoice">{{invoice?.totalDays}}</strong> يوماً</span>
+                </p>
+              </div>
+            </div>
+            <div class="form-row mb-2" *ngIf="invoice && invoice.subscriptionPackage?.category === PackageCategoryEnum.Business">
+              <label class="col-4 h6 mb-0"><i class="fa fa-plus"></i>&nbsp;{{'Invoices.EmploymentBags' | translate }}</label>
+              <div class="col-8">
+                <p class="h6 mb-0"><strong>{{'Invoices.EmploymentBagsBalance' | translate}}:</strong><span *ngIf="invoice &&  invoice.subscriptionPackage?.category === PackageCategoryEnum.Business" class="badge badge-pill badge-info text-light">{{invoice?.employmentBagsBalance}} من {{invoice?.subscriptionPackage?.employmentBags}}</span></p>
+              </div>
+            </div>
+            <div class="form-row mb-2" *ngIf="invoice && invoice?.status === PaymentStatusEnum.Confirmed">
+              <label class="col-4 h6 mb-0"><i class="fa fa-plus"></i>&nbsp;{{'Invoices.IsExpiry' | translate }}</label>
+              <div class="col-8">
+                <p class="h6 mb-0">
+                  <i class="fa" *ngIf="invoice" [ngClass]="invoice.isExpiry === true ? 'fa-times-circle text-danger' : 'fa-check-circle text-success'"></i>
+                  <span class="text-success" *ngIf="invoice && invoice.isExpiry === false"> {{'Invoices.Valid' | translate }}</span>
+                  <span class="text-danger" *ngIf="invoice && invoice.isExpiry === true"> {{'Invoices.Expired' | translate }}</span>
+                </p>
+              </div>
+            </div>
+            <div class="form-row mb-2" *ngIf="invoice && invoice?.status === PaymentStatusEnum.Confirmed">
+              <label class="col-4 h6 mb-0"><i class="fa fa-plus"></i>&nbsp;{{'Invoices.ExpiryDate' | translate }}</label>
+              <div class="col-8">
+                <p class="h6 mb-0" >{{invoice?.expiryDate | date:'yyyy/MM/dd'}}</p>
+              </div>
+            </div>
+            <div class="form-row mb-2">
+              <label class="col-4 h6 mb-0"><i class="fa fa-plus"></i>&nbsp;{{'Invoices.Status' | translate }}</label>
+              <div class="col-8">
+                <p class="h6 mb-0"><i class="fa"  *ngIf="invoice" [ngClass]="getPaymentStatusIconStyle(invoice?.chargeStatus)"></i> {{invoice?.chargeStatusDescription}}</p>
+              </div>
+            </div>
+            <hr>
+            <div class="form-row mb-2">
+              <label class="col-4 h6 mb-0"><i class="fa fa-plus"></i>&nbsp;{{'Invoices.ChargeId' | translate }}</label>
+              <div class="col-8">
+                <p class="h6 mb-0"><span *ngIf="invoice" class="badge badge-pill badge-warning text-dark">{{invoice?.chargeId}}</span></p>
+              </div>
+            </div>
+            <div class="form-row mb-2">
+              <label class="col-4 h6 mb-0"><i class="fa fa-plus"></i>&nbsp;{{'Invoices.IsPaid' | translate }}</label>
+              <div class="col-8">
+                <p class="h6 mb-0"><i class="fa" [ngClass]="invoice?.isPaid ? 'fa fa-check-circle text-success' : 'fa fa-ban text-danger'"></i> </p>
+              </div>
+            </div>
+            <div class="form-row mb-2">
+              <label class="col-4 h6 mb-0"><i class="fa fa-plus"></i>&nbsp;{{'Invoices.ChargeStatusName' | translate }}</label>
+              <div class="col-8">
+                <p class="h6 mb-0"><i class="fa" [ngClass]="getPaymentStatusIconStyle(invoice?.status)"></i> {{invoice?.statusDescription}}</p>
+              </div>
+            </div>
+
+
+            <div class="form-row mb-2" *ngIf="permissions.canManageInvoices" >
+              <label class="col-4 h6 mb-0"><i class="fa fa-plus"></i>&nbsp;{{'Invoices.ChargeResponsiveCode' | translate }}</label>
+              <div class="col-8">
+                <p class="h6 mb-0">{{invoice?.chargeResponsiveCode}}<span *ngIf="invoice && invoice?.status !== PaymentStatusEnum.Confirmed"> | </span>
+                <a *ngIf="invoice && invoice?.status !== PaymentStatusEnum.Confirmed" href="https://tappayments.api-docs.io/2.0/response-codes/http-status-code-summary" target="_blank">رابط أكواد الخطأ</a></p>
+              </div>
+            </div>
+            <div class="form-row mb-2" *ngIf="permissions.canManageInvoices">
+              <label class="col-4 h6 mb-0"><i class="fa fa-plus"></i>&nbsp;{{'Invoices.ChargeResponsiveMessage' | translate }}</label>
+              <div class="col-8">
+                <p class="h6 mb-0">{{invoice?.chargeResponsiveMessage}}</p>
+              </div>
+            </div>
+            <div class="form-row mb-2" *ngIf="permissions.canManageInvoices">
+              <button *ngIf="invoice && invoice.chargeStatus !== ChargeStatusEnum.Free" type="button" class="btn btn-primary btn-sm btn-block" (click)="checkPaymentGatewayForThisCharge(invoice.chargeStatus, invoice.chargeId)"  [disabled]="isSubmitting">
+                <i class='fa ' [ngClass]="isSubmitting ? 'fa-circle-o-notch fa-spin' : 'fa-repeat'"></i>&nbsp;
+                {{(isSubmitting ? 'Common.Data.SendingData' : 'Invoices.CheckPayment') | translate}}&nbsp;
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+      <!-- end invoice Collapse Card -->
+
+
+  </div>
+</article>
+
+
+

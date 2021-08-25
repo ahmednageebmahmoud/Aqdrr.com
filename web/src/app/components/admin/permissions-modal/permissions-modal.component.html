@@ -1,0 +1,69 @@
+<div class="modal-header">
+  <h4 class="modal-title"><i class="fa fa-shield" aria-hidden="true"></i> تعديل أذونات الصلاحية {{role.name}}</h4>
+</div>
+<div class="modal-body">
+  <form #rolesForm="ngForm" id="rolesForm">
+      <div class="row">
+          <div class="col-sm-5">
+            <div class="form-group row has-feedback-icon">
+              <label class="col-form-label col-md-3" for="roleName">{{'roles.editor.Name' | translate}}</label>
+              <div class="col-md-9">
+                <input type="text" id="roleName" name="roleName" placeholder="Enter role name" class="form-control" [(ngModel)]="tempRole.name"  required minlength="2" maxlength="200" />
+              </div>
+            </div>
+          </div>
+    
+          <div class="col-sm-7">
+            <div class="form-group row">
+              <label class="col-form-label col-md-3" for="roleDescription">{{'roles.editor.Description' | translate}}</label>
+              <div class="col-md-9">
+                <input type="text" id="roleDescription" name="roleDescription" placeholder="Enter role description" class="form-control" [(ngModel)]="tempRole.description" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+              <hr class="edit-separator-hr" />
+            </div>
+          </div>
+
+    <div class="row">
+        <div class="col-sm-12 card card-body bg-light well-sm permissionsRow">
+          <div class="row">
+  
+            <ng-template ngFor let-permissionGroup [ngForOf]="permissions | groupBy: 'groupName'" let-i="index">
+              <div class="form-group row col-sm-6 permissionsColumn">
+                <label class="col-md-5 col-form-label group-name" for="checkboxes" (click)="toggleGroup(permissionGroup.key)">{{permissionGroup.key}}</label>
+                <div class="col-md-7">
+                  <div class="animated-checkbox" *ngFor="let permission of permissionGroup.value">
+                    <input name="checkboxes-{{permission.value}}" id="checkboxes-{{permission.value}}" type="checkbox" value="permission.value"
+                           class="" [checked]="permission.checked" (change)="permission.checked = !permission.checked">
+                    <label class="label-text"  title="{{permission.description}}" for="checkboxes-{{permission.value}}">{{permission.name}}</label>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="(i + 1) % 2 === 0" class="clearfix"></div>
+            </ng-template>
+  
+          </div>
+        </div>
+  
+      </div>
+
+
+  </form>
+</div>
+<div class="modal-footer">
+    <div class="col-sm-5">
+          <a (click)="selectAll()" href="javascript:;" class="btn btn-link">{{'roles.editor.SelectAll' | translate}}</a>|<a (click)="selectNone()" href="javascript:;" class="btn btn-link">{{'roles.editor.SelectNone' | translate}}</a>
+    </div>
+    <div class="col-sm-7">
+        <div ngPreserveWhitespaces class="">
+            <button type="button" class="btn btn-default" form="rolesForm" (click)="updateTheRole();">اعتماد</button>
+            <button type="button" class="btn btn-default" (click)="activeModal.dismiss()">إغلاق</button>
+        </div>
+      </div>
+
+</div>

@@ -1,0 +1,16 @@
+<div class="form-group row my-0">
+    <label class="col-form-label profile-info-title pb-0">{{'users.Students.Hobbies' | translate }}</label>
+    <ng-container *ngIf="UserHoppies?.length > 0; else nothingTemplate">
+        <div class="col-12 my-2">
+            <div class="badge-xl bg-info mb-1 profile-info-details" *ngFor="let hobby of UserHoppies; let i = index;">
+                {{hobby?.hobby?.name}}
+            </div>
+        </div>
+
+
+      
+    </ng-container>
+    <ng-template #nothingTemplate>
+        <p class="form-control-plaintext text-break text-secondary pt-0">{{'Common.Data.NoData' | translate }}</p>
+    </ng-template>
+</div>

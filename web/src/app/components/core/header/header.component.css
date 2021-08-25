@@ -1,0 +1,48 @@
+.icon-badge-group {
+ 
+}
+
+.icon-badge-group .icon-badge-container {
+    display: inline-block;
+    margin-left:15px;
+}
+
+.icon-badge-group .icon-badge-container:first-child { 
+  margin-left:0
+}
+
+.icon-badge-container {
+    margin-top: 5px;
+    position:relative;
+}
+
+.icon-badge-icon {
+    font-size: 20px;
+    position: relative;
+    font-weight: bold;
+}
+
+.icon-badge {
+    background-color: #1089a4;
+    font-size: 13px;
+    color: white;
+    text-align: center;
+    width: 17px;
+    height: 17px;
+    border-radius: 50%;
+    position: absolute;
+    top: -5px;
+    right: 16px;
+}
+
+
+.slider {
+    max-height: 1000px;
+    overflow: hidden;
+    transition: max-height 0.5s cubic-bezier(1,0,1,0);
+  }
+  
+  .slider.closed {
+    max-height: 0;
+    transition: max-height 0.7s cubic-bezier(0,1,0,1);
+  }

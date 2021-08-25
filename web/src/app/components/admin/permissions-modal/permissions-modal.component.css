@@ -1,0 +1,121 @@
+.role-badge {
+  border-radius: 5px !important;
+  margin-right: 5px;
+  background-color: #1188a4 !important;
+  color: #fff !important;
+  font-family: 'arial' !important;
+  font-size: 0.9rem !important;
+  padding: 5px;
+}
+
+[type="checkbox"]:before {
+    content: "";
+    position: absolute;
+    top: -1.2em;
+    width: 27px;
+    height: 25px;
+    border: 3px solid #333;
+    border-radius: 5px;
+    text-align: center;
+  }
+  
+  /* ✔ */
+  
+  
+  .separator-hr {
+    margin: 0 5px;
+    border-top-style: dashed;
+  }
+   
+  .edit-separator-hr {
+    margin: 10px 5px;
+    border-top-style: dashed;
+  }
+  
+  .last-separator-hr {
+    margin-top: 5px;
+  }
+  
+  .edit-last-separator-hr {
+    margin-top: 15px;
+  }
+  
+  
+  .form-group {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  
+  input.form-control {
+    border-left-width: 5px;
+  }
+  
+  .invalid-feedback {
+    display: block;
+  }
+  
+  .group-name {
+    color: #1188a4;
+    font-weight: 500;
+  }
+  
+  .permissionsColumn {
+    margin-bottom: 20px;
+  }
+  
+  .permissionsRow {
+    margin: 0 15px;
+  }
+  
+  
+  .well-sm {
+    padding: 0.5rem;
+  }
+  
+  @media (min-width: 992px) {
+    .user-enabled {
+      margin-left: 40px;
+    }
+  }
+  
+/* Custom Checkbox and Radio Buttons */
+.animated-checkbox input[type="checkbox"] {
+  display: none;
+}
+
+.animated-checkbox input[type="checkbox"]+.label-text {
+  cursor: pointer !important;
+}
+
+.animated-checkbox input[type="checkbox"]+.label-text:before {
+  content: "";
+  font-family: "FontAwesome";
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  font-size: 18px;
+  -webkit-font-smoothing: antialiased;
+  width: 1em;
+  display: inline-block;
+  margin-right: 2px;
+  vertical-align: -2px;
+}
+
+.animated-checkbox input[type="checkbox"]:checked+.label-text:before {
+  content: "";
+  color: #1188a4;
+  -webkit-animation: tick 180ms ease-in;
+  animation: tick 180ms ease-in;
+}
+
+.animated-checkbox input[type="checkbox"]:disabled+.label-text {
+  cursor: not-allowed !important;
+}
+
+.animated-checkbox input[type="checkbox"]:disabled+.label-text:before {
+  content: "";
+  color: #ccc;
+}

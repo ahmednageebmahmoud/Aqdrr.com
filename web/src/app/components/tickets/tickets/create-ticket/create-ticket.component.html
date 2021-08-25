@@ -1,0 +1,84 @@
+<!-- start Normal Add BootStrap CardForm Form -->
+<form id ="formAddTicket" [formGroup]="addTicketForm" (ngSubmit)="addNewTicket()">
+  <div class="form-group position-relative">
+    <div class="input-group">
+      <div class="input-group-prepend">
+      <span class="input-group-text"><span class="fa fa-info-circle"></span></span>
+    </div>
+      <select id="ddlCategory" name="ddlCategory" formControlName="category" class="form-control" [ngClass]="{'is-invalid' : addValidator.category.errors && addValidator.category.touched }">
+        <option [value]="null" disabled>{{'Common.Form.ChooseFromMenu' | translate }}</option>
+        <option *ngFor="let category of categoryOptions" value="{{category.id}}">{{category.name}}</option>
+      </select>
+      <div *ngIf="addValidator.category.touched && addValidator.category.errors" class="invalid-tooltip">
+        <div *ngIf="addValidator.category.errors.required">{{'Common.Validation.Required' | translate }}</div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group position-relative">
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text"><span class="fa fa-user-circle-o"></span></span>
+      </div>
+      <input  class="form-control"  maxlength="100" formControlName="fullName" placeholder="{{'Tickets.FullName' | translate }}" [ngClass]="{'is-invalid' : addValidator.fullName.errors && addValidator.fullName.touched}"  >
+      <div *ngIf="addValidator.fullName.touched && addValidator.fullName.errors" class="invalid-tooltip">
+        <div *ngIf="addValidator.fullName.errors.required">{{'Common.Validation.Required' | translate }}</div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group position-relative">
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text"><span class="fa fa-phone"></span></span>
+      </div>
+      <input  class="form-control"  maxlength="15" formControlName="phone" placeholder="{{'Tickets.Phone' | translate }} 05XXXXXXXX" [ngClass]="{'is-invalid' : addValidator.phone.errors && addValidator.phone.touched}"  >
+      <div *ngIf="addValidator.phone.touched && addValidator.phone.errors" class="invalid-tooltip">
+        <div *ngIf="addValidator.phone.errors.required">{{'Common.Validation.Required' | translate }}</div>
+        <div *ngIf="addValidator.phone.errors.pattern">{{'Common.Validation.Pattern' | translate }}</div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group position-relative">
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text"><span class="fa fa-at"></span></span>
+      </div>
+      <input  class="form-control"  maxlength="100" formControlName="email" placeholder="{{'Tickets.Email' | translate }}" [ngClass]="{'is-invalid' : addValidator.email.errors && addValidator.email.touched}"  >
+      <div *ngIf="addValidator.email.touched && addValidator.email.errors" class="invalid-tooltip">
+        <div *ngIf="addValidator.email.errors.required">{{'Common.Validation.Required' | translate }}</div>
+        <div *ngIf="addValidator.email.errors.pattern">{{'Common.Validation.Pattern' | translate }}</div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group position-relative">
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text"><span class="fa fa-pencil-square-o"></span></span>
+      </div>
+      <input  class="form-control"  maxlength="100" formControlName="title" placeholder="{{'Tickets.Title' | translate }}" [ngClass]="{'is-invalid' : addValidator.title.errors && addValidator.title.touched}"  >
+      <div *ngIf="addValidator.title.touched && addValidator.title.errors" class="invalid-tooltip">
+        <div *ngIf="addValidator.title.errors.required">{{'Common.Validation.Required' | translate }}</div>
+        <div *ngIf="addValidator.message.errors.maxlength">{{'Common.Validation.Maxlength' | translate:{'value':'100'} }}</div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group position-relative">
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text"><span class="fa fa-pencil-square-o"></span></span>
+      </div>
+      <textarea id="txtAddMessage" name="txtAddMessage" class= "form-control" rows="5"  maxlength="300" formControlName="message" placeholder="{{'Common.Form.MaxLength' | translate:{'value': 'Tickets.Message' | translate , 'max':'300'} }}" [ngClass]="{'is-invalid' : addValidator.message.errors && addValidator.message.touched}"  ></textarea>
+      <div *ngIf="addValidator.message.touched && addValidator.message.errors" class="invalid-tooltip">
+        <div *ngIf="addValidator.message.errors.required">{{'Common.Validation.Required' | translate }}</div>
+        <div *ngIf="addValidator.message.errors.maxlength">{{'Common.Validation.Maxlength' | translate:{'value':'300'} }}</div>
+      </div>
+    </div>
+  </div>
+  <div class="text-center">
+    <button id="btnAddTicket" class="btn btn-primary" [disabled]="isSubmitting" type="submit">
+      <i class='fa ' [ngClass]="isSubmitting ? 'fa-circle-o-notch fa-spin' : 'fa-send'"></i>&nbsp;
+      {{(isSubmitting ? 'Common.Data.SendingData' : 'Tickets.Send') | translate}}&nbsp;
+    </button>
+  </div>
+</form>
+<!-- End Normal Add BootStrap CardForm Form -->
+

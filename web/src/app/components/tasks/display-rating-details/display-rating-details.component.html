@@ -1,0 +1,11 @@
+<div *ngIf="!orderService?.isAllowToRate && orderService?.rating > 0" class="card text-center mb-2" style="border: 1px dotted #edb867;">
+    <div class="card-body pb-1">
+      <h5 class="card-title">{{orderService?.ratingComment}}</h5>
+      <h2 class="pb-0 mb-0"><b>{{orderService?.rating}}</b><small>&nbsp;/ 5</small></h2>
+      <ngb-rating [max]="5" [(rate)]="orderService.rating" [readonly]="true">
+        <ng-template let-fill="fill" let-index="index">
+          <span class="star" [class.filled]="fill === 100"><i class="fa fa-star"></i></span>
+        </ng-template>
+      </ngb-rating>
+    </div>
+  </div>

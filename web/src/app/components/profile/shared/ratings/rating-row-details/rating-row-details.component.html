@@ -1,0 +1,47 @@
+<div class="d-flex bg-light mb-2">
+    <div class="align-self-center p-2 mx-2">
+        <ngb-rating [max]="5" [(rate)]="ratingAndReview.rating" [readonly]="true" class="activity-rate">
+            <ng-template let-fill="fill" let-index="index">
+              <span class="star" [class.filled]="fill === 100"><i class="fa fa-star"></i></span>
+            </ng-template>
+        </ngb-rating>
+        <div>{{ratingAndReview?.createdDate | timeAgo}}</div>
+    </div>
+    <div class="p-2 flex-grow-1" [ngSwitch]="ratingAndReview.type">
+        <ng-container *ngSwitchCase="RateTypeEnum.ServiceProvider">
+            <div class="d-flex flex-column">
+                <div><a class="text-info" [routerLink]="(ratingAndReview?.reviewerUser) ? ['/profile', ratingAndReview?.reviewerUser?.id , ratingAndReview?.reviewerUser?.fullName] : ['']" role="button">{{ratingAndReview?.reviewerUser?.fullName}}</a></div>
+                <div class="pb-1 text-secondary"><i class="fa fa-tag px-1"></i>{{'Tasks.Type' | translate }} [{{getServiceOrderReviewDetails.name}}]</div>
+                <div>
+                    <span>{{ratingAndReview?.comment}}</span>
+                </div>
+            </div>
+        </ng-container>
+        <ng-container *ngSwitchCase="RateTypeEnum.EmployerRatingTheWorker">
+            <div class="d-flex flex-column">
+                <div class="pb-1 text-secondary"><i class="fa fa-tag px-1"></i><a class="text-info" [routerLink]="(getRatingWorkerByEmployerDetails) ? ['/jobs', 'details', getRatingWorkerByEmployerDetails.id , getRatingWorkerByEmployerDetails.name] : ['']">{{'Applicants.JobOffer' | translate }} [{{getRatingWorkerByEmployerDetails.name}}]</a></div>
+                <div><i class="fa fa-user-circle-o px-1 text-secondary"></i> <a class="text-info" [routerLink]="(ratingAndReview?.reviewerUser) ? ['/profile', ratingAndReview?.reviewerUser?.id , ratingAndReview?.reviewerUser?.fullName] : ['']" role="button">{{ratingAndReview?.reviewerUser?.fullName}}</a></div>
+                <div>
+                    <span>{{ratingAndReview?.comment}}</span>
+                </div>
+            </div>
+        </ng-container>
+        <ng-container *ngSwitchCase="RateTypeEnum.WorkerRatingTheEmployer">
+            <div class="d-flex flex-column">
+                <div class="pb-1 text-secondary"><i class="fa fa-tag px-1"></i><a class="text-info" [routerLink]="(getRatingEmployerByWorkerDetails) ? ['/jobs', 'details', getRatingEmployerByWorkerDetails.id , getRatingEmployerByWorkerDetails.name] : ['']">{{'Applicants.JobOffer' | translate }} [{{getRatingEmployerByWorkerDetails.name}}]</a></div>
+                <div><i class="fa fa-user-circle-o px-1 text-secondary"></i> <a class="text-info" [routerLink]="(ratingAndReview?.reviewerUser) ? ['/profile', ratingAndReview?.reviewerUser?.id , ratingAndReview?.reviewerUser?.fullName] : ['']" role="button">{{ratingAndReview?.reviewerUser?.fullName}}</a></div>
+                <div>
+                    <span>{{ratingAndReview?.comment}}</span>
+                </div>
+            </div>
+        </ng-container>
+        <ng-container *ngSwitchDefault>
+            <div class="d-flex flex-column">
+                <div><a class="text-info" [routerLink]="(ratingAndReview?.reviewerUser) ? ['/profile', ratingAndReview?.reviewerUser?.id , ratingAndReview?.reviewerUser?.fullName] : ['']" role="button">{{ratingAndReview?.reviewerUser?.fullName}}</a></div>
+                <div>
+                    <span>{{ratingAndReview?.comment}}</span>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+</div>

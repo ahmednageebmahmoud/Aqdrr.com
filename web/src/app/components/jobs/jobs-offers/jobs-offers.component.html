@@ -1,0 +1,210 @@
+<app-article-spinner *ngIf="!jobOffers"></app-article-spinner>
+<!-- ======= Breadcrumbs ======= -->
+<section *ngIf="jobOffers" id="breadcrumbs" class="breadcrumbs">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h2>{{'JobsOffers.ManageJobs' | translate }}</h2>
+            </div>
+            <!-- <ol>
+                
+            </ol> -->
+        </div>
+    </div>
+</section><!-- End Breadcrumbs -->
+
+<article *ngIf="jobOffers" id="profile" class="content">
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-md-3 px-2">
+                <div id="search-box" class="collapse show">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control" maxlength="30" [(ngModel)]="query.filterText"
+                                (keyup.esc)="resetFilter()" (keyup.enter)="onFilterChange()"
+                                placeholder="{{'Common.Data.SearchTip' | translate}}">
+                            <div class="input-group-append" id="button-addon4">
+                                <button type="button" class="btn btn-success" (click)="refreshData()"><span
+                                        class="fa fa-refresh text-light"
+                                        title="{{'Common.Data.Refresh' | translate}}"></span></button>
+                                <button type="button" class="btn btn-danger" (click)="resetFilter()"
+                                    title="{{'Common.Data.Reset' | translate}}"><span
+                                        class="fa fa-remove"></span></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="!authService.isLoggedIn || permissions.canApplyToTheJobs" class="form-group">
+                        <label for="rdbMatchUserProfile" class="">{{'Common.Data.AdvancedSearch' | translate }} <i
+                                class="fa fa-question-circle" (click)="whatIsMatchUserProfileDo()"></i></label>
+                        <div class="form-check">
+                            <input id="rdbAddmatchUserProfile0" class="form-check-input" type="radio"
+                                name="matchUserProfile" (change)="resetFilter()" [(ngModel)]="query.matchUserProfile"
+                                [value]="matchUserProfileEnum.AnyThing">
+                            <label class="form-check-label pl-1" for="rdbAddmatchUserProfile0">{{'Common.Form.All' |
+                                translate }}</label>
+                        </div>
+                        <div class="form-check">
+                            <input id="rdbAddmatchUserProfile1" class="form-check-input" type="radio"
+                                name="matchUserProfile" (change)="onFilterChange()" [(ngModel)]="query.matchUserProfile"
+                                [value]="matchUserProfileEnum.MatchMyProfile">
+                            <label class="form-check-label pl-1"
+                                for="rdbAddmatchUserProfile1">{{'JobsOffers.MatchMeProfile' | translate }}</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="ddlJobCategoryId" class="">{{'JobsOffers.JobCategoryId' | translate }}</label>
+                        <ng-select [loading]="isLoadingOptions" [disabled]="disableAllFillters" bindValue="id"
+                            bindLabel="name" [multiple]="true" [items]="jobsCategoriesOptions" [clearable]="false"
+                            [selectableGroup]="true" [closeOnSelect]="false"
+                            placeholder="{{'Common.Form.SelectFromMenu' | translate:{'value': 'JobsOffers.JobCategoryId' | translate} }}"
+                            class="custom" (change)="onFilterChange()" [(ngModel)]="query.categories">
+                            <ng-template ng-loadingspinner-tmp>
+                                <div class="lds-ellipsis mx-2">
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                </div>
+                            </ng-template>
+                            <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                                <input id="item-{{index}}" type="checkbox"
+                                    [checked]="item$.selected" />&nbsp;{{item.name}}
+                            </ng-template>
+                        </ng-select>
+                    </div>
+                    <div class="form-group">
+                        <label for="ddlCityId" class="">{{'JobsOffers.CityId' | translate }}</label>
+                        <select class="form-control" [disabled]="disableAllFillters" (change)="onFilterChange()"
+                            [(ngModel)]="query.cityId">
+                            <option [value]="0">{{'Common.Form.ChooseAll' | translate:{'value': 'JobsOffers.Cities' |
+                                translate} }}</option>
+                            <option *ngFor="let city of citiesOptions" value="{{city.id}}">{{city.name}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="addId" class="">{{'JobsOffers.Skills' | translate }}</label>
+                        <ng-select [loading]="isLoadingOptions" [disabled]="disableAllFillters" bindValue="id"
+                            bindLabel="name" [multiple]="true" [items]="jobsOffersSkillsOptions" [clearable]="false"
+                            [selectableGroup]="true" [closeOnSelect]="false" (change)="onFilterChange()"
+                            [(ngModel)]="query.skills"
+                            placeholder="{{'Common.Form.SelectFromMenu' | translate:{'value': 'Common.Form.YourOptions' | translate} }}"
+                            class="custom">
+                            <ng-template ng-loadingspinner-tmp>
+                                <div class="lds-ellipsis mx-2">
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                </div>
+                            </ng-template>
+                            <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                                <input id="item-{{index}}" type="checkbox"
+                                    [checked]="item$.selected" />&nbsp;{{item.name}}
+                            </ng-template>
+                        </ng-select>
+                    </div>
+                    <div class="form-group">
+                        <label for="dtpkrAddStartDate" class="">{{'JobsOffers.StartDate' | translate }}</label>
+                        <div class="input-group">
+                            <input ngbDatepicker #dtpkrAddStartDate="ngbDatepicker" [autoClose]="'outside'"
+                                [maxDate]="maxDate" [minDate]="minDate" [firstDayOfWeek]="0"
+                                (dateSelect)="onDateSelection($event)" [firstDayOfWeek]="0" [displayMonths]="1"
+                                [markDisabled]="isDisabled" [dayTemplate]="tDatesRange" class="form-control" readonly
+                                (click)="dtpkrAddStartDate?.open()" outsideDays="hidden">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary calendar" (click)="dtpkrAddStartDate?.open()"
+                                    type="button"><i class="fa fa-calendar"></i></button>
+                            </div>
+                        </div>
+                        <ng-template #tDatesRange let-date let-disabled="disabled" let-focused="focused">
+                            <span class="custom-day" [class.focused]="focused" [class.range]="isRange(date)"
+                                [class.faded]="isHovered(date) || isInside(date)" [class.disabled]="disabled"
+                                (mouseenter)="hoveredDate = date" (mouseleave)="hoveredDate = null">{{ date.day }}
+                            </span>
+                        </ng-template>
+                    </div>
+                    <div class="form-group">
+                        <label for="rdbAddGender" class="">{{'JobsOffers.Gender' | translate }}</label>
+                        <div class="form-check">
+                            <input [disabled]="disableAllFillters" id="rdbAddGender0" class="form-check-input"
+                                type="radio" name="gender" (change)="onFilterChange()" [(ngModel)]="query.gender"
+                                [value]="genderEnum.none">
+                            <label class="form-check-label" for="rdbAddGender0">
+                                {{'Common.Form.BothGender' | translate }}
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input [disabled]="disableAllFillters" id="rdbAddGender1" class="form-check-input"
+                                type="radio" name="gender" (change)="onFilterChange()" [(ngModel)]="query.gender"
+                                [value]="genderEnum.male">
+                            <label class="form-check-label text-sky" for="rdbAddGender1">
+                                <i class="fa fa-male mr-1"></i>{{'Common.Form.Males' | translate }}
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input [disabled]="disableAllFillters" id="rdbAddGender2" class="form-check-input"
+                                type="radio" name="gender" (change)="onFilterChange()" [(ngModel)]="query.gender"
+                                [value]="genderEnum.female">
+                            <label class="form-check-label text-pink" for="rdbAddGender2">
+                                <i class="fa fa-female mr-1"></i>{{'Common.Form.Females' | translate }}
+                            </label>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="col-md-9 px-0">
+                <!-- ======= Jobs Section ======= -->
+
+                <div class="aqdr-table aqdr-table-small">
+                    <div class="aqdr-table-row aqdr-table-header">
+                        <div class="aqdr-table-column job">{{'JobsOffers.TheJob'|translate}}</div>
+                        <div class="aqdr-table-column location">{{'JobsOffers.Location'|translate}}</div>
+                        <div class="aqdr-table-column time">{{'JobsOffers.Time'|translate}}</div>
+                        <div class="aqdr-table-column period">{{'JobsOffers.Period'|translate}}</div>
+                        <div class="aqdr-table-column price">{{'JobsOffers.Price'|translate}}</div>
+                        <div class="aqdr-table-column tools">
+                            <a *ngIf="!authService.isLoggedIn || permissions.canAddJobs" [routerLink]="['/jobs', 'new']"
+                                class="aqdr-icon-btn">
+                                <i class="fa fa-plus"></i>
+                                <span>{{'JobsOffers.AddNewJob'|translate}}</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div *ngIf="!jobOffers?.length" class="text-center text-info">
+                        <p class="mb-2">{{'Common.Messages.NotFoundAnyRecord' | translate:{'value': 'Common.Data.Record'
+                            |
+                            translate} }}</p>
+                    </div>
+                    <app-job-offer-row class="aqdr-table-row" *ngFor="let jobOffer of jobOffers; let i=index"
+                        [@EnterItem]="{value:'', params:{delay: 100 * i}}" [JobOffer]='jobOffer' [isNewDesign]="true">
+                    </app-job-offer-row>
+
+
+                </div>
+
+
+                <div class="container-fluid no-padding-sm my-3">
+                    <div class="col-md-12 p-0">
+                        <div class="tab-pane">
+                            <div class="d-flex justify-content-end">
+                                <ngb-pagination class="d-flex justify-content-center" [boundaryLinks]="true"
+                                    [pageSize]="query.pageSize" [collectionSize]="query.totalItems"
+                                    [(page)]="query.pageNumber" [maxSize]="5" [rotate]="true"
+                                    (pageChange)="onPageChange($event);">
+                                    <ng-template ngbPaginationFirst>&laquo;</ng-template>
+                                    <ng-template ngbPaginationPrevious>&lsaquo;</ng-template>
+                                    <ng-template ngbPaginationLast>&raquo;</ng-template>
+                                    <ng-template ngbPaginationNext>&rsaquo;</ng-template>
+                                </ngb-pagination>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</article>

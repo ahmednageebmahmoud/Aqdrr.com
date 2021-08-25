@@ -1,0 +1,21 @@
+<div class="aqdr-freelancer-info">
+  <app-small-avatar-img [ImageName]="taskerCard?.publicId" [Gender]='taskerCard?.gender' [Size]="250" [heightWidthSameSize]='false' [ImgClass]="'img-fluid img-thumbnail'"></app-small-avatar-img>
+  <div class="data">
+    <a [routerLink]="(taskerCard?.id) ? [ '/profile', taskerCard?.id , taskerCard?.fullName] : ['']"  >
+      <h3 class="name">{{taskerCard?.fullName}}</h3>
+    </a>
+      <div class="location">{{taskerCard?.cityName}}</div>
+      <div class="stars">
+        <ngb-rating  [max]="5" [(rate)]="taskerCard.totalRating" [readonly]="true">
+          <ng-template let-fill="fill" let-index="index">
+            <span class="star filled" *ngIf="fill===100" [class.filled]="fill === 100"><i class="fa fa-star"></i></span>
+            <span class="star" *ngIf="fill!==100" [class.filled]="fill === 100"><i class="fa fa-star off"></i></span>
+          </ng-template>
+      </ngb-rating>
+    </div>
+  </div>
+</div>
+<p class="aqdr-freelancer-bio" [title]="taskerCard?.about||('Public.NoAboutFound'|translate)">
+  {{(taskerCard?.about|ellipsis:55)  ||('Public.NoAboutFound'|translate)}}</p>
+
+ 

@@ -1,0 +1,15 @@
+<ng-container *ngIf="isBusinessAccount()">
+    <app-business-account-profile [userProfile]="userProfile"></app-business-account-profile>
+</ng-container>
+
+<ng-container *ngIf="isStudentAccount()">
+    <app-jobs-searcher-profile [userProfile]="userProfile"></app-jobs-searcher-profile>
+</ng-container>
+
+<ng-container *ngIf="isTaskerAccount()">
+    <app-tasker-profile [userProfile]="userProfile"></app-tasker-profile>
+</ng-container>
+
+<ng-container *ngIf="isManagerAccount() || isVisitorAccount()">
+    <app-visitor-profile [userProfile]="userProfile"></app-visitor-profile>
+</ng-container>

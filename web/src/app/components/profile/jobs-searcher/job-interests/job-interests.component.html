@@ -1,0 +1,23 @@
+<div class="row" >
+    <h4 class="profile-horizontal-Line text-left px-2 my-3">
+        <span class="section-header-behind-line profile-head-line px-2">{{'users.Students.JobInterests' | translate }}</span>
+    </h4>
+    <div class="col-md-12 pl-4">
+        <div class="form-group row my-0">
+            <label class="col-form-label col-sm-3 profile-info-title">{{'users.Students.DayAvailability' | translate }}</label>
+            <div class="col-sm-9">
+                <p class="form-control-plaintext profile-info-details"><i class="fa fa-clock-o"></i>&nbsp;&nbsp;{{userProfile?.studentAccountData?.dayAvailabilityName}}</p>
+            </div>
+        </div>
+    </div>
+    <ng-container *ngIf="userJobInterests?.length > 0; else nothingTemplate">
+        <div class="col-12 my-2">
+            <span class="h6 badge-xl bg-info" *ngFor="let job of userJobInterests; let i = index;">{{job?.jobCategory?.name}}</span>
+        </div>
+    </ng-container>
+    <ng-template #nothingTemplate>
+        <div class="col-12 my-2">
+            <p class="form-control-plaintext text-break text-secondary pt-0">{{'Common.Data.NoData' | translate }}</p>
+        </div>
+    </ng-template>
+</div>
