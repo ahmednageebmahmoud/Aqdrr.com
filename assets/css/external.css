@@ -1,0 +1,27 @@
+#pre-bootstrap{background-color:#5a3e55;bottom:0;left:0;position:fixed;right:0;top:0;z-index:999999}
+#pre-bootstrap div.messaging{color:#fff;font-family:arial!important;left:0;margin-top:-107px;position:absolute;right:0;text-align:center;top:50%}
+#pre-bootstrap h1{margin:0 0 20px 0}
+#pre-bootstrap p{font-size:18px;line-height:14px;margin:0}
+.prebootShow{opacity:1!important}
+.prebootStep{opacity:0;transition:.5s ease-in-out all}
+.cs-loader{position:absolute;top:0;left:0;height:100%;width:100%}
+.cs-loader-inner{transform:translateY(-50%);top:60%;position:absolute;width:calc(100% - 0px);color:#fff;padding:0 100px;text-align:center}
+.cs-loader-inner label{font-size:20px;opacity:0;display:inline-block;color:#3ca59d;margin-bottom:0px !important;}
+@keyframes lol{
+0%{opacity:0;transform:translateX(-300px)}
+33%{opacity:1;transform:translateX(0)}
+66%{opacity:1;transform:translateX(0)}
+100%{opacity:0;transform:translateX(300px)}
+}
+@-webkit-keyframes lol{
+0%{opacity:0;-webkit-transform:translateX(-300px)}
+33%{opacity:1;-webkit-transform:translateX(0)}
+66%{opacity:1;-webkit-transform:translateX(0)}
+100%{opacity:0;-webkit-transform:translateX(300px)}
+}
+.cs-loader-inner label:nth-child(6){-webkit-animation:lol 3s infinite ease-in-out;animation:lol 3s infinite ease-in-out}
+.cs-loader-inner label:nth-child(5){-webkit-animation:lol 3s .1s infinite ease-in-out;animation:lol 3s .1s infinite ease-in-out}
+.cs-loader-inner label:nth-child(4){-webkit-animation:lol 3s .2s infinite ease-in-out;animation:lol 3s .2s infinite ease-in-out}
+.cs-loader-inner label:nth-child(3){-webkit-animation:lol 3s .3s infinite ease-in-out;animation:lol 3s .3s infinite ease-in-out}
+.cs-loader-inner label:nth-child(2){-webkit-animation:lol 3s .4s infinite ease-in-out;animation:lol 3s .4s infinite ease-in-out}
+.cs-loader-inner label:nth-child(1){-webkit-animation:lol 3s .5s infinite ease-in-out;animation:lol 3s .5s infinite ease-in-out}

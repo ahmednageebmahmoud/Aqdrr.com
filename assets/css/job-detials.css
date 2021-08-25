@@ -1,0 +1,79 @@
+.job-title-badge {
+  font-size: 0.8rem !important;
+}
+
+.job-details-avatar {
+  vertical-align: middle;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  border: solid 0.5px #efefef;
+}
+
+.jobs .card {
+  padding: 0;
+  border-radius: 0;
+  box-shadow: none;
+  border: none !important;
+  margin-bottom: 21px;
+}
+
+.jobs .card-header {
+  border: 0 solid #eaeaea;
+  border-bottom-width: 1px;
+  padding: 0;
+  background: #fff;
+}
+
+.jobs .card-header a,
+.jobs .card-header a:hover {
+  color: #686868;
+}
+
+.jobs .card-block {
+  padding: 21px;
+}
+
+.jobs .card-header .fa {
+  transition: .3s transform ease-in-out;
+}
+
+.jobs .card-header .collapsed .fa {
+  transform: rotate(180deg);
+}
+
+.jobs .card hr {
+  margin-top: 7px;
+  margin-bottom: 7px;
+  border: 0;
+  border-top: 1px solid #eeeeee;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  height: 0;
+}
+
+.jobs .job-meta-row {
+  padding-left: 0.5rem !important;
+  padding-right: 0.5rem !important;
+  /* margin-bottom: 0.7rem; */
+}
+
+.jobs .text-plaintext {
+  display: block;
+  width: 100%;
+  padding: 0px;
+  margin-bottom: 0px;
+  font-size: 1rem;
+  line-height: 1.2;
+  color: #212529;
+  background-color: transparent;
+  border: solid transparent;
+  border-width: 0px 0;
+}
+
+@media (min-width: 768px) {
+  .pr-md-2 {
+    padding-left: .5rem !important;
+    padding-right: 0 !important;
+  }
+}
